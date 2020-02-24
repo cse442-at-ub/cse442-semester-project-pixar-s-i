@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity" >
 
-   < android:LinearLayout
+   <LinearLayout
 
     android:id="@+id/layout"
     android:layout_width="match_parent"
@@ -17,15 +17,14 @@
            android:text="High Five"
            android:id="@+id/highFiveBtn"
 
-
            android:layout_width="match_parent"
            android:layout_height="0dp"
            android:layout_weight="0.5"
            android:background="#F3E9DC"
            android:textSize="20sp"
-
            style="?android:attr/borderlessButtonStyle"
 
+           android:onClick="goToHighFivePage"
            />
 
        <Button
@@ -37,8 +36,9 @@
            android:layout_height="0dp"
            android:layout_width="match_parent"
            android:layout_alignParentBottom="true"
-
            style="?android:attr/borderlessButtonStyle"
+
+           android:onClick="goToHugPage"
            />
 
        <Button
@@ -48,8 +48,9 @@
            android:background="#F7B32B"
            android:layout_width="match_parent"
            android:layout_weight="0.5"
-
            style="?android:attr/borderlessButtonStyle"
+
+           android:onClick="goToMotivationPage"
            />
 
        <Button
@@ -59,8 +60,9 @@
            android:layout_width="match_parent"
            android:layout_weight="0.5"
            android:background="#A4243B"
-
            style="?android:attr/borderlessButtonStyle"
+
+            android:onClick="goToTalkPage"
            />
 
        <Button
@@ -72,9 +74,9 @@
            android:layout_height="0dp"
            android:layout_weight="0.5"
            android:background="#80A1C1"
-
            style="?android:attr/borderlessButtonStyle"
 
+           android:onClick="goToConnectPage"
            />
 
 </LinearLayout>
