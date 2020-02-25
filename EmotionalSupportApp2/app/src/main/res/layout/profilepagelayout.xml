@@ -125,8 +125,8 @@
         android:id="@+id/backButton"
         android:layout_width="wrap_content"
         android:layout_height="31dp"
-        android:layout_x="182dp"
-        android:layout_y="529dp"
+        android:layout_x="157dp"
+        android:layout_y="526dp"
         android:background="@color/colorPrimary"
         android:onClick="backToHome"
         android:text="Back"
@@ -136,8 +136,8 @@
         android:id="@+id/changeImage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_x="154dp"
-        android:layout_y="63dp"
+        android:layout_x="147dp"
+        android:layout_y="40dp"
         android:background="@color/colorPrimary"
         android:text="Change Image"
         android:textSize="14dp" />
@@ -146,8 +146,8 @@
         android:id="@+id/logout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_x="190dp"
-        android:layout_y="462dp"
+        android:layout_x="177dp"
+        android:layout_y="442dp"
         android:src="@android:drawable/ic_lock_power_off" />
 
     <TextView
