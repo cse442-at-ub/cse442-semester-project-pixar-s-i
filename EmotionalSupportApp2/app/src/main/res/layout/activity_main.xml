@@ -42,16 +42,15 @@
            />
 
        <Button
-           android:text="motivation"
            android:id="@+id/motivationBtn"
-
-           android:background="#F7B32B"
-           android:layout_width="match_parent"
-           android:layout_weight="0.5"
            style="?android:attr/borderlessButtonStyle"
 
+           android:layout_width="match_parent"
+           android:layout_weight="0.5"
+           android:background="#F7B32B"
            android:onClick="goToMotivationPage"
-           />
+
+           android:text="motivation" />
 
        <Button
            android:text="Talk"
