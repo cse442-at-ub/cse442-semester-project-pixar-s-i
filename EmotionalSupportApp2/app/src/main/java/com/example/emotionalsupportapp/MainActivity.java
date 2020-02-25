@@ -23,19 +23,19 @@ public class MainActivity extends AppCompatActivity {
      * should be used to change to the high five page
      * Called when high five button is clicked
      */
-    public void goToHighFivePage(View view){
-        Intent intent = new Intent(this,HighFiveActivity.class);
-        startActivity(intent);
-    }
-    /*
-     * Changes to the main hug page
-     * should be used to change to the hug page
-     * Called when hug button is clicked
-     */
-    public void goToHugPage(View view){
-        Intent intent = new Intent(this,HugActivity.class);
-        startActivity(intent);
-    }
+//    public void goToHighFivePage(View view){
+//        Intent intent = new Intent(this,HighFiveActivity.class);
+//        startActivity(intent);
+//    }
+//    /*
+//     * Changes to the main hug page
+//     * should be used to change to the hug page
+//     * Called when hug button is clicked
+//     */
+//    public void goToHugPage(View view){
+//        Intent intent = new Intent(this,HugActivity.class);
+//        startActivity(intent);
+//    }
     /*
      * Changes to the main Motivation page
      * should be used to change to the Motivation page
