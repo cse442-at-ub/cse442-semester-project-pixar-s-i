@@ -6,78 +6,88 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity" >
 
-   <LinearLayout
 
-    android:id="@+id/layout"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical" >
+<!--    </androidx.appcompat.widget.Toolbar>-->
+    <LinearLayout
 
-       <Button
-           android:text="High Five"
-           android:id="@+id/highFiveBtn"
+        android:id="@+id/layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-           android:layout_width="match_parent"
-           android:layout_height="0dp"
-           android:layout_weight="0.5"
-           android:background="#F3E9DC"
-           android:textSize="20sp"
-           style="?android:attr/borderlessButtonStyle"
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/topNavBar"
 
-           android:onClick="goToHighFivePage"
-           />
+            android:layout_width="match_parent"
+            android:layout_height="39dp"
+            android:layout_weight="0.1"
+            android:background="?attr/colorPrimary"
+            android:elevation="4dp"
+            android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
-       <Button
-           android:text="Hug"
-           android:id="@+id/hugBtn"
 
-           android:background="#FCF6B1"
-           android:layout_weight="0.5"
-           android:layout_height="0dp"
-           android:layout_width="match_parent"
-           android:layout_alignParentBottom="true"
-           style="?android:attr/borderlessButtonStyle"
+        <Button
+            android:id="@+id/highFiveBtn"
+            style="?android:attr/borderlessButtonStyle"
 
-           android:onClick="goToHugPage"
-           />
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.5"
+            android:background="#F3E9DC"
+            android:onClick="goToHighFivePage"
+            android:text="High Five"
 
-       <Button
-           android:id="@+id/motivationBtn"
-           style="?android:attr/borderlessButtonStyle"
+            android:textSize="20sp" />
 
-           android:layout_width="match_parent"
-           android:layout_weight="0.5"
-           android:background="#F7B32B"
-           android:onClick="goToMotivationPage"
+        <Button
+            android:id="@+id/hugBtn"
+            style="?android:attr/borderlessButtonStyle"
 
-           android:text="motivation" />
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_alignParentBottom="true"
+            android:layout_weight="0.5"
+            android:background="#FCF6B1"
+            android:onClick="goToHugPage"
 
-       <Button
-           android:text="Talk"
-           android:id="@+id/talkBtn"
+            android:text="Hug" />
 
-           android:layout_width="match_parent"
-           android:layout_weight="0.5"
-           android:background="#A4243B"
-           style="?android:attr/borderlessButtonStyle"
+        <Button
+            android:id="@+id/motivationBtn"
+            style="?android:attr/borderlessButtonStyle"
 
+            android:layout_width="match_parent"
+            android:layout_weight="0.5"
+            android:background="#F7B32B"
+            android:onClick="goToMotivationPage"
+
+            android:text="motivation" />
+
+        <Button
+            android:id="@+id/talkBtn"
+            style="?android:attr/borderlessButtonStyle"
+
+            android:layout_width="match_parent"
+            android:layout_weight="0.5"
+            android:background="#A4243B"
             android:onClick="goToTalkPage"
-           />
 
-       <Button
-           android:text="Connect"
-           android:id="@+id/connectBtn"
+            android:text="Talk" />
+
+        <Button
+            android:id="@+id/connectBtn"
+            style="?android:attr/borderlessButtonStyle"
 
 
-           android:layout_width="match_parent"
-           android:layout_height="0dp"
-           android:layout_weight="0.5"
-           android:background="#80A1C1"
-           style="?android:attr/borderlessButtonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.5"
+            android:background="#80A1C1"
+            android:onClick="goToConnectPage"
 
-           android:onClick="goToConnectPage"
-           />
+            android:text="Connect" />
 
-</LinearLayout>
+    </LinearLayout>
 
 </RelativeLayout>
