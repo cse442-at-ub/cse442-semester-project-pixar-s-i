@@ -6,44 +6,62 @@
 6
 7    <uses-sdk
 8        android:minSdkVersion="15"
-8-->C:\Users\spitt\StudioProjects\EmotionalSupportApp2\app\src\main\AndroidManifest.xml
+8-->C:\Users\rgroe\OneDrive\Documents\CollegeWork\Spring2020\CSE442\Project\EmotionalSupportApp2\app\src\main\AndroidManifest.xml
 9        android:targetSdkVersion="28" />
-9-->C:\Users\spitt\StudioProjects\EmotionalSupportApp2\app\src\main\AndroidManifest.xml
+9-->C:\Users\rgroe\OneDrive\Documents\CollegeWork\Spring2020\CSE442\Project\EmotionalSupportApp2\app\src\main\AndroidManifest.xml
 10
 11    <application
-11-->C:\Users\spitt\StudioProjects\EmotionalSupportApp2\app\src\main\AndroidManifest.xml:5:5-20:19
+11-->C:\Users\rgroe\OneDrive\Documents\CollegeWork\Spring2020\CSE442\Project\EmotionalSupportApp2\app\src\main\AndroidManifest.xml:5:5-28:19
 12        android:allowBackup="true"
-12-->C:\Users\spitt\StudioProjects\EmotionalSupportApp2\app\src\main\AndroidManifest.xml:6:9-35
+12-->C:\Users\rgroe\OneDrive\Documents\CollegeWork\Spring2020\CSE442\Project\EmotionalSupportApp2\app\src\main\AndroidManifest.xml:6:9-35
 13        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
-13-->[androidx.core:core:1.0.1] C:\Users\spitt\.gradle\caches\transforms-2\files-2.1\8f8ab13dc8f4e84e14a8bb3d9ac92bc4\core-1.0.1\AndroidManifest.xml:22:18-86
+13-->[androidx.core:core:1.0.1] C:\Users\rgroe\.gradle\caches\transforms-2\files-2.1\36e3e9561b56dfae3649040dc909bb65\core-1.0.1\AndroidManifest.xml:22:18-86
 14        android:debuggable="true"
 15        android:icon="@mipmap/ic_launcher"
-15-->C:\Users\spitt\StudioProjects\EmotionalSupportApp2\app\src\main\AndroidManifest.xml:7:9-43
+15-->C:\Users\rgroe\OneDrive\Documents\CollegeWork\Spring2020\CSE442\Project\EmotionalSupportApp2\app\src\main\AndroidManifest.xml:7:9-43
 16        android:label="@string/app_name"
-16-->C:\Users\spitt\StudioProjects\EmotionalSupportApp2\app\src\main\AndroidManifest.xml:8:9-41
+16-->C:\Users\rgroe\OneDrive\Documents\CollegeWork\Spring2020\CSE442\Project\EmotionalSupportApp2\app\src\main\AndroidManifest.xml:8:9-41
 17        android:roundIcon="@mipmap/ic_launcher_round"
-17-->C:\Users\spitt\StudioProjects\EmotionalSupportApp2\app\src\main\AndroidManifest.xml:9:9-54
+17-->C:\Users\rgroe\OneDrive\Documents\CollegeWork\Spring2020\CSE442\Project\EmotionalSupportApp2\app\src\main\AndroidManifest.xml:9:9-54
 18        android:supportsRtl="true"
-18-->C:\Users\spitt\StudioProjects\EmotionalSupportApp2\app\src\main\AndroidManifest.xml:10:9-35
-19        android:theme="@style/AppTheme" >
-19-->C:\Users\spitt\StudioProjects\EmotionalSupportApp2\app\src\main\AndroidManifest.xml:11:9-40
-20        <activity android:name="com.example.emotionalsupportapp.profile_page" />
-20-->C:\Users\spitt\StudioProjects\EmotionalSupportApp2\app\src\main\AndroidManifest.xml:12:9-59
-20-->C:\Users\spitt\StudioProjects\EmotionalSupportApp2\app\src\main\AndroidManifest.xml:12:19-47
-21        <activity android:name="com.example.emotionalsupportapp.MainActivity" >
-21-->C:\Users\spitt\StudioProjects\EmotionalSupportApp2\app\src\main\AndroidManifest.xml:13:9-19:20
-21-->C:\Users\spitt\StudioProjects\EmotionalSupportApp2\app\src\main\AndroidManifest.xml:13:19-47
-22            <intent-filter>
-22-->C:\Users\spitt\StudioProjects\EmotionalSupportApp2\app\src\main\AndroidManifest.xml:14:13-18:29
-23                <action android:name="android.intent.action.MAIN" />
-23-->C:\Users\spitt\StudioProjects\EmotionalSupportApp2\app\src\main\AndroidManifest.xml:15:17-69
-23-->C:\Users\spitt\StudioProjects\EmotionalSupportApp2\app\src\main\AndroidManifest.xml:15:25-66
-24
-25                <category android:name="android.intent.category.LAUNCHER" />
-25-->C:\Users\spitt\StudioProjects\EmotionalSupportApp2\app\src\main\AndroidManifest.xml:17:17-77
-25-->C:\Users\spitt\StudioProjects\EmotionalSupportApp2\app\src\main\AndroidManifest.xml:17:27-74
-26            </intent-filter>
-27        </activity>
-28    </application>
-29
-30</manifest>
+18-->C:\Users\rgroe\OneDrive\Documents\CollegeWork\Spring2020\CSE442\Project\EmotionalSupportApp2\app\src\main\AndroidManifest.xml:10:9-35
+19        android:testOnly="true"
+20        android:theme="@style/AppTheme" >
+20-->C:\Users\rgroe\OneDrive\Documents\CollegeWork\Spring2020\CSE442\Project\EmotionalSupportApp2\app\src\main\AndroidManifest.xml:11:9-40
+21        <activity android:name="com.example.emotionalsupportapp.SignUpActivity" />
+21-->C:\Users\rgroe\OneDrive\Documents\CollegeWork\Spring2020\CSE442\Project\EmotionalSupportApp2\app\src\main\AndroidManifest.xml:12:9-61
+21-->C:\Users\rgroe\OneDrive\Documents\CollegeWork\Spring2020\CSE442\Project\EmotionalSupportApp2\app\src\main\AndroidManifest.xml:12:19-49
+22        <activity android:name="com.example.emotionalsupportapp.LoginActivity" >
+22-->C:\Users\rgroe\OneDrive\Documents\CollegeWork\Spring2020\CSE442\Project\EmotionalSupportApp2\app\src\main\AndroidManifest.xml:13:9-19:20
+22-->C:\Users\rgroe\OneDrive\Documents\CollegeWork\Spring2020\CSE442\Project\EmotionalSupportApp2\app\src\main\AndroidManifest.xml:13:19-48
+23            <intent-filter>
+23-->C:\Users\rgroe\OneDrive\Documents\CollegeWork\Spring2020\CSE442\Project\EmotionalSupportApp2\app\src\main\AndroidManifest.xml:14:13-18:29
+24                <action android:name="android.intent.action.MAIN" />
+24-->C:\Users\rgroe\OneDrive\Documents\CollegeWork\Spring2020\CSE442\Project\EmotionalSupportApp2\app\src\main\AndroidManifest.xml:15:17-69
+24-->C:\Users\rgroe\OneDrive\Documents\CollegeWork\Spring2020\CSE442\Project\EmotionalSupportApp2\app\src\main\AndroidManifest.xml:15:25-66
+25
+26                <category android:name="android.intent.category.LAUNCHER" />
+26-->C:\Users\rgroe\OneDrive\Documents\CollegeWork\Spring2020\CSE442\Project\EmotionalSupportApp2\app\src\main\AndroidManifest.xml:17:17-77
+26-->C:\Users\rgroe\OneDrive\Documents\CollegeWork\Spring2020\CSE442\Project\EmotionalSupportApp2\app\src\main\AndroidManifest.xml:17:27-74
+27            </intent-filter>
+28        </activity>
+29        <activity android:name="com.example.emotionalsupportapp.profile_page" />
+29-->C:\Users\rgroe\OneDrive\Documents\CollegeWork\Spring2020\CSE442\Project\EmotionalSupportApp2\app\src\main\AndroidManifest.xml:20:9-50
+29-->C:\Users\rgroe\OneDrive\Documents\CollegeWork\Spring2020\CSE442\Project\EmotionalSupportApp2\app\src\main\AndroidManifest.xml:20:19-47
+30        <activity android:name="com.example.emotionalsupportapp.MainActivity" >
+30-->C:\Users\rgroe\OneDrive\Documents\CollegeWork\Spring2020\CSE442\Project\EmotionalSupportApp2\app\src\main\AndroidManifest.xml:21:9-27:20
+30-->C:\Users\rgroe\OneDrive\Documents\CollegeWork\Spring2020\CSE442\Project\EmotionalSupportApp2\app\src\main\AndroidManifest.xml:21:19-47
+31            <intent-filter>
+31-->C:\Users\rgroe\OneDrive\Documents\CollegeWork\Spring2020\CSE442\Project\EmotionalSupportApp2\app\src\main\AndroidManifest.xml:14:13-18:29
+32                <action android:name="android.intent.action.MAIN" />
+32-->C:\Users\rgroe\OneDrive\Documents\CollegeWork\Spring2020\CSE442\Project\EmotionalSupportApp2\app\src\main\AndroidManifest.xml:15:17-69
+32-->C:\Users\rgroe\OneDrive\Documents\CollegeWork\Spring2020\CSE442\Project\EmotionalSupportApp2\app\src\main\AndroidManifest.xml:15:25-66
+33
+34                <category android:name="android.intent.category.LAUNCHER" />
+34-->C:\Users\rgroe\OneDrive\Documents\CollegeWork\Spring2020\CSE442\Project\EmotionalSupportApp2\app\src\main\AndroidManifest.xml:17:17-77
+34-->C:\Users\rgroe\OneDrive\Documents\CollegeWork\Spring2020\CSE442\Project\EmotionalSupportApp2\app\src\main\AndroidManifest.xml:17:27-74
+35            </intent-filter>
+36        </activity>
+37    </application>
+38
+39</manifest>
