@@ -21,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
      * Called when high five button is clicked
      */
     public void goToHighFivePage(View view){
-        Intent intent = new Intent(this,HighFiveActivity.class);
+        Intent intent = new Intent(this,profilePage.class);
         startActivity(intent);
     }
     /*
@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
      * Called when hug button is clicked
      */
     public void goToHugPage(View view){
-        Intent intent = new Intent(this,HugActivity.class);
+        Intent intent = new Intent(this,profilePage.class);
         startActivity(intent);
     }
     /*
@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
      * Called when talk button is clicked
      */
     public void goToTalkPage(View view){
-        Intent intent = new Intent(this,TalkActivity.class);
+        Intent intent = new Intent(this,profilePage.class);
         startActivity(intent);
     }
     /*
@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
      * Called when Connect button is clicked
      */
     public void goToConnectPage(View view){
-        Intent intent = new Intent(this,ConnectActivity.class);
+        Intent intent = new Intent(this,profilePage.class);
         startActivity(intent);
     }
     /*
@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
      * Called when Profile button is clicked
      */
     public void goToProfilePage(View view){
-        Intent intent = new Intent(this,profile_page.class);
+        Intent intent = new Intent(this,profilePage.class);
         startActivity(intent);
     }
 }

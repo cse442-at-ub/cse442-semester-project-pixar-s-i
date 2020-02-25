@@ -1,0 +1,4 @@
+#Tue Feb 25 18:06:30 EST 2020
+base.0=/Users/Work/cse442-semester-project-pixar-s-i/EmotionalSupportApp2/app/build/intermediates/dex/debug/mergeDexDebug/out/classes.dex
+path.0=classes.dex
+renamed.0=classes.dex
