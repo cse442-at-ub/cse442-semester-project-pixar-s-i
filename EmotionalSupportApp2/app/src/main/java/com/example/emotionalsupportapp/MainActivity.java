@@ -69,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
      * Called when Profile button is clicked
      */
     public void goToProfilePage(View view){
-        Intent intent = new Intent(this,profile_page.class);
+        Intent intent = new Intent(this,profilePage.class);
         startActivity(intent);
     }
 }
