@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SettingsActivity">
+
+    <Button
+        android:id="@+id/notifications"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="goToNotifications"
+        android:text="Notifications"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="127dp" />
+
+    <Button
+        android:id="@+id/history"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="goToHistory"
+        android:text="History"
+        app:layout_constraintTop_toBottomOf="@+id/notifications"
+        tools:layout_editor_absoluteX="176dp" />
+
+    <Switch
+        android:id="@+id/volunteer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Volunteer"
+        app:layout_constraintTop_toBottomOf="@+id/history"
+        tools:layout_editor_absoluteX="118dp" />
+</androidx.constraintlayout.widget.ConstraintLayout>

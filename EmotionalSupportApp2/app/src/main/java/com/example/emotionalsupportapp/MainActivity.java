@@ -1,11 +1,11 @@
 package com.example.emotionalsupportapp;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-
+import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -13,9 +13,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        Toolbar topNav =  findViewById(R.id.topNavBar);
-        setSupportActionBar(topNav);
     }
 
     /*
@@ -23,19 +20,19 @@ public class MainActivity extends AppCompatActivity {
      * should be used to change to the high five page
      * Called when high five button is clicked
      */
-//    public void goToHighFivePage(View view){
-//        Intent intent = new Intent(this,HighFiveActivity.class);
-//        startActivity(intent);
-//    }
-//    /*
-//     * Changes to the main hug page
-//     * should be used to change to the hug page
-//     * Called when hug button is clicked
-//     */
-//    public void goToHugPage(View view){
-//        Intent intent = new Intent(this,HugActivity.class);
-//        startActivity(intent);
-//    }
+    public void goToHighFivePage(View view){
+        Intent intent = new Intent(this,profilePage.class);
+        startActivity(intent);
+    }
+    /*
+     * Changes to the main hug page
+     * should be used to change to the hug page
+     * Called when hug button is clicked
+     */
+    public void goToHugPage(View view){
+        Intent intent = new Intent(this,profilePage.class);
+        startActivity(intent);
+    }
     /*
      * Changes to the main Motivation page
      * should be used to change to the Motivation page
@@ -51,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
      * Called when talk button is clicked
      */
     public void goToTalkPage(View view){
-        Intent intent = new Intent(this,TalkActivity.class);
+        Intent intent = new Intent(this,profilePage.class);
         startActivity(intent);
     }
     /*
@@ -60,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
      * Called when Connect button is clicked
      */
     public void goToConnectPage(View view){
-        Intent intent = new Intent(this,ConnectActivity.class);
+        Intent intent = new Intent(this,profilePage.class);
         startActivity(intent);
     }
     /*
