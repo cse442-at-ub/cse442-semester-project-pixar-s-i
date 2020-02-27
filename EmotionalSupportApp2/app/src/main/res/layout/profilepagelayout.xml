@@ -28,11 +28,11 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_x="136dp"
+        android:layout_width="157dp"
+        android:layout_height="141dp"
+        android:layout_x="125dp"
         android:layout_y="88dp"
-        tools:src="@tools:sample/avatars" />
+        android:src="@tools:sample/avatars" />
 
     <TextView
         android:id="@+id/textView"
@@ -130,8 +130,17 @@
         android:layout_x="157dp"
         android:layout_y="526dp"
         android:background="@color/colorPrimary"
-        android:onClick="backToHome"
         android:text="Back"
+        android:textSize="17dp" />
+
+    <Button
+        android:id="@+id/SettingsBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="31dp"
+        android:layout_x="159dp"
+        android:layout_y="578dp"
+        android:background="@color/colorPrimary"
+        android:text="Settings"
         android:textSize="17dp" />
 
     <Button

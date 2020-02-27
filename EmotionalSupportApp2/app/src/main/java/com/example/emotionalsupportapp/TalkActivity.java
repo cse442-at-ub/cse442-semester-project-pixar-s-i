@@ -19,7 +19,7 @@ public class TalkActivity extends AppCompatActivity {
      * Called when high five button is clicked
      */
     public void goToHomePage(View view){
-        Intent intent = new Intent(this,profilePage.class);
+        Intent intent = new Intent(this,MainActivity.class);
         startActivity(intent);
     }
 }

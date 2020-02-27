@@ -650,8 +650,10 @@ id E_MailTB
 id FUNCTION
 id LogoImage
 id META
+id ProfileBtn
 id SHIFT
 id SYM
+id SettingsBtn
 id action_bar
 id action_bar_activity_content
 id action_bar_container
@@ -685,6 +687,8 @@ id button
 id button2
 id button3
 id button4
+id button5
+id button8
 id buttonPanel
 id center
 id center_horizontal
@@ -832,7 +836,6 @@ id title
 id titleDividerNoCustom
 id title_template
 id top
-id topNavBar
 id topPanel
 id turnOffAllNotifications
 id uniform
@@ -877,8 +880,10 @@ layout abc_select_dialog_material
 layout abc_tooltip
 layout activity_connect
 layout activity_high_five
+layout activity_high_five_request
 layout activity_history
 layout activity_hug
+layout activity_hug_request
 layout activity_login
 layout activity_main
 layout activity_notifications
