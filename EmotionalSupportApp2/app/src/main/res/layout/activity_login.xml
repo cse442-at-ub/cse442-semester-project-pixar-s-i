@@ -15,7 +15,9 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:onClick="openMain"
+        />
 
     <EditText
         android:id="@+id/E_MailTB"
@@ -52,7 +54,9 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/signInButton"
-        app:layout_constraintVertical_bias="0.654" />
+        app:layout_constraintVertical_bias="0.654"
+        android:onClick="openSignUp"
+        />
 
     <ImageView
         android:id="@+id/LogoImage"

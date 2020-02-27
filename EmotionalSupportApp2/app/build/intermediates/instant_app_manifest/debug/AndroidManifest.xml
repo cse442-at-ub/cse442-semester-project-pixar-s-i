@@ -19,8 +19,14 @@
         android:supportsRtl="true"
         android:testOnly="true"
         android:theme="@style/AppTheme" >
+        <activity android:name="com.example.emotionalsupportapp.HugActivity" />
+        <activity android:name="com.example.emotionalsupportapp.HighFiveActivity" />
         <activity android:name="com.example.emotionalsupportapp.profilePage" />
-        <activity android:name="com.example.emotionalsupportapp.MainActivity" >
+        <activity android:name="com.example.emotionalsupportapp.SignUpActivity" />
+        <activity android:name="com.example.emotionalsupportapp.MainActivity" />
+        <activity android:name="com.example.emotionalsupportapp.ConnectActivity" />
+        <activity android:name="com.example.emotionalsupportapp.TalkActivity" />
+        <activity android:name="com.example.emotionalsupportapp.LoginActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
