@@ -653,7 +653,7 @@ id META
 id ProfileBtn
 id SHIFT
 id SYM
-id SettingsBtn
+id SettingBtn
 id action_bar
 id action_bar_activity_content
 id action_bar_container
@@ -750,6 +750,7 @@ id imageView5
 id imageView6
 id imageView7
 id imageView8
+id imageView9
 id info
 id invisible
 id italic

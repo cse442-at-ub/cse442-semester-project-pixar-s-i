@@ -43,7 +43,7 @@ public class profilePage extends Activity {
                 startActivity(intent);
             }
         });
-        SettingsBtn =  findViewById(R.id.backButton);
+        SettingsBtn =  findViewById(R.id.SettingBtn);
         SettingsBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view){
