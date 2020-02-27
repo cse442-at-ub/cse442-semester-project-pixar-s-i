@@ -15,18 +15,18 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/topNavBar"
+        <Button
+            android:id="@+id/ProfileBtn"
+            style="?android:attr/borderlessButtonStyle"
 
             android:layout_width="match_parent"
-            android:layout_height="39dp"
-            android:layout_weight="0.1"
-            android:background="?attr/colorPrimary"
-            android:elevation="4dp"
-            android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+            android:layout_height="0dp"
+            android:layout_weight="0.15"
+            android:background="#142175"
+            android:onClick="goToProfilePage"
+            android:text="Profile"
 
-
+            android:textSize="20sp" />
         <Button
             android:id="@+id/highFiveBtn"
             style="?android:attr/borderlessButtonStyle"

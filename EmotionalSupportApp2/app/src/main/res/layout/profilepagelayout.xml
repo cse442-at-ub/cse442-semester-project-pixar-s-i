@@ -28,11 +28,12 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_x="136dp"
+        android:layout_width="157dp"
+        android:layout_height="141dp"
+        android:layout_x="125dp"
         android:layout_y="88dp"
-        tools:src="@tools:sample/avatars" />
+        tools:src="@tools:sample/avatars"
+        />
 
     <TextView
         android:id="@+id/textView"
@@ -125,14 +126,22 @@
 
     <Button
         android:id="@+id/backButton"
-        android:layout_width="wrap_content"
+        android:layout_width="102dp"
         android:layout_height="31dp"
         android:layout_x="157dp"
         android:layout_y="526dp"
         android:background="@color/colorPrimary"
-        android:onClick="backToHome"
         android:text="Back"
         android:textSize="17dp" />
+
+    <Button
+        android:id="@+id/SettingBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_x="167dp"
+        android:layout_y="586dp"
+        android:background="@color/colorPrimary"
+        android:text="Settings" />
 
     <Button
         android:id="@+id/changeImage"
@@ -160,5 +169,12 @@
         android:layout_y="487dp"
         android:text="Logout"
         android:textSize="14dp" />
+
+    <ImageView
+        android:id="@+id/imageView9"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_x="139dp"
+        android:layout_y="97dp" />
 
 </AbsoluteLayout>
