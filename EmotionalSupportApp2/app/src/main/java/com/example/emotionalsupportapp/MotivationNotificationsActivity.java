@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.Calendar;
 
@@ -46,8 +47,13 @@ public class MotivationNotificationsActivity extends AppCompatActivity {
 
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-
+                String date = "Turn off until " + month + "/" + dayOfMonth + "/" + year;
+                selectDateTurnOffNotifications.setText(date);
             }
         };
+    }
+
+    public void turnOffNotificationsForever(View view) {
+        Toast.makeText(this, "You have selected turn off Motivation notifications forever", Toast.LENGTH_SHORT).show();
     }
 }
