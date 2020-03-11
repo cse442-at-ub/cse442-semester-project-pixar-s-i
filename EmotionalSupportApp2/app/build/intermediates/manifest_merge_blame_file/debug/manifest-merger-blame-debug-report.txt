@@ -10,85 +10,115 @@
 9        android:targetSdkVersion="28" />
 9-->C:\Users\Winston Mills\Desktop\CSE442-Project\cse442-semester-project-pixar-s-i\EmotionalSupportApp2\app\src\main\AndroidManifest.xml
 10
-11    <application
-11-->C:\Users\Winston Mills\Desktop\CSE442-Project\cse442-semester-project-pixar-s-i\EmotionalSupportApp2\app\src\main\AndroidManifest.xml:5:5-35:19
-12        android:name="com.example.emotionalsupportapp.EmotionalSupport"
-12-->C:\Users\Winston Mills\Desktop\CSE442-Project\cse442-semester-project-pixar-s-i\EmotionalSupportApp2\app\src\main\AndroidManifest.xml:6:9-41
-13        android:allowBackup="true"
-13-->C:\Users\Winston Mills\Desktop\CSE442-Project\cse442-semester-project-pixar-s-i\EmotionalSupportApp2\app\src\main\AndroidManifest.xml:7:9-35
-14        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
-14-->[androidx.core:core:1.0.1] C:\Users\Winston Mills\.gradle\caches\transforms-2\files-2.1\8f8ab13dc8f4e84e14a8bb3d9ac92bc4\core-1.0.1\AndroidManifest.xml:22:18-86
-15        android:debuggable="true"
-16        android:icon="@mipmap/ic_launcher"
-16-->C:\Users\Winston Mills\Desktop\CSE442-Project\cse442-semester-project-pixar-s-i\EmotionalSupportApp2\app\src\main\AndroidManifest.xml:8:9-43
-17        android:label="@string/app_name"
-17-->C:\Users\Winston Mills\Desktop\CSE442-Project\cse442-semester-project-pixar-s-i\EmotionalSupportApp2\app\src\main\AndroidManifest.xml:9:9-41
-18        android:roundIcon="@mipmap/ic_launcher_round"
-18-->C:\Users\Winston Mills\Desktop\CSE442-Project\cse442-semester-project-pixar-s-i\EmotionalSupportApp2\app\src\main\AndroidManifest.xml:10:9-54
-19        android:supportsRtl="true"
-19-->C:\Users\Winston Mills\Desktop\CSE442-Project\cse442-semester-project-pixar-s-i\EmotionalSupportApp2\app\src\main\AndroidManifest.xml:11:9-35
-20        android:testOnly="true"
-21        android:theme="@style/AppTheme" >
-21-->C:\Users\Winston Mills\Desktop\CSE442-Project\cse442-semester-project-pixar-s-i\EmotionalSupportApp2\app\src\main\AndroidManifest.xml:12:9-40
-22        <activity android:name="com.example.emotionalsupportapp.HugRequestActivity" />
-22-->C:\Users\Winston Mills\Desktop\CSE442-Project\cse442-semester-project-pixar-s-i\EmotionalSupportApp2\app\src\main\AndroidManifest.xml:13:9-65
-22-->C:\Users\Winston Mills\Desktop\CSE442-Project\cse442-semester-project-pixar-s-i\EmotionalSupportApp2\app\src\main\AndroidManifest.xml:13:19-53
-23        <activity android:name="com.example.emotionalsupportapp.ChangeImage" />
-23-->C:\Users\Winston Mills\Desktop\CSE442-Project\cse442-semester-project-pixar-s-i\EmotionalSupportApp2\app\src\main\AndroidManifest.xml:14:9-58
-23-->C:\Users\Winston Mills\Desktop\CSE442-Project\cse442-semester-project-pixar-s-i\EmotionalSupportApp2\app\src\main\AndroidManifest.xml:14:19-46
-24        <activity android:name="com.example.emotionalsupportapp.HistoryActivity" />
-24-->C:\Users\Winston Mills\Desktop\CSE442-Project\cse442-semester-project-pixar-s-i\EmotionalSupportApp2\app\src\main\AndroidManifest.xml:15:9-62
-24-->C:\Users\Winston Mills\Desktop\CSE442-Project\cse442-semester-project-pixar-s-i\EmotionalSupportApp2\app\src\main\AndroidManifest.xml:15:19-50
-25        <activity android:name="com.example.emotionalsupportapp.HighFiveRequestActivity" />
-25-->C:\Users\Winston Mills\Desktop\CSE442-Project\cse442-semester-project-pixar-s-i\EmotionalSupportApp2\app\src\main\AndroidManifest.xml:16:9-61
-25-->C:\Users\Winston Mills\Desktop\CSE442-Project\cse442-semester-project-pixar-s-i\EmotionalSupportApp2\app\src\main\AndroidManifest.xml:16:19-58
-26        <activity android:name="com.example.emotionalsupportapp.HugActivity" />
-26-->C:\Users\Winston Mills\Desktop\CSE442-Project\cse442-semester-project-pixar-s-i\EmotionalSupportApp2\app\src\main\AndroidManifest.xml:17:9-49
-26-->C:\Users\Winston Mills\Desktop\CSE442-Project\cse442-semester-project-pixar-s-i\EmotionalSupportApp2\app\src\main\AndroidManifest.xml:17:19-46
-27        <activity android:name="com.example.emotionalsupportapp.HighFiveActivity" />
-27-->C:\Users\Winston Mills\Desktop\CSE442-Project\cse442-semester-project-pixar-s-i\EmotionalSupportApp2\app\src\main\AndroidManifest.xml:18:9-54
-27-->C:\Users\Winston Mills\Desktop\CSE442-Project\cse442-semester-project-pixar-s-i\EmotionalSupportApp2\app\src\main\AndroidManifest.xml:18:19-51
-28        <activity android:name="com.example.emotionalsupportapp.profilePage" />
-28-->C:\Users\Winston Mills\Desktop\CSE442-Project\cse442-semester-project-pixar-s-i\EmotionalSupportApp2\app\src\main\AndroidManifest.xml:19:9-49
-28-->C:\Users\Winston Mills\Desktop\CSE442-Project\cse442-semester-project-pixar-s-i\EmotionalSupportApp2\app\src\main\AndroidManifest.xml:19:19-46
-29        <activity android:name="com.example.emotionalsupportapp.SignUpActivity" />
-29-->C:\Users\Winston Mills\Desktop\CSE442-Project\cse442-semester-project-pixar-s-i\EmotionalSupportApp2\app\src\main\AndroidManifest.xml:20:9-52
-29-->C:\Users\Winston Mills\Desktop\CSE442-Project\cse442-semester-project-pixar-s-i\EmotionalSupportApp2\app\src\main\AndroidManifest.xml:20:19-49
-30        <activity android:name="com.example.emotionalsupportapp.MainActivity" />
-30-->C:\Users\Winston Mills\Desktop\CSE442-Project\cse442-semester-project-pixar-s-i\EmotionalSupportApp2\app\src\main\AndroidManifest.xml:21:9-50
-30-->C:\Users\Winston Mills\Desktop\CSE442-Project\cse442-semester-project-pixar-s-i\EmotionalSupportApp2\app\src\main\AndroidManifest.xml:21:19-47
-31        <activity android:name="com.example.emotionalsupportapp.ConnectActivity" />
-31-->C:\Users\Winston Mills\Desktop\CSE442-Project\cse442-semester-project-pixar-s-i\EmotionalSupportApp2\app\src\main\AndroidManifest.xml:22:9-53
-31-->C:\Users\Winston Mills\Desktop\CSE442-Project\cse442-semester-project-pixar-s-i\EmotionalSupportApp2\app\src\main\AndroidManifest.xml:22:19-50
-32        <activity android:name="com.example.emotionalsupportapp.TalkActivity" />
-32-->C:\Users\Winston Mills\Desktop\CSE442-Project\cse442-semester-project-pixar-s-i\EmotionalSupportApp2\app\src\main\AndroidManifest.xml:23:9-50
-32-->C:\Users\Winston Mills\Desktop\CSE442-Project\cse442-semester-project-pixar-s-i\EmotionalSupportApp2\app\src\main\AndroidManifest.xml:23:19-47
-33        <activity android:name="com.example.emotionalsupportapp.MotivationActivity" />
-33-->C:\Users\Winston Mills\Desktop\CSE442-Project\cse442-semester-project-pixar-s-i\EmotionalSupportApp2\app\src\main\AndroidManifest.xml:24:9-65
-33-->C:\Users\Winston Mills\Desktop\CSE442-Project\cse442-semester-project-pixar-s-i\EmotionalSupportApp2\app\src\main\AndroidManifest.xml:24:19-53
-34        <activity android:name="com.example.emotionalsupportapp.NotificationsActivity" />
-34-->C:\Users\Winston Mills\Desktop\CSE442-Project\cse442-semester-project-pixar-s-i\EmotionalSupportApp2\app\src\main\AndroidManifest.xml:25:9-68
-34-->C:\Users\Winston Mills\Desktop\CSE442-Project\cse442-semester-project-pixar-s-i\EmotionalSupportApp2\app\src\main\AndroidManifest.xml:25:19-56
-35        <activity android:name="com.example.emotionalsupportapp.SettingsActivity" />
-35-->C:\Users\Winston Mills\Desktop\CSE442-Project\cse442-semester-project-pixar-s-i\EmotionalSupportApp2\app\src\main\AndroidManifest.xml:26:9-63
-35-->C:\Users\Winston Mills\Desktop\CSE442-Project\cse442-semester-project-pixar-s-i\EmotionalSupportApp2\app\src\main\AndroidManifest.xml:26:19-51
-36        <activity android:name="com.example.emotionalsupportapp.SignUpPictureActivity" />
-36-->C:\Users\Winston Mills\Desktop\CSE442-Project\cse442-semester-project-pixar-s-i\EmotionalSupportApp2\app\src\main\AndroidManifest.xml:27:9-68
-36-->C:\Users\Winston Mills\Desktop\CSE442-Project\cse442-semester-project-pixar-s-i\EmotionalSupportApp2\app\src\main\AndroidManifest.xml:27:19-56
-37        <activity android:name="com.example.emotionalsupportapp.LoginActivity" >
-37-->C:\Users\Winston Mills\Desktop\CSE442-Project\cse442-semester-project-pixar-s-i\EmotionalSupportApp2\app\src\main\AndroidManifest.xml:28:9-34:20
-37-->C:\Users\Winston Mills\Desktop\CSE442-Project\cse442-semester-project-pixar-s-i\EmotionalSupportApp2\app\src\main\AndroidManifest.xml:28:19-48
-38            <intent-filter>
-38-->C:\Users\Winston Mills\Desktop\CSE442-Project\cse442-semester-project-pixar-s-i\EmotionalSupportApp2\app\src\main\AndroidManifest.xml:29:13-33:29
-39                <action android:name="android.intent.action.MAIN" />
-39-->C:\Users\Winston Mills\Desktop\CSE442-Project\cse442-semester-project-pixar-s-i\EmotionalSupportApp2\app\src\main\AndroidManifest.xml:30:17-69
-39-->C:\Users\Winston Mills\Desktop\CSE442-Project\cse442-semester-project-pixar-s-i\EmotionalSupportApp2\app\src\main\AndroidManifest.xml:30:25-66
-40
-41                <category android:name="android.intent.category.LAUNCHER" />
-41-->C:\Users\Winston Mills\Desktop\CSE442-Project\cse442-semester-project-pixar-s-i\EmotionalSupportApp2\app\src\main\AndroidManifest.xml:32:17-77
-41-->C:\Users\Winston Mills\Desktop\CSE442-Project\cse442-semester-project-pixar-s-i\EmotionalSupportApp2\app\src\main\AndroidManifest.xml:32:27-74
-42            </intent-filter>
-43        </activity>
-44    </application>
-45
-46</manifest>
+11    <uses-permission android:name="android.permission.INTERNET" />
+11-->C:\Users\Winston Mills\Desktop\CSE442-Project\cse442-semester-project-pixar-s-i\EmotionalSupportApp2\app\src\main\AndroidManifest.xml:5:5-83
+11-->C:\Users\Winston Mills\Desktop\CSE442-Project\cse442-semester-project-pixar-s-i\EmotionalSupportApp2\app\src\main\AndroidManifest.xml:5:22-64
+12    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+12-->C:\Users\Winston Mills\Desktop\CSE442-Project\cse442-semester-project-pixar-s-i\EmotionalSupportApp2\app\src\main\AndroidManifest.xml:6:5-95
+12-->C:\Users\Winston Mills\Desktop\CSE442-Project\cse442-semester-project-pixar-s-i\EmotionalSupportApp2\app\src\main\AndroidManifest.xml:6:22-76
+13
+14    <application
+14-->C:\Users\Winston Mills\Desktop\CSE442-Project\cse442-semester-project-pixar-s-i\EmotionalSupportApp2\app\src\main\AndroidManifest.xml:7:5-39:19
+15        android:name="com.example.emotionalsupportapp.EmotionalSupport"
+15-->C:\Users\Winston Mills\Desktop\CSE442-Project\cse442-semester-project-pixar-s-i\EmotionalSupportApp2\app\src\main\AndroidManifest.xml:8:9-41
+16        android:allowBackup="true"
+16-->C:\Users\Winston Mills\Desktop\CSE442-Project\cse442-semester-project-pixar-s-i\EmotionalSupportApp2\app\src\main\AndroidManifest.xml:9:9-35
+17        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+17-->[androidx.core:core:1.0.1] C:\Users\Winston Mills\.gradle\caches\transforms-2\files-2.1\8f8ab13dc8f4e84e14a8bb3d9ac92bc4\core-1.0.1\AndroidManifest.xml:22:18-86
+18        android:debuggable="true"
+19        android:icon="@mipmap/ic_launcher"
+19-->C:\Users\Winston Mills\Desktop\CSE442-Project\cse442-semester-project-pixar-s-i\EmotionalSupportApp2\app\src\main\AndroidManifest.xml:10:9-43
+20        android:label="@string/app_name"
+20-->C:\Users\Winston Mills\Desktop\CSE442-Project\cse442-semester-project-pixar-s-i\EmotionalSupportApp2\app\src\main\AndroidManifest.xml:11:9-41
+21        android:roundIcon="@mipmap/ic_launcher_round"
+21-->C:\Users\Winston Mills\Desktop\CSE442-Project\cse442-semester-project-pixar-s-i\EmotionalSupportApp2\app\src\main\AndroidManifest.xml:12:9-54
+22        android:supportsRtl="true"
+22-->C:\Users\Winston Mills\Desktop\CSE442-Project\cse442-semester-project-pixar-s-i\EmotionalSupportApp2\app\src\main\AndroidManifest.xml:13:9-35
+23        android:testOnly="true"
+24        android:theme="@style/AppTheme" >
+24-->C:\Users\Winston Mills\Desktop\CSE442-Project\cse442-semester-project-pixar-s-i\EmotionalSupportApp2\app\src\main\AndroidManifest.xml:14:9-40
+25        <activity android:name="com.example.emotionalsupportapp.HighFiveLocationActivity" />
+25-->C:\Users\Winston Mills\Desktop\CSE442-Project\cse442-semester-project-pixar-s-i\EmotionalSupportApp2\app\src\main\AndroidManifest.xml:15:9-71
+25-->C:\Users\Winston Mills\Desktop\CSE442-Project\cse442-semester-project-pixar-s-i\EmotionalSupportApp2\app\src\main\AndroidManifest.xml:15:19-59
+26        <activity android:name="com.example.emotionalsupportapp.HugRequestActivity" />
+26-->C:\Users\Winston Mills\Desktop\CSE442-Project\cse442-semester-project-pixar-s-i\EmotionalSupportApp2\app\src\main\AndroidManifest.xml:16:9-56
+26-->C:\Users\Winston Mills\Desktop\CSE442-Project\cse442-semester-project-pixar-s-i\EmotionalSupportApp2\app\src\main\AndroidManifest.xml:16:19-53
+27        <activity android:name="com.example.emotionalsupportapp.ChangeImage" />
+27-->C:\Users\Winston Mills\Desktop\CSE442-Project\cse442-semester-project-pixar-s-i\EmotionalSupportApp2\app\src\main\AndroidManifest.xml:17:9-49
+27-->C:\Users\Winston Mills\Desktop\CSE442-Project\cse442-semester-project-pixar-s-i\EmotionalSupportApp2\app\src\main\AndroidManifest.xml:17:19-46
+28        <activity android:name="com.example.emotionalsupportapp.HistoryActivity" />
+28-->C:\Users\Winston Mills\Desktop\CSE442-Project\cse442-semester-project-pixar-s-i\EmotionalSupportApp2\app\src\main\AndroidManifest.xml:18:9-53
+28-->C:\Users\Winston Mills\Desktop\CSE442-Project\cse442-semester-project-pixar-s-i\EmotionalSupportApp2\app\src\main\AndroidManifest.xml:18:19-50
+29        <activity android:name="com.example.emotionalsupportapp.HighFiveRequestActivity" />
+29-->C:\Users\Winston Mills\Desktop\CSE442-Project\cse442-semester-project-pixar-s-i\EmotionalSupportApp2\app\src\main\AndroidManifest.xml:19:9-61
+29-->C:\Users\Winston Mills\Desktop\CSE442-Project\cse442-semester-project-pixar-s-i\EmotionalSupportApp2\app\src\main\AndroidManifest.xml:19:19-58
+30        <activity android:name="com.example.emotionalsupportapp.HugActivity" />
+30-->C:\Users\Winston Mills\Desktop\CSE442-Project\cse442-semester-project-pixar-s-i\EmotionalSupportApp2\app\src\main\AndroidManifest.xml:20:9-49
+30-->C:\Users\Winston Mills\Desktop\CSE442-Project\cse442-semester-project-pixar-s-i\EmotionalSupportApp2\app\src\main\AndroidManifest.xml:20:19-46
+31        <activity android:name="com.example.emotionalsupportapp.HighFiveActivity" />
+31-->C:\Users\Winston Mills\Desktop\CSE442-Project\cse442-semester-project-pixar-s-i\EmotionalSupportApp2\app\src\main\AndroidManifest.xml:21:9-54
+31-->C:\Users\Winston Mills\Desktop\CSE442-Project\cse442-semester-project-pixar-s-i\EmotionalSupportApp2\app\src\main\AndroidManifest.xml:21:19-51
+32        <activity android:name="com.example.emotionalsupportapp.profilePage" />
+32-->C:\Users\Winston Mills\Desktop\CSE442-Project\cse442-semester-project-pixar-s-i\EmotionalSupportApp2\app\src\main\AndroidManifest.xml:22:9-49
+32-->C:\Users\Winston Mills\Desktop\CSE442-Project\cse442-semester-project-pixar-s-i\EmotionalSupportApp2\app\src\main\AndroidManifest.xml:22:19-46
+33        <activity android:name="com.example.emotionalsupportapp.SignUpActivity" />
+33-->C:\Users\Winston Mills\Desktop\CSE442-Project\cse442-semester-project-pixar-s-i\EmotionalSupportApp2\app\src\main\AndroidManifest.xml:23:9-52
+33-->C:\Users\Winston Mills\Desktop\CSE442-Project\cse442-semester-project-pixar-s-i\EmotionalSupportApp2\app\src\main\AndroidManifest.xml:23:19-49
+34        <activity android:name="com.example.emotionalsupportapp.MainActivity" />
+34-->C:\Users\Winston Mills\Desktop\CSE442-Project\cse442-semester-project-pixar-s-i\EmotionalSupportApp2\app\src\main\AndroidManifest.xml:24:9-50
+34-->C:\Users\Winston Mills\Desktop\CSE442-Project\cse442-semester-project-pixar-s-i\EmotionalSupportApp2\app\src\main\AndroidManifest.xml:24:19-47
+35        <activity android:name="com.example.emotionalsupportapp.ConnectActivity" />
+35-->C:\Users\Winston Mills\Desktop\CSE442-Project\cse442-semester-project-pixar-s-i\EmotionalSupportApp2\app\src\main\AndroidManifest.xml:25:9-53
+35-->C:\Users\Winston Mills\Desktop\CSE442-Project\cse442-semester-project-pixar-s-i\EmotionalSupportApp2\app\src\main\AndroidManifest.xml:25:19-50
+36        <activity android:name="com.example.emotionalsupportapp.TalkActivity" />
+36-->C:\Users\Winston Mills\Desktop\CSE442-Project\cse442-semester-project-pixar-s-i\EmotionalSupportApp2\app\src\main\AndroidManifest.xml:26:9-50
+36-->C:\Users\Winston Mills\Desktop\CSE442-Project\cse442-semester-project-pixar-s-i\EmotionalSupportApp2\app\src\main\AndroidManifest.xml:26:19-47
+37        <activity android:name="com.example.emotionalsupportapp.MotivationActivity" />
+37-->C:\Users\Winston Mills\Desktop\CSE442-Project\cse442-semester-project-pixar-s-i\EmotionalSupportApp2\app\src\main\AndroidManifest.xml:27:9-56
+37-->C:\Users\Winston Mills\Desktop\CSE442-Project\cse442-semester-project-pixar-s-i\EmotionalSupportApp2\app\src\main\AndroidManifest.xml:27:19-53
+38        <activity android:name="com.example.emotionalsupportapp.NotificationsActivity" />
+38-->C:\Users\Winston Mills\Desktop\CSE442-Project\cse442-semester-project-pixar-s-i\EmotionalSupportApp2\app\src\main\AndroidManifest.xml:28:9-59
+38-->C:\Users\Winston Mills\Desktop\CSE442-Project\cse442-semester-project-pixar-s-i\EmotionalSupportApp2\app\src\main\AndroidManifest.xml:28:19-56
+39        <activity android:name="com.example.emotionalsupportapp.SettingsActivity" />
+39-->C:\Users\Winston Mills\Desktop\CSE442-Project\cse442-semester-project-pixar-s-i\EmotionalSupportApp2\app\src\main\AndroidManifest.xml:29:9-54
+39-->C:\Users\Winston Mills\Desktop\CSE442-Project\cse442-semester-project-pixar-s-i\EmotionalSupportApp2\app\src\main\AndroidManifest.xml:29:19-51
+40        <activity android:name="com.example.emotionalsupportapp.SignUpPictureActivity" />
+40-->C:\Users\Winston Mills\Desktop\CSE442-Project\cse442-semester-project-pixar-s-i\EmotionalSupportApp2\app\src\main\AndroidManifest.xml:30:9-59
+40-->C:\Users\Winston Mills\Desktop\CSE442-Project\cse442-semester-project-pixar-s-i\EmotionalSupportApp2\app\src\main\AndroidManifest.xml:30:19-56
+41        <activity android:name="com.example.emotionalsupportapp.LoginActivity" >
+41-->C:\Users\Winston Mills\Desktop\CSE442-Project\cse442-semester-project-pixar-s-i\EmotionalSupportApp2\app\src\main\AndroidManifest.xml:31:9-37:20
+41-->C:\Users\Winston Mills\Desktop\CSE442-Project\cse442-semester-project-pixar-s-i\EmotionalSupportApp2\app\src\main\AndroidManifest.xml:31:19-48
+42            <intent-filter>
+42-->C:\Users\Winston Mills\Desktop\CSE442-Project\cse442-semester-project-pixar-s-i\EmotionalSupportApp2\app\src\main\AndroidManifest.xml:32:13-36:29
+43                <action android:name="android.intent.action.MAIN" />
+43-->C:\Users\Winston Mills\Desktop\CSE442-Project\cse442-semester-project-pixar-s-i\EmotionalSupportApp2\app\src\main\AndroidManifest.xml:33:17-69
+43-->C:\Users\Winston Mills\Desktop\CSE442-Project\cse442-semester-project-pixar-s-i\EmotionalSupportApp2\app\src\main\AndroidManifest.xml:33:25-66
+44
+45                <category android:name="android.intent.category.LAUNCHER" />
+45-->C:\Users\Winston Mills\Desktop\CSE442-Project\cse442-semester-project-pixar-s-i\EmotionalSupportApp2\app\src\main\AndroidManifest.xml:35:17-77
+45-->C:\Users\Winston Mills\Desktop\CSE442-Project\cse442-semester-project-pixar-s-i\EmotionalSupportApp2\app\src\main\AndroidManifest.xml:35:27-74
+46            </intent-filter>
+47        </activity>
+48
+49        <service android:name="com.example.emotionalsupportapp.LocationService" />
+49-->C:\Users\Winston Mills\Desktop\CSE442-Project\cse442-semester-project-pixar-s-i\EmotionalSupportApp2\app\src\main\AndroidManifest.xml:38:9-60
+49-->C:\Users\Winston Mills\Desktop\CSE442-Project\cse442-semester-project-pixar-s-i\EmotionalSupportApp2\app\src\main\AndroidManifest.xml:38:18-49
+50
+51        <activity
+51-->[com.google.android.gms:play-services-base:11.8.0] C:\Users\Winston Mills\.gradle\caches\transforms-2\files-2.1\ba5ff0bcb974d456a93791fdbe9c242f\jetified-play-services-base-11.8.0\AndroidManifest.xml:23:9-26:75
+52            android:name="com.google.android.gms.common.api.GoogleApiActivity"
+52-->[com.google.android.gms:play-services-base:11.8.0] C:\Users\Winston Mills\.gradle\caches\transforms-2\files-2.1\ba5ff0bcb974d456a93791fdbe9c242f\jetified-play-services-base-11.8.0\AndroidManifest.xml:24:13-79
+53            android:exported="false"
+53-->[com.google.android.gms:play-services-base:11.8.0] C:\Users\Winston Mills\.gradle\caches\transforms-2\files-2.1\ba5ff0bcb974d456a93791fdbe9c242f\jetified-play-services-base-11.8.0\AndroidManifest.xml:25:13-37
+54            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+54-->[com.google.android.gms:play-services-base:11.8.0] C:\Users\Winston Mills\.gradle\caches\transforms-2\files-2.1\ba5ff0bcb974d456a93791fdbe9c242f\jetified-play-services-base-11.8.0\AndroidManifest.xml:26:13-72
+55
+56        <meta-data
+56-->[com.google.android.gms:play-services-basement:11.8.0] C:\Users\Winston Mills\.gradle\caches\transforms-2\files-2.1\f904d7ec195a4cb4bf2c1aa061e0a435\jetified-play-services-basement-11.8.0\AndroidManifest.xml:23:9-25:69
+57            android:name="com.google.android.gms.version"
+57-->[com.google.android.gms:play-services-basement:11.8.0] C:\Users\Winston Mills\.gradle\caches\transforms-2\files-2.1\f904d7ec195a4cb4bf2c1aa061e0a435\jetified-play-services-basement-11.8.0\AndroidManifest.xml:24:13-58
+58            android:value="@integer/google_play_services_version" />
+58-->[com.google.android.gms:play-services-basement:11.8.0] C:\Users\Winston Mills\.gradle\caches\transforms-2\files-2.1\f904d7ec195a4cb4bf2c1aa061e0a435\jetified-play-services-basement-11.8.0\AndroidManifest.xml:25:13-66
+59    </application>
+60
+61</manifest>
