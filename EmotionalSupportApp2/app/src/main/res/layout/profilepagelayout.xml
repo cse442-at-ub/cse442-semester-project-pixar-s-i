@@ -15,6 +15,7 @@
         android:layout_x="153dp"
         android:layout_y="226dp"
         android:text="John Smith"
+
         android:textSize="17dp" />
 
     <TextView
