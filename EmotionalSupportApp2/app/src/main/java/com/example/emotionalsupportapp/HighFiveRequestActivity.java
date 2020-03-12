@@ -18,6 +18,8 @@ import androidx.appcompat.app.AppCompatActivity;
 public class HighFiveRequestActivity extends AppCompatActivity {
         private TextView lat;
         private TextView lon;
+        private double latit;
+        private double longit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,8 +66,8 @@ public class HighFiveRequestActivity extends AppCompatActivity {
         };
     }
         public void returnToMain(View view){
-            Intent returnToMainIntent = new Intent(this, MainActivity.class);
-            startActivity(returnToMainIntent);
+        Intent returnToMainIntent = new Intent(this, MainActivity.class);
+        startActivity(returnToMainIntent);
     }
 
     /*
@@ -81,9 +83,20 @@ public class HighFiveRequestActivity extends AppCompatActivity {
             if(intent.getAction().equals("ACT_LOC")){
                 double latitude = intent.getDoubleExtra("latitude",0f);
                 double longitude = intent.getDoubleExtra("longitude",0f);
+                latit  =  latitude;
+                longit = longitude;
                 lat.setText("Latitude: "+ latitude);
                 lon.setText("Longitude: " +longitude);
             }
         }
     }
+
+
+    public void volunteerAndLocationInfo (View view){
+        Intent volunteerAndLocationInfo_ = new Intent(this, VolunteerAndLocationInfoActivity.class);
+        volunteerAndLocationInfo_.putExtra("lat", latit);
+        volunteerAndLocationInfo_.putExtra("lon",longit);
+        startActivity(volunteerAndLocationInfo_);
+    }
+
 }

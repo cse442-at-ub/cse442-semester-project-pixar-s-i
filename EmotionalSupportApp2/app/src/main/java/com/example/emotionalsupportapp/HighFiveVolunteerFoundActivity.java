@@ -13,8 +13,8 @@ public class HighFiveVolunteerFoundActivity extends AppCompatActivity {
         setContentView(R.layout.activity_high_five_volunteer_found);
     }
 
-    public void rateVolunteer(View view){
-        Intent rate = new Intent(this, HighFiveRatingActivity.class);
-        startActivity(rate);
-    }
+//    public void rateVolunteer(View view){
+//        Intent rate = new Intent(this, HighFiveRatingActivity.class);
+//        startActivity(rate);
+//    }
 }
