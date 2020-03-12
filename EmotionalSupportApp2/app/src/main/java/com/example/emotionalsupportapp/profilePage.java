@@ -37,6 +37,7 @@ public class profilePage extends Activity {
         });
         BackBtn =  findViewById(R.id.backButton);
         BackBtn.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View view){
                 Intent intent = new Intent(profilePage.this,MainActivity.class);
