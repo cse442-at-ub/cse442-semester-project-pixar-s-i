@@ -2,6 +2,7 @@ package com.example.emotionalsupportapp;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,12 +35,14 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.username.setText(username.get(position));
-
-        holder.parent_layout.setOnClickListener(new View.OnClickListener() {
+        final String current_username = username.get(position);
+        holder.username.setText(current_username);
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent = new Intent(mContext, MessageActivity.class);
+                intent.putExtra("username", current_username);
+                mContext.startActivity(intent);
             }
         });
     }
@@ -57,7 +60,6 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
             super(itemView);
 
             username = itemView.findViewById(R.id.username);
-            parent_layout = itemView.findViewById(R.id.parent_layout);
         }
     }
 }
