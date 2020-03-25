@@ -34,8 +34,8 @@ public class LocationService extends Service {
             //Location Change method
             public void onLocationResult(LocationResult locationResult) {
                 super.onLocationResult(locationResult);
-                Log.d("myLog","Lat is: " + locationResult.getLastLocation().getLatitude() + ", "
-                        + "Long is: " + locationResult.getLastLocation().getLongitude());
+//                Log.d("myLog","Lat is: " + locationResult.getLastLocation().getLatitude() + ", "
+//                        + "Long is: " + locationResult.getLastLocation().getLongitude());
 
                 //BroadCast(Pass) Location to be used in High Five and Hug Activity
                 Intent intent = new Intent("ACT_LOC");

@@ -2,8 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.emotionalsupportapp">
 
-    <uses-permission android:name="android.permission.INTERNET"></uses-permission>
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"></uses-permission>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
     <application
         android:name=".EmotionalSupport"
         android:allowBackup="true"
@@ -12,7 +13,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".HighFiveLocationActivity"></activity>
+        <service
+            android:name=".NotificationHandling"
+            android:enabled="true"
+            android:exported="true">
+
+        </service>
+
+        <activity android:name=".HighFiveLocationActivity" />
         <activity android:name=".HugRequestActivity" />
         <activity android:name=".ChangeImage" />
         <activity android:name=".HistoryActivity" />
@@ -35,7 +43,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <service android:name=".LocationService"></service>
+
+        <service android:name=".LocationService" />
     </application>
 
 </manifest>
