@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
+import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -14,89 +15,82 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.fragment.app.FragmentActivity;
 
-public class HighFiveRequestActivity extends AppCompatActivity {
-        private TextView lat;
-        private TextView lon;
-        private double latit;
-        private double longit;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+
+public class HighFiveRequestActivity extends FragmentActivity implements OnMapReadyCallback {
+
+    Location currentLocation;
+    FusedLocationProviderClient fusedLocationProviderClient;
+    private static final int REQUEST_CODE = 101;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_high_five_request);
-        lon = findViewById(R.id.lon);
-        lat = findViewById(R.id.lat);
-        if (Build.VERSION.SDK_INT >= 23) {
-            //Ask for permission to get location data
-            if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                //Request location
-                requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
+        startLocationService();
 
-            } else {
-                //Ask for permission
-                startLocationService();
-            }
-
-        } else {
-            //Start Location Service if no permission needed
-        }
     }
+
     //Method to Start location services
-    void startLocationService(){
-        LocationBroadcastReceiver receiver = new LocationBroadcastReceiver();
-        IntentFilter filter = new IntentFilter("ACT_LOC");
-        registerReceiver(receiver,filter);
-        Intent intent = new Intent(HighFiveRequestActivity.this,LocationService.class);
-        startService(intent);
+    void startLocationService() {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
+                ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+        Task<Location> task = fusedLocationProviderClient.getLastLocation();
+        task.addOnSuccessListener(new OnSuccessListener<Location>() {
+            @Override
+            public void onSuccess(Location location) {
+                if(location != null){
+                    currentLocation = location;
+                    SupportMapFragment supportMapFragment = (SupportMapFragment)
+                            getSupportFragmentManager().findFragmentById(R.id.google_map);
+                    supportMapFragment.getMapAsync(HighFiveRequestActivity.this);
 
+                }
+            }
+        });
     }
-    //Check if permission was granted
+
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        LatLng latLng = new LatLng(currentLocation.getLatitude(),currentLocation.getLongitude());
+        MarkerOptions markerOptions = new MarkerOptions().position(latLng)
+                .title("You are Here");
+        googleMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
+        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng,8));
+        googleMap.addMarker(markerOptions);
+    }
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        switch (requestCode){
-            case 1:
-                if(grantResults[0] == PackageManager.PERMISSION_GRANTED){
+        switch(requestCode){
+            case REQUEST_CODE:
+                if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
                     startLocationService();
                 }
-                else{
-//                    Toast.makeText(this,"Cant Find High Fiver without permission",Toast.LENGTH_LONG).show();
-                }
-        };
-    }
-        public void returnToMain(View view){
-        Intent returnToMainIntent = new Intent(this, MainActivity.class);
-        startActivity(returnToMainIntent);
-    }
-
-    /*
-        Gets the location data from the location services
-        This is where the location will be mapped to a specific location on campus
-     */
-    public class LocationBroadcastReceiver extends BroadcastReceiver{
-
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            //Check if action is the one in Location Services
-
-            if(intent.getAction().equals("ACT_LOC")){
-                double latitude = intent.getDoubleExtra("latitude",0f);
-                double longitude = intent.getDoubleExtra("longitude",0f);
-                latit  =  latitude;
-                longit = longitude;
-                lat.setText("Latitude: "+ latitude);
-                lon.setText("Longitude: " +longitude);
-            }
+                break;
         }
     }
-
-
-    public void volunteerAndLocationInfo (View view){
-        Intent volunteerAndLocationInfo_ = new Intent(this, VolunteerAndLocationInfoActivity.class);
-        volunteerAndLocationInfo_.putExtra("lat", latit);
-        volunteerAndLocationInfo_.putExtra("lon",longit);
-        startActivity(volunteerAndLocationInfo_);
-    }
-
 }
