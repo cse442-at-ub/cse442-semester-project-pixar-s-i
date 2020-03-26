@@ -4,10 +4,33 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.VolleyLog;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class LoginActivity extends AppCompatActivity {
+
+    EditText eMail, password;
+
+    String userID = "1";
+    String result = "";
+    String signUpURL = "https://www-student.cse.buffalo.edu/CSE442-542/2020-spring/cse-442e/login.php";
+
+    RequestQueue requestQueue;
 
     private Button signUpLink;
     private Button loggedInLink;
@@ -16,21 +39,7 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-//
-//        signUpLink = (Button) findViewById(R.id.signUpButton);
-//        signUpLink.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                openSignUp(v);
-//            }
-//        });
-//        loggedInLink = (Button) findViewById(R.id.signInButton);
-//        loggedInLink.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                openMain(v);
-//            }
-//        });
+
     }
 
     public void openSignUp(View view) {
@@ -38,7 +47,40 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(intent);
     }
     public void openMain(View view){
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
+        eMail = (EditText) findViewById(R.id.E_MailTB);
+        password = (EditText) findViewById(R.id.passwordTB);
+        String sendLogIn = signUpURL + "/?email=" + eMail.getText() + "&password=" + password.getText();
+        /*
+        requestQueue = Volley.newRequestQueue(getApplicationContext());
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, signUpURL, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
+
+        requestQueue.add(jsonObjectRequest);*/
+        String passer = password.getText().toString();
+        String emailer = eMail.getText().toString();
+        if(passer.equals("tester123") && emailer.equals("testemail@test.com")){
+            result = "ok";
+        }
+        else{
+            result = "failed";
+        }
+
+        Log.d("Creation", result);
+
+        if(result.equals("ok")) {
+            Intent intent = new Intent(this, MainActivity.class);
+            intent.putExtra("EXTRA_USER_ID", userID);
+            startActivity(intent);
+        }
     }
 }
