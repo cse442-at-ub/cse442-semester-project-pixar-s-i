@@ -7,15 +7,15 @@ import android.view.View;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class HugActivity extends AppCompatActivity {
-    int userID;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hug);
 
         String sessionId = getIntent().getStringExtra("EXTRA_USER_ID");
-        userID = 1;
+  
+        notificationManager = NotificationManagerCompat.from(this);
+
     }
 
     public void returnToMain(View view){
