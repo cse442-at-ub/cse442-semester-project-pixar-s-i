@@ -5,12 +5,27 @@ import android.app.NotificationManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+<<<<<<< HEAD
 import android.widget.EditText;
+||||||| aa225b8... Adding Location Services/ Fixing Bugs #97
+import android.widget.Toast;
+=======
+>>>>>>> parent of aa225b8... Adding Location Services/ Fixing Bugs #97
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
+<<<<<<< HEAD
+||||||| aa225b8... Adding Location Services/ Fixing Bugs #97
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.messaging.FirebaseMessaging;
+
+=======
+
+>>>>>>> parent of aa225b8... Adding Location Services/ Fixing Bugs #97
 import static com.example.emotionalsupportapp.EmotionalSupport.CHANNEL_1_ID;
 
 public class HighFiveActivity extends AppCompatActivity {

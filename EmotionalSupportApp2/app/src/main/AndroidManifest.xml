@@ -5,6 +5,7 @@
     <uses-permission android:name="android.permission.CALL_PHONE" />
 
 
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -12,6 +13,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+<<<<<<< HEAD
         <uses-library
             android:name="org.apache.http.legacy"
             android:required="false" />
@@ -21,6 +23,34 @@
         <activity android:name=".MotivationNotificationsActivity" />
         <activity android:name=".HugNotificationsActivity" />
         <activity android:name=".HighFiveNotificationsActivity" />
+||||||| aa225b8... Adding Location Services/ Fixing Bugs #97
+        <activity android:name=".HighFiveVolunteerActivity"></activity>
+
+        <service
+            android:name=".NotificationHandling"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+            </intent-filter>
+        </service>
+
+<!--        <uses-library-->
+<!--            android:name="org.apache.http.legacy"-->
+<!--            android:required="false" />-->
+
+        <activity android:name=".HighFiveLocationActivity" />
+=======
+        <service
+            android:name=".NotificationHandling"
+            android:enabled="true"
+            android:exported="true">
+
+        </service>
+        <uses-library android:name="org.apache.http.legacy" android:required="false"/>
+
+        <activity android:name=".HighFiveLocationActivity" />
+>>>>>>> parent of aa225b8... Adding Location Services/ Fixing Bugs #97
         <activity android:name=".HugRequestActivity" />
         <activity android:name=".ChangeImage" />
         <activity android:name=".HistoryActivity" />
@@ -36,6 +66,15 @@
         <activity android:name=".NotificationsActivity" />
         <activity android:name=".SettingsActivity" />
         <activity android:name=".SignUpPictureActivity" />
+<<<<<<< HEAD
+||||||| aa225b8... Adding Location Services/ Fixing Bugs #97
+        <activity android:name=".VolunteerAndLocationInfoActivity" />
+        <activity android:name=".MissedMeetUpActivity" />
+=======
+        <activity android:name=".VolunteerAndLocationInfoActivity" />
+        <activity android:name=".MissedMeetUpActivity" />
+
+>>>>>>> parent of aa225b8... Adding Location Services/ Fixing Bugs #97
         <activity android:name=".LoginActivity">
         <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -43,6 +82,20 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+<<<<<<< HEAD
+||||||| aa225b8... Adding Location Services/ Fixing Bugs #97
+
+        <service android:name=".LocationService" />
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyBaUPPSTrK4s6N7vgZ9tpGS3uzdfgjDviE" />
+=======
+        <service android:name=".LocationService" />
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyBaUPPSTrK4s6N7vgZ9tpGS3uzdfgjDviE" />
+>>>>>>> parent of aa225b8... Adding Location Services/ Fixing Bugs #97
     </application>
 
 </manifest>
