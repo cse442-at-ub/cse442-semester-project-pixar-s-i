@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -74,15 +75,12 @@ public class LoginActivity extends AppCompatActivity {
             result = "failed";
         }
 
+        Log.d("Creation", result);
 
-
-        if(result == "ok") {
+        if(result.equals("ok")) {
             Intent intent = new Intent(this, MainActivity.class);
             intent.putExtra("EXTRA_USER_ID", userID);
             startActivity(intent);
-        }
-        else if(result == "failed"){
-
         }
     }
 }

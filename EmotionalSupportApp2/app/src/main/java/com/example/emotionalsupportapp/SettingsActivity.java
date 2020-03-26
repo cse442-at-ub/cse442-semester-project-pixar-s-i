@@ -15,7 +15,7 @@ public class SettingsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_settings);
 
         String sessionId = getIntent().getStringExtra("EXTRA_USER_ID");
-        idNum = Integer.getInteger(sessionId);
+        idNum = 1;
     }
 
     public void goToNotifications(View view) {

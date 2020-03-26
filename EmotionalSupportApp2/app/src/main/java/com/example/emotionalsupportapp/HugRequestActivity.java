@@ -15,7 +15,7 @@ public class HugRequestActivity extends AppCompatActivity {
         setContentView(R.layout.activity_hug_request);
 
         String sessionId = getIntent().getStringExtra("EXTRA_USER_ID");
-        userID = Integer.getInteger(sessionId);
+        userID = 1;
     }
     public void returnToMain(View view){
         Intent returnToMainIntent = new Intent(this, MainActivity.class);

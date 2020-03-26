@@ -15,9 +15,15 @@
         <uses-library
             android:name="org.apache.http.legacy"
             android:required="false" />
-        <activity android:name=".HugRequestActivity"></activity>
-        <activity android:name=".ChangeImage"></activity>
-        <activity android:name=".HistoryActivity"></activity>
+        <activity android:name=".MessageActivity"></activity>
+        <activity android:name=".ConnectNotificationsActivity" />
+        <activity android:name=".TalkNotificationsActivity" />
+        <activity android:name=".MotivationNotificationsActivity" />
+        <activity android:name=".HugNotificationsActivity" />
+        <activity android:name=".HighFiveNotificationsActivity" />
+        <activity android:name=".HugRequestActivity" />
+        <activity android:name=".ChangeImage" />
+        <activity android:name=".HistoryActivity" />
         <activity android:name=".HighFiveRequestActivity" />
         <activity android:name=".HugActivity" />
         <activity android:name=".HighFiveActivity" />
@@ -26,12 +32,12 @@
         <activity android:name=".MainActivity" />
         <activity android:name=".ConnectActivity" />
         <activity android:name=".TalkActivity" />
-        <activity android:name=".MotivationActivity"></activity>
-        <activity android:name=".NotificationsActivity"></activity>
-        <activity android:name=".SettingsActivity"></activity>
-        <activity android:name=".SignUpPictureActivity"></activity>
+        <activity android:name=".MotivationActivity" />
+        <activity android:name=".NotificationsActivity" />
+        <activity android:name=".SettingsActivity" />
+        <activity android:name=".SignUpPictureActivity" />
         <activity android:name=".LoginActivity">
-            <intent-filter>
+        <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />

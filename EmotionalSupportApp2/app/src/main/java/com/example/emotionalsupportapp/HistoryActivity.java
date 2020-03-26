@@ -13,6 +13,6 @@ public class HistoryActivity extends AppCompatActivity {
         setContentView(R.layout.activity_history);
 
         String sessionId = getIntent().getStringExtra("EXTRA_USER_ID");
-        userID = Integer.getInteger(sessionId);
+        userID = 1;
     }
 }

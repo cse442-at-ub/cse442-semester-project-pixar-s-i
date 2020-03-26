@@ -14,7 +14,7 @@ public class NotificationsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_notifications);
 
         String sessionId = getIntent().getStringExtra("EXTRA_USER_ID");
-        userID = Integer.getInteger(sessionId);
+        userID = 1;
     }
 
     public void goToHighFiveNotifications(View view) {

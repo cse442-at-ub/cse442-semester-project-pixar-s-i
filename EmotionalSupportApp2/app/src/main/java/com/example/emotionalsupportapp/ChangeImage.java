@@ -16,7 +16,7 @@ public class ChangeImage extends Activity {
         setContentView(R.layout.changeimagelayout);
 
         String sessionId = getIntent().getStringExtra("EXTRA_USER_ID");
-        userID = Integer.getInteger(sessionId);
+        userID = 1;
 
         button = (Button) findViewById(R.id.backButton);
         button.setOnClickListener(new View.OnClickListener() {

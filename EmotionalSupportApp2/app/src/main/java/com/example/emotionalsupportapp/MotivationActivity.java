@@ -12,6 +12,6 @@ public class MotivationActivity extends Activity {
         setContentView(R.layout.motivationlayout);
 
         String sessionId = getIntent().getStringExtra("EXTRA_USER_ID");
-        userID = Integer.getInteger(sessionId);
+        userID = 1;
     }
 }
