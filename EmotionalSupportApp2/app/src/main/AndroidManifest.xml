@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.emotionalsupportapp">
 
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+
     <application
         android:name=".EmotionalSupport"
         android:allowBackup="true"
@@ -10,9 +12,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".HugRequestActivity"></activity>
-        <activity android:name=".ChangeImage"></activity>
-        <activity android:name=".HistoryActivity"></activity>
+        <activity android:name=".MessageActivity"></activity>
+        <activity android:name=".ConnectNotificationsActivity" />
+        <activity android:name=".TalkNotificationsActivity" />
+        <activity android:name=".MotivationNotificationsActivity" />
+        <activity android:name=".HugNotificationsActivity" />
+        <activity android:name=".HighFiveNotificationsActivity" />
+        <activity android:name=".HugRequestActivity" />
+        <activity android:name=".ChangeImage" />
+        <activity android:name=".HistoryActivity" />
         <activity android:name=".HighFiveRequestActivity" />
         <activity android:name=".HugActivity" />
         <activity android:name=".HighFiveActivity" />
@@ -21,10 +29,10 @@
         <activity android:name=".MainActivity" />
         <activity android:name=".ConnectActivity" />
         <activity android:name=".TalkActivity" />
-        <activity android:name=".MotivationActivity"></activity>
-        <activity android:name=".NotificationsActivity"></activity>
-        <activity android:name=".SettingsActivity"></activity>
-        <activity android:name=".SignUpPictureActivity"></activity>
+        <activity android:name=".MotivationActivity" />
+        <activity android:name=".NotificationsActivity" />
+        <activity android:name=".SettingsActivity" />
+        <activity android:name=".SignUpPictureActivity" />
         <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
