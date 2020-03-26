@@ -13,11 +13,45 @@
                         "endOffsets": "151"
                     },
                     "to": {
-                        "startLines": "30",
+                        "startLines": "48",
                         "startColumns": "4",
-                        "startOffsets": "2965",
+                        "startOffsets": "5866",
                         "endColumns": "100",
-                        "endOffsets": "3061"
+                        "endOffsets": "5962"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\Winston Mills\\.gradle\\caches\\transforms-2\\files-2.1\\f904d7ec195a4cb4bf2c1aa061e0a435\\jetified-play-services-basement-11.8.0\\res\\values-fr-rCA\\values.xml",
+                    "from": {
+                        "startLines": "4",
+                        "startColumns": "0",
+                        "startOffsets": "287",
+                        "endColumns": "219",
+                        "endOffsets": "506"
+                    },
+                    "to": {
+                        "startLines": "37",
+                        "startColumns": "4",
+                        "startOffsets": "4100",
+                        "endColumns": "219",
+                        "endOffsets": "4315"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\Winston Mills\\.gradle\\caches\\transforms-2\\files-2.1\\ba5ff0bcb974d456a93791fdbe9c242f\\jetified-play-services-base-11.8.0\\res\\values-fr-rCA\\values.xml",
+                    "from": {
+                        "startLines": "4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20",
+                        "startColumns": "0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0",
+                        "startOffsets": "285,389,601,729,836,1066,1197,1344,1482,1736,1846,2062,2196,2415,2620,2719,2809",
+                        "endColumns": "103,211,127,106,229,130,146,137,253,109,215,133,218,204,98,89,108",
+                        "endOffsets": "388,600,728,835,1065,1196,1343,1481,1735,1845,2061,2195,2414,2619,2718,2808,2917"
+                    },
+                    "to": {
+                        "startLines": "29,30,31,32,33,34,35,36,38,39,40,41,42,43,44,45,46",
+                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
+                        "startOffsets": "2879,2987,3199,3331,3442,3672,3807,3958,4320,4574,4688,4904,5042,5261,5470,5573,5667",
+                        "endColumns": "107,211,131,110,229,134,150,141,253,113,215,137,218,208,102,93,112",
+                        "endOffsets": "2982,3194,3326,3437,3667,3802,3953,4095,4569,4683,4899,5037,5256,5465,5568,5662,5775"
                     }
                 },
                 {
