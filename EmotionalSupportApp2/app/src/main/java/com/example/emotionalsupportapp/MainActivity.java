@@ -8,12 +8,15 @@ import android.view.View;
 import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
+    int userID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        String sessionId = getIntent().getStringExtra("EXTRA_USER_ID");
+        userID = Integer.getInteger(sessionId);
     }
 
     /*
@@ -23,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
      */
     public void goToHighFivePage(View view){
         Intent intent = new Intent(this,HighFiveActivity.class);
+        intent.putExtra("EXTRA_USER_ID", userID);
         startActivity(intent);
     }
     /*
@@ -32,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
      */
     public void goToHugPage(View view){
         Intent intent = new Intent(this,HugActivity.class);
+        intent.putExtra("EXTRA_USER_ID", userID);
         startActivity(intent);
     }
     /*
@@ -41,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
      */
     public void goToMotivationPage(View view){
         Intent intent = new Intent(this,MotivationActivity.class);
+        intent.putExtra("EXTRA_USER_ID", userID);
         startActivity(intent);
     }
     /*
@@ -50,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
      */
     public void goToTalkPage(View view){
         Intent intent = new Intent(this,TalkActivity.class);
+        intent.putExtra("EXTRA_USER_ID", userID);
         startActivity(intent);
     }
     /*
@@ -59,6 +66,7 @@ public class MainActivity extends AppCompatActivity {
      */
     public void goToConnectPage(View view){
         Intent intent = new Intent(this,ConnectActivity.class);
+        intent.putExtra("EXTRA_USER_ID", userID);
         startActivity(intent);
     }
     /*
@@ -68,6 +76,7 @@ public class MainActivity extends AppCompatActivity {
      */
     public void goToProfilePage(View view){
         Intent intent = new Intent(this,profilePage.class);
+        intent.putExtra("EXTRA_USER_ID", userID);
         startActivity(intent);
     }
 }
