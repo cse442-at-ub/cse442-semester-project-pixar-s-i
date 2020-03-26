@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context=".NotificationsActivity">
 
     <Switch
@@ -12,9 +11,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Turn off all notifications"
-        android:textSize="60px"
-        android:layout_weight="1"
-        android:onClick="turnOffAllNotifications"/>
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="167dp" />
 
     <Button
         android:id="@+id/highFiveNotifications"
@@ -22,9 +20,8 @@
         android:layout_height="wrap_content"
         android:onClick="goToHighFiveNotifications"
         android:text="High Five"
-        android:textSize="60px"
-        android:background="#F3E9DC"
-        android:layout_weight="1" />
+        app:layout_constraintTop_toBottomOf="@+id/turnOffAllNotifications"
+        tools:layout_editor_absoluteX="141dp" />
 
     <Button
         android:id="@+id/hugNotifications"
@@ -32,9 +29,8 @@
         android:layout_height="wrap_content"
         android:onClick="goToHugNotifications"
         android:text="Hug"
-        android:textSize="60px"
-        android:background="#FCF6B1"
-        android:layout_weight="1" />
+        app:layout_constraintTop_toBottomOf="@+id/highFiveNotifications"
+        tools:layout_editor_absoluteX="153dp" />
 
     <Button
         android:id="@+id/motivationNotifications"
@@ -42,9 +38,8 @@
         android:layout_height="wrap_content"
         android:onClick="goToMotivationNotifications"
         android:text="Motivation"
-        android:textSize="60px"
-        android:background="#F7B32B"
-        android:layout_weight="1" />
+        app:layout_constraintTop_toBottomOf="@+id/hugNotifications"
+        tools:layout_editor_absoluteX="162dp" />
 
     <Button
         android:id="@+id/talkNotifications"
@@ -52,9 +47,8 @@
         android:layout_height="wrap_content"
         android:onClick="goToTalkNotifications"
         android:text="Talk"
-        android:textSize="60px"
-        android:background="#A4243B"
-        android:layout_weight="1" />
+        app:layout_constraintTop_toBottomOf="@+id/motivationNotifications"
+        tools:layout_editor_absoluteX="164dp" />
 
     <Button
         android:id="@+id/connectNotifications"
@@ -62,7 +56,6 @@
         android:layout_height="wrap_content"
         android:onClick="goToConnectNotifications"
         android:text="Connect"
-        android:textSize="60px"
-        android:background="#80A1C1"
-        android:layout_weight="1" />
-</LinearLayout>
+        app:layout_constraintTop_toBottomOf="@+id/talkNotifications"
+        tools:layout_editor_absoluteX="170dp" />
+</androidx.constraintlayout.widget.ConstraintLayout>
