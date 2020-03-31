@@ -12,4 +12,22 @@
         android:layout_y="18dp"
         android:text="Motivation"
         android:textSize="25dp" />
+
+    <Button
+        android:id="@+id/button6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_x="163dp"
+        android:layout_y="225dp"
+        android:text="search"
+        android:onClick="goToSearchPage"/>
+
+    <Button
+        android:id="@+id/button11"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_x="160dp"
+        android:layout_y="328dp"
+        android:text="accept"
+        android:onClick="goToAcceptPage"/>
 </AbsoluteLayout>

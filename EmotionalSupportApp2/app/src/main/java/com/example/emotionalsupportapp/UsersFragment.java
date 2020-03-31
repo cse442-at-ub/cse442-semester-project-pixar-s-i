@@ -23,12 +23,6 @@ public class UsersFragment extends Fragment {
     private UserAdapter userAdapter;
     private ArrayList<String> users;
 
-
-    public UsersFragment() {
-        // Required empty public constructor
-    }
-
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
