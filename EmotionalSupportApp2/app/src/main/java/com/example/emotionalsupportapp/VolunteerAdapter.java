@@ -6,7 +6,7 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.RelativeLayout;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -15,28 +15,28 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 
-public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
+public class VolunteerAdapter extends RecyclerView.Adapter<VolunteerAdapter.ViewHolder> {
 
-    private ArrayList<String> username;
+    private ArrayList<String> users;
     private Context mContext;
 
-    public UserAdapter(ArrayList<String> username, Context mContext){
-        this.username = username;
+    public VolunteerAdapter(ArrayList<String> users, Context mContext){
+        this.users = users;
         this.mContext = mContext;
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.user_item, parent,false);
-        return new UserAdapter.ViewHolder(view);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.volunteer_item, parent,false);
+        return new VolunteerAdapter.ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        final String current_username = username.get(position);
+        final String current_username = users.get(position);
         holder.username.setText(current_username);
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
+        holder.accept.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(mContext, MessageActivity.class);
@@ -48,16 +48,20 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
 
     @Override
     public int getItemCount() {
-        return username.size();
+        return users.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
         TextView username;
+        Button accept;
+        Button decline;
 
         ViewHolder(View itemView){
             super(itemView);
 
             username = itemView.findViewById(R.id.username);
+            accept = itemView.findViewById(R.id.accept);
+            decline = itemView.findViewById(R.id.decline);
         }
     }
 }

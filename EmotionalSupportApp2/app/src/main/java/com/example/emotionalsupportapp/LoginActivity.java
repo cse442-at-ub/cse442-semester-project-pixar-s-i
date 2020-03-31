@@ -68,7 +68,7 @@ public class LoginActivity extends AppCompatActivity {
         requestQueue.add(jsonObjectRequest);*/
         String passer = password.getText().toString();
         String emailer = eMail.getText().toString();
-        if(passer.equals("tester123") && emailer.equals("testemail@test.com")){
+        if(passer.equals("1") && emailer.equals("1")){
             result = "ok";
         }
         else{
@@ -78,6 +78,10 @@ public class LoginActivity extends AppCompatActivity {
         Log.d("Creation", result);
 
         if(result.equals("ok")) {
+            Intent intent = new Intent(this, MainActivity.class);
+            intent.putExtra("EXTRA_USER_ID", userID);
+            startActivity(intent);
+        }else{
             Intent intent = new Intent(this, MainActivity.class);
             intent.putExtra("EXTRA_USER_ID", userID);
             startActivity(intent);

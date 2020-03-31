@@ -22,4 +22,24 @@
         android:layout_centerVertical="true"
         android:textSize="18dp"/>
 
+    <Button
+        android:id="@+id/accept"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="accept"
+        android:layout_toRightOf="@id/username"
+        android:layout_toEndOf="@id/username"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="60dp"/>
+
+    <Button
+        android:id="@+id/decline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="decline"
+        android:layout_toRightOf="@id/accept"
+        android:layout_toEndOf="@id/accept"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="10dp"/>
+
 </RelativeLayout>
