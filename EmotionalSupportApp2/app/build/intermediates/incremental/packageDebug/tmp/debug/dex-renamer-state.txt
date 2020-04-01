@@ -1,12 +1,4 @@
-<<<<<<<<< Temporary merge branch 1
-#Thu Mar 26 00:50:16 EDT 2020
-base.0=C\:\\Users\\rgroe\\OneDrive\\Documents\\CollegeWork\\Spring2020\\CSE442\\EmotionalSupportApp2\\app\\build\\intermediates\\dex\\debug\\out\\classes.dex
-||||||||| merged common ancestors
-#Wed Feb 26 20:34:08 EST 2020
-base.0=C\:\\Users\\Winston Mills\\Desktop\\CSE442-Project\\cse442-semester-project-pixar-s-i\\EmotionalSupportApp2\\app\\build\\intermediates\\dex\\debug\\mergeDexDebug\\out\\classes.dex
-=========
-#Mon Mar 09 20:14:28 EDT 2020
-base.0=C\:\\Users\\Winston Mills\\Desktop\\CSE442-Project\\cse442-semester-project-pixar-s-i\\EmotionalSupportApp2\\app\\build\\intermediates\\dex\\debug\\mergeDexDebug\\out\\classes.dex
->>>>>>>>> Temporary merge branch 2
+#Wed Apr 01 13:28:07 EDT 2020
+base.0=C\:\\Users\\spitt\\StudioProjects\\cse442-semester-project-pixar-s-i\\EmotionalSupportApp2\\app\\build\\intermediates\\dex\\debug\\mergeDexDebug\\out\\classes.dex
 path.0=classes.dex
 renamed.0=classes.dex
