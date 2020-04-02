@@ -13,20 +13,24 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class SignUpActivity extends AppCompatActivity {
 
     EditText emailText, passwordText, passwordConText, fNameText, lNameText;
-    Switch hugSwitch, hFiveSwitch, motivationSwitch;
     Button nowCreated;
     String result;
     RequestQueue requestQueue;
@@ -37,6 +41,14 @@ public class SignUpActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
 
+        emailText = (EditText) findViewById(R.id.emailText);
+        passwordText = (EditText) findViewById(R.id.passwordText);
+        passwordConText = (EditText) findViewById(R.id.passConText);
+        fNameText = (EditText) findViewById(R.id.fNameText);
+        lNameText = (EditText) findViewById(R.id.lNameText);
+        result = "";
+
+        requestQueue = Volley.newRequestQueue(getApplicationContext());
 
         nowCreated = (Button) findViewById(R.id.signInButton);
         nowCreated.setOnClickListener(new View.OnClickListener() {
@@ -47,34 +59,26 @@ public class SignUpActivity extends AppCompatActivity {
         });
 
     }
+
+
     public void openMainer(){
 
-        emailText = (EditText) findViewById(R.id.emailText);
-        passwordText = (EditText) findViewById(R.id.passwordText);
-        passwordConText = (EditText) findViewById(R.id.passConText);
-        fNameText = (EditText) findViewById(R.id.fNameText);
-        lNameText = (EditText) findViewById(R.id.lNameText);
-        hugSwitch = (Switch) findViewById(R.id.hugSwitch);
-        hFiveSwitch = (Switch) findViewById(R.id.hFiveSwitch);
-        motivationSwitch = (Switch) findViewById(R.id.motivationSwitch);
-        result = "";
+        String signUpSendURL = signUpURL + "?eMail=" + emailText.getText().toString() + "&FirstName=" +
+                fNameText.getText().toString() + "&LastName=" + lNameText.getText().toString() +
+                "&password=" + passwordText.getText().toString();
 
-        requestQueue = Volley.newRequestQueue(getApplicationContext());
+        String pass1 = passwordText.getText().toString();
+        String pass2 = passwordConText.getText().toString();
 
-        String signUpSendURL = signUpURL + "/?eMail=" + emailText.getText() + "&FirstName=" +
-                fNameText.getText() + "&LastName=" + lNameText.getText() + "&VolunteerHug=0"  +
-                "&VolunteerHighFive=0" + "&VolunteerMotivate=0" +
-                "&password=" + passwordText.getText();
+        if(pass1.equals(pass2)){
 
-        if(passwordText == passwordConText){
-
-            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST,
+            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,
                     signUpSendURL, new Response.Listener<JSONObject>() {
                 @Override
                 public void onResponse(JSONObject response) {
                     try {
                         String responder = response.getString("response");
-                        result = result+responder;
+                        result = responder;
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -91,18 +95,10 @@ public class SignUpActivity extends AppCompatActivity {
 
 
 
-            if (result == "ok"){
+            if (result == ""){
                 Intent intent = new Intent(this, LoginActivity.class);
                 startActivity(intent);
             }
-            else if(result == "error"){
-
-            }
-            else if(result == "exists"){
-
-            }
-        }
-        else{
 
         }
 
