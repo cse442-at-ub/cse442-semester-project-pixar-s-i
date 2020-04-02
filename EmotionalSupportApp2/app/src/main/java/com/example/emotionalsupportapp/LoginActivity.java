@@ -49,13 +49,20 @@ public class LoginActivity extends AppCompatActivity {
     public void openMain(View view){
         eMail = (EditText) findViewById(R.id.E_MailTB);
         password = (EditText) findViewById(R.id.passwordTB);
-        String sendLogIn = signUpURL + "/?email=" + eMail.getText() + "&password=" + password.getText();
+        String sendLogIn = signUpURL + "?email=" + eMail.getText() + "&password=" + password.getText();
 
         requestQueue = Volley.newRequestQueue(getApplicationContext());
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, sendLogIn, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
+
+                try {
+                    String returner = response.getString("response");
+                    result = returner;
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
 
             }
         }, new Response.ErrorListener() {
@@ -68,9 +75,9 @@ public class LoginActivity extends AppCompatActivity {
         requestQueue.add(jsonObjectRequest);
 
 
-        if(result.equals("ok")) {
+        if(!result.equals("failed")) {
             Intent intent = new Intent(this, MainActivity.class);
-            intent.putExtra("EXTRA_USER_ID", userID);
+            //intent.putExtra("EXTRA_USER_ID", userID);
             startActivity(intent);
         }
     }
