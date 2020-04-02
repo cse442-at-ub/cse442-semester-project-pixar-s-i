@@ -33,7 +33,7 @@ public class VolunteerAdapter extends RecyclerView.Adapter<VolunteerAdapter.View
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
         final String current_username = users.get(position);
         holder.username.setText(current_username);
         holder.accept.setOnClickListener(new View.OnClickListener() {
@@ -42,6 +42,14 @@ public class VolunteerAdapter extends RecyclerView.Adapter<VolunteerAdapter.View
                 Intent intent = new Intent(mContext, MessageActivity.class);
                 intent.putExtra("username", current_username);
                 mContext.startActivity(intent);
+            }
+        });
+        holder.decline.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                users.remove(position);
+                notifyItemRemoved(position);
+                notifyItemRangeChanged(position, users.size());
             }
         });
     }
