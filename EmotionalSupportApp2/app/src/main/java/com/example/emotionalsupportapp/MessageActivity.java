@@ -34,11 +34,9 @@ public class MessageActivity extends AppCompatActivity {
     EditText text_send;
 
     MessageAdpater messageAdpater;
-    ArrayList<String> chats;
+    ArrayList<Chat> chats;
 
     RecyclerView recyclerView;
-
-    Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,13 +63,15 @@ public class MessageActivity extends AppCompatActivity {
 
         username = findViewById(R.id.username);
         Bundle data =getIntent().getExtras();
-        final Friend friend = (Friend) data.getParcelable("CURRENT_FRIEND");
+        final Friend friend = data.getParcelable("CURRENT_FRIEND");
         username.setText(friend.getFriendName());
 
         btn_send = findViewById(R.id.btn_send);
         text_send = findViewById(R.id.text_send);
 
         chats = new ArrayList<>();
+
+        readMessages(friend.getUserId(),friend.getFriendId());
 
         btn_send.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -84,19 +84,47 @@ public class MessageActivity extends AppCompatActivity {
             }
         });
 
-        readMessages();
-
     }
 
-    private void sendMessage(String senderId, String recieverId, String message){
-        String phpURLBase = "https://www-student.cse.buffalo.edu/CSE442-542/2020-spring/cse-442e/saveMessage.php/?sender_id=" + senderId + "&reciever_id=" + recieverId+ "&message=" + message;
+    private void sendMessage(final String senderId, final String receiverId, String message){
+        String phpURLBase = "https://www-student.cse.buffalo.edu/CSE442-542/2020-spring/cse-442e/saveMessage.php/?sender_id=" + senderId + "&receiver_id=" + receiverId+ "&message=" + message;
+        RequestQueue reqQueue;
+        reqQueue = Volley.newRequestQueue(getApplicationContext());
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, phpURLBase, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                readMessages(senderId, receiverId);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("ERROR:", "Error on Volley: " + error.toString());
+            }
+        });
+        reqQueue.add(jsonObjectRequest);
+    }
+
+    private void readMessages(final String userId, final  String friendId){
+        chats.clear();
+        String phpURLBase = "https://www-student.cse.buffalo.edu/CSE442-542/2020-spring/cse-442e/getMessages.php/?user_id=" + userId;
         RequestQueue reqQueue;
         reqQueue = Volley.newRequestQueue(getApplicationContext());
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, phpURLBase, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 try {
-                    Log.d("Test", response.getString("response"));
+                    JSONArray re = response.getJSONArray("response");
+                    for (int i = 0; i < re.length(); i++) {
+                        JSONObject jsonobject = re.getJSONObject(i);
+                        String senderId = jsonobject.getString("senderId");
+                        String receiverId = jsonobject.getString("receiverId");
+                        String message = jsonobject.getString("message");
+                        if (friendId.equals(senderId) || friendId.equals(receiverId)){
+                            chats.add(new Chat(senderId,receiverId,message));
+                        }
+                    }
+                     messageAdpater = new MessageAdpater(userId, chats, MessageActivity.this);
+                     recyclerView.setAdapter(messageAdpater);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -108,12 +136,5 @@ public class MessageActivity extends AppCompatActivity {
             }
         });
         reqQueue.add(jsonObjectRequest);
-        chats.add(message);
-    }
-
-    private void readMessages(){
-
-        messageAdpater = new MessageAdpater(chats, MessageActivity.this);
-        recyclerView.setAdapter(messageAdpater);
     }
 }
