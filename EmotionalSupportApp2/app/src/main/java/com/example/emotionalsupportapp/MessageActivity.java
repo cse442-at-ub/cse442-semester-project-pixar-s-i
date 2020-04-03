@@ -78,7 +78,7 @@ public class MessageActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String msg = text_send.getText().toString();
                 if (!msg.equals("")){
-                    sendMessage(friend.getUserId(),friend.getFriendId(), msg);
+                    sendMessage(friend.getUserId(),friend.getUserName(),friend.getFriendId(),friend.getFriendName(), msg);
                 }
                 text_send.setText("");
             }
@@ -86,8 +86,14 @@ public class MessageActivity extends AppCompatActivity {
 
     }
 
-    private void sendMessage(final String senderId, final String receiverId, String message){
-        String phpURLBase = "https://www-student.cse.buffalo.edu/CSE442-542/2020-spring/cse-442e/saveMessage.php/?sender_id=" + senderId + "&receiver_id=" + receiverId+ "&message=" + message;
+    private void sendMessage(final String senderId, final String senderName, final String receiverId, final String receiverName, String message){
+        String phpURLBase =
+                "https://www-student.cse.buffalo.edu/CSE442-542/2020-spring/cse-442e/saveMessage.php/"
+                        + "?sender_id=" + senderId +
+                        "&sender_name=" + senderName +
+                        "&receiver_id=" + receiverId+
+                        "&receiver_name=" + receiverName +
+                        "&message=" + message;
         RequestQueue reqQueue;
         reqQueue = Volley.newRequestQueue(getApplicationContext());
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, phpURLBase, new Response.Listener<JSONObject>() {
@@ -117,10 +123,12 @@ public class MessageActivity extends AppCompatActivity {
                     for (int i = 0; i < re.length(); i++) {
                         JSONObject jsonobject = re.getJSONObject(i);
                         String senderId = jsonobject.getString("senderId");
+                        String senderName = jsonobject.getString("senderName");
                         String receiverId = jsonobject.getString("receiverId");
+                        String receiverName = jsonobject.getString("receiverName");
                         String message = jsonobject.getString("message");
                         if (friendId.equals(senderId) || friendId.equals(receiverId)){
-                            chats.add(new Chat(senderId,receiverId,message));
+                            chats.add(new Chat(senderId,senderName,receiverId,receiverName,message));
                         }
                     }
                      messageAdpater = new MessageAdpater(userId, chats, MessageActivity.this);
