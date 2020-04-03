@@ -17,11 +17,11 @@ import java.util.ArrayList;
 
 public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
 
-    private ArrayList<String> username;
+    private ArrayList<Friend> friends;
     private Context mContext;
 
-    public UserAdapter(ArrayList<String> username, Context mContext){
-        this.username = username;
+    public UserAdapter(ArrayList<Friend> friends, Context mContext){
+        this.friends = friends;
         this.mContext = mContext;
     }
 
@@ -34,13 +34,13 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        final String current_username = username.get(position);
-        holder.username.setText(current_username);
+        final Friend current_friend = friends.get(position);
+        holder.username.setText(current_friend.getFriendName());
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(mContext, MessageActivity.class);
-                intent.putExtra("username", current_username);
+                intent.putExtra("CURRENT_FRIEND", current_friend);
                 mContext.startActivity(intent);
             }
         });
@@ -48,7 +48,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
 
     @Override
     public int getItemCount() {
-        return username.size();
+        return friends.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{

@@ -25,13 +25,13 @@ public class SearchActivity extends AppCompatActivity {
     }
 
     private void getTopFiveVolunteers(){
-        topFiveVolunteers.add("Volunteer1");
-        topFiveVolunteers.add("Volunteer2");
-        topFiveVolunteers.add("Volunteer3");
-        topFiveVolunteers.add("Volunteer4");
-        topFiveVolunteers.add("Volunteer5");
-
-        userAdapter = new UserAdapter(topFiveVolunteers, this);
-        recyclerView.setAdapter(userAdapter);
+//        topFiveVolunteers.add("Volunteer1");
+//        topFiveVolunteers.add("Volunteer2");
+//        topFiveVolunteers.add("Volunteer3");
+//        topFiveVolunteers.add("Volunteer4");
+//        topFiveVolunteers.add("Volunteer5");
+//
+//        userAdapter = new UserAdapter(topFiveVolunteers, this);
+//        recyclerView.setAdapter(userAdapter);
     }
 }

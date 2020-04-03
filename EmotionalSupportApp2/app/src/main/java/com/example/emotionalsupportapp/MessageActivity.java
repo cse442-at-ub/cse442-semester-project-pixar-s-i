@@ -13,6 +13,17 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 
 public class MessageActivity extends AppCompatActivity {
@@ -53,9 +64,9 @@ public class MessageActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(linearLayoutManager);
 
         username = findViewById(R.id.username);
-        intent =getIntent();
-        final String user = intent.getStringExtra("username");
-        username.setText(user);
+        Bundle data =getIntent().getExtras();
+        final Friend friend = (Friend) data.getParcelable("CURRENT_FRIEND");
+        username.setText(friend.getFriendName());
 
         btn_send = findViewById(R.id.btn_send);
         text_send = findViewById(R.id.text_send);
@@ -66,9 +77,9 @@ public class MessageActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String msg = text_send.getText().toString();
-                Log.d("CREATION", msg);
                 if (!msg.equals("")){
-                    sendMessage(user, msg); }
+                    sendMessage(friend.getUserId(),friend.getFriendId(), msg);
+                }
                 text_send.setText("");
             }
         });
@@ -77,7 +88,26 @@ public class MessageActivity extends AppCompatActivity {
 
     }
 
-    private void sendMessage(String reciever, String message){
+    private void sendMessage(String senderId, String recieverId, String message){
+        String phpURLBase = "https://www-student.cse.buffalo.edu/CSE442-542/2020-spring/cse-442e/saveMessage.php/?sender_id=" + senderId + "&reciever_id=" + recieverId+ "&message=" + message;
+        RequestQueue reqQueue;
+        reqQueue = Volley.newRequestQueue(getApplicationContext());
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, phpURLBase, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    Log.d("Test", response.getString("response"));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("ERROR:", "Error on Volley: " + error.toString());
+            }
+        });
+        reqQueue.add(jsonObjectRequest);
         chats.add(message);
     }
 

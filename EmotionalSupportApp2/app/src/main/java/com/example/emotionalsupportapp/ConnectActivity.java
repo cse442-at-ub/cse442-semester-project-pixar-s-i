@@ -15,17 +15,30 @@ import java.util.ArrayList;
 
 public class ConnectActivity extends AppCompatActivity {
 
+    private String userID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_connect);
 
+//        String userID = getIntent().getStringExtra("EXTRA_USER_ID");
+        String userID = "1";
+
+
         TabLayout tabLayout = findViewById(R.id.tab_layout);
         ViewPager viewPager = findViewById(R.id.view_pager);
         ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
-        viewPagerAdapter.addFragment(new ChatsFragment(),"Chats");
-        viewPagerAdapter.addFragment(new UsersFragment(),"Users");
+
+        Bundle bundle = new Bundle();
+        bundle.putString("EXTRA_USER_ID", userID);
+        ChatsFragment chatsFragment = new ChatsFragment();
+        chatsFragment.setArguments(bundle);
+        UsersFragment usersFragment = new UsersFragment();
+        usersFragment.setArguments(bundle);
+
+        viewPagerAdapter.addFragment(chatsFragment,"Chats");
+        viewPagerAdapter.addFragment(usersFragment,"Users");
 
         viewPager.setAdapter(viewPagerAdapter);
         tabLayout.setupWithViewPager(viewPager);
