@@ -68,30 +68,22 @@ public class TalkActivity extends AppCompatActivity {
     }
 
     public void makePhoneCall() {
-        int callsMade = 0;
-       // while(callsMade == 0) {
 
-            //if(callsMade == 0) {
-                Log.d("Number Updated:", number);
-                Intent intent = new Intent(Intent.ACTION_CALL);
-                //number
-                intent.setData(Uri.parse("tel: " + "(516)817-7327"));
-                if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
-                    ActivityCompat.requestPermissions(TalkActivity.this, new String[]{Manifest.permission.CALL_PHONE}, REQUEST_CALL);
-                    return;
-                }
-                startActivity(intent);
-                String toPrint = phoneStateListener.currentState + ", Prev State = " + phoneStateListener.prevState;
-                Log.d("STATE: ", toPrint);
-                callsMade+=1;
-           // }else if(phoneStateListener.prevState == 2){
 
-             //   callsMade+=1;
-           // }
-        //}
+        Log.d("Number Updated:", number);
+        Intent intent = new Intent(Intent.ACTION_CALL);
+        //number
+        intent.setData(Uri.parse("tel: " + "(516)817-7327"));
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(TalkActivity.this, new String[]{Manifest.permission.CALL_PHONE}, REQUEST_CALL);
+            return;
+        }
+        startActivity(intent);
+        String toPrint = phoneStateListener.currentState + ", Prev State = " + phoneStateListener.prevState;
+        Log.d("STATE: ", toPrint);
+
         Log.d("ROR: ", "EXECUTED UNNESSICARILY");
-      //  phoneStateListener.prevState = 0;
-       // phoneStateListener.currentState = 0;
+
     }
 
 
