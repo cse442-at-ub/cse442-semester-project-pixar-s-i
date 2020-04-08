@@ -5,10 +5,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
+import android.content.BroadcastReceiver;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.telephony.PhoneStateListener;
+import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
@@ -24,18 +27,31 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+
 public class TalkActivity extends AppCompatActivity {
     private static final int REQUEST_CALL = 1;
     public String phpURLBase = "https://www-student.cse.buffalo.edu/CSE442-542/2020-spring/cse-442e/getInfoProfile.php/?id=" + 1;
     public RequestQueue reqQueue;
     String number = "111111111";
+    String emergencyNumber = "(800)273-8255";
+    StateListener phoneStateListener;
+   // Bundle savedInstanceState;
 
+
+    public TalkActivity() {
+       // super.onCreate(savedInstanceState);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+      //  savedInstanceState = savedInstanceState;
         setContentView(R.layout.activity_talk);
+
         initializeSql();
+        phoneStateListener = new StateListener();
+        TelephonyManager telephonyManager =(TelephonyManager)getSystemService(TELEPHONY_SERVICE);
+        telephonyManager.listen(phoneStateListener, PhoneStateListener.LISTEN_CALL_STATE);
     }
     /*
      * Changes to the main high five page
@@ -52,15 +68,32 @@ public class TalkActivity extends AppCompatActivity {
     }
 
     public void makePhoneCall() {
-        Log.d("Number Updated:", number);
-        Intent intent = new Intent(Intent.ACTION_CALL);
-        intent.setData(Uri.parse("tel: " + number));
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED){
-            ActivityCompat.requestPermissions(TalkActivity.this, new String[] {Manifest.permission.CALL_PHONE}, REQUEST_CALL);
-            return;
-        }
-        startActivity(intent);
+        int callsMade = 0;
+       // while(callsMade == 0) {
+
+            //if(callsMade == 0) {
+                Log.d("Number Updated:", number);
+                Intent intent = new Intent(Intent.ACTION_CALL);
+                //number
+                intent.setData(Uri.parse("tel: " + "(516)817-7327"));
+                if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(TalkActivity.this, new String[]{Manifest.permission.CALL_PHONE}, REQUEST_CALL);
+                    return;
+                }
+                startActivity(intent);
+                String toPrint = phoneStateListener.currentState + ", Prev State = " + phoneStateListener.prevState;
+                Log.d("STATE: ", toPrint);
+                callsMade+=1;
+           // }else if(phoneStateListener.prevState == 2){
+
+             //   callsMade+=1;
+           // }
+        //}
+        Log.d("ROR: ", "EXECUTED UNNESSICARILY");
+      //  phoneStateListener.prevState = 0;
+       // phoneStateListener.currentState = 0;
     }
+
 
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (requestCode == REQUEST_CALL) {

@@ -32,7 +32,11 @@
         <activity android:name=".SignUpActivity" />
         <activity android:name=".MainActivity" />
         <activity android:name=".ConnectActivity" />
-        <activity android:name=".TalkActivity" />
+        <activity android:name=".TalkActivity" >
+             <intent-filter>
+                <action android:name="android.intent.action.PHONE_STATE" />
+             </intent-filter>
+        </activity>
         <activity android:name=".MotivationActivity" />
         <activity android:name=".NotificationsActivity" />
         <activity android:name=".SettingsActivity" />

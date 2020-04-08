@@ -52,7 +52,11 @@
         <activity android:name="com.example.emotionalsupportapp.SignUpActivity" />
         <activity android:name="com.example.emotionalsupportapp.MainActivity" />
         <activity android:name="com.example.emotionalsupportapp.ConnectActivity" />
-        <activity android:name="com.example.emotionalsupportapp.TalkActivity" />
+        <activity android:name="com.example.emotionalsupportapp.TalkActivity" >
+            <intent-filter>
+                <action android:name="android.intent.action.PHONE_STATE" />
+            </intent-filter>
+        </activity>
         <activity android:name="com.example.emotionalsupportapp.MotivationActivity" />
         <activity android:name="com.example.emotionalsupportapp.NotificationsActivity" />
         <activity android:name="com.example.emotionalsupportapp.SettingsActivity" />
