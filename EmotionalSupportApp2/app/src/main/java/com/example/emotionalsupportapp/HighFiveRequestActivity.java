@@ -1,10 +1,13 @@
 package com.example.emotionalsupportapp;
 
+import android.content.Context;
 import android.content.Intent;
 import android.Manifest;
 
 import android.content.pm.PackageManager;
+import android.location.Criteria;
 import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -58,30 +61,34 @@ import java.util.concurrent.TimeUnit;
 
 public class HighFiveRequestActivity extends FragmentActivity implements OnMapReadyCallback,GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener, RoutingListener {
 
-    Location currentLocation;
-    FusedLocationProviderClient fusedLocationProviderClient;
-    private GoogleApiClient googleApiClient;
-    private LocationRequest locationRequest;
-    private GoogleMap mMap;
-    private Location lastLocation;
-    private MarkerOptions currentUserLocationMarker;
-    RequestQueue reqQueue;
-    private final String phpurl = "https://www-student.cse.buffalo.edu/CSE442-542/2020-spring/cse-442e/";
-    private static final int REQUEST_CODE = 101;
-    int id;
-    Button search;
-    private boolean mLocationPermissionGranted;
     private ArrayList<LatLng> markerPoints = new ArrayList<>();
     private List<Polyline> polylines;
     private static final int[] COLORS = new int[]{R.color.colorPrimaryDark, R.color.colorPrimary, R.color.colorAccent, R.color.primary_dark_material_light};
+    private boolean mLocationPermissionGranted;
+    FusedLocationProviderClient fusedLocationProviderClient;
+    private GoogleApiClient googleApiClient;
+    private LocationRequest locationRequest;
+    public LocationManager locationManager;
+    public Criteria criteria;
+    public String bestProvider;
+    private GoogleMap mMap;
+    private Location lastLocation;
+    private MarkerOptions currentUserLocationMarker;
+    private static final int REQUEST_CODE = 101;
+
+
+    RequestQueue reqQueue;
+    private final String phpurl = "https://www-student.cse.buffalo.edu/CSE442-542/2020-spring/cse-442e/";
+    int id;
+    Button search;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_high_five_request);
-        polylines = new ArrayList<>();
 
+        polylines = new ArrayList<>();
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
         search  = findViewById(R.id.request_high_five);
         currentUserLocationMarker = new MarkerOptions();
@@ -92,33 +99,9 @@ public class HighFiveRequestActivity extends FragmentActivity implements OnMapRe
         mapFragment.getMapAsync(this);
     }
 
-    //Method to Start location services
-    void startLocationService() {
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_CODE);
-        }
-        Task<Location> task = fusedLocationProviderClient.getLastLocation();
-        task.addOnSuccessListener(new OnSuccessListener<Location>() {
-            @Override
-            public void onSuccess(Location location) {
-                if (location != null) {
-                    currentLocation = location;
-                    SupportMapFragment supportMapFragment = (SupportMapFragment)
-                            getSupportFragmentManager().findFragmentById(R.id.google_map);
-                    supportMapFragment.getMapAsync(HighFiveRequestActivity.this);
-
-                }
-            }
-        });
-
-    }
-    public void returnToMain(View view) {
-        Intent returnToMainIntent = new Intent(this, MainActivity.class);
-        startActivity(returnToMainIntent);
-    }
-    //    Set Up the Google Maps Location
     @Override
-    public void onMapReady(GoogleMap googleMap) {  mMap = googleMap;
+    public void onMapReady(GoogleMap googleMap) {
+        mMap = googleMap;
         buildGoogleApiClient();
         updateLocationUI();
         getDeviceLocation();
@@ -159,9 +142,54 @@ public class HighFiveRequestActivity extends FragmentActivity implements OnMapRe
         });
     }
 
+    public void returnToMain(View view) {
+        Intent returnToMainIntent = new Intent(this, MainActivity.class);
+        startActivity(returnToMainIntent);
+    }
+
+    //Method to Start location services
+    void startLocationService() {
+        if(mLocationPermissionGranted) {
+            locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
+            criteria = new Criteria();
+            bestProvider = String.valueOf(locationManager.getBestProvider(criteria, true).toString());
+            Location location;
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                location  = locationManager.getLastKnownLocation(bestProvider);
+
+            }else{
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_CODE);
+                location = locationManager.getLastKnownLocation(bestProvider);
+            }
+            if (location != null) {
+                lastLocation = location;
+            }else{
+                locationManager.requestLocationUpdates(bestProvider,1000,0, (android.location.LocationListener) this);
+            }
+        }
+    }
+    private Location getLastKnownLocation() {
+        Location l=null;
+        LocationManager mLocationManager = (LocationManager)getApplicationContext().getSystemService(LOCATION_SERVICE);
+        List<String> providers = mLocationManager.getProviders(true);
+        Location bestLocation = null;
+        for (String provider : providers) {
+            if(ContextCompat.checkSelfPermission(this,Manifest.permission.ACCESS_FINE_LOCATION)==PackageManager.PERMISSION_GRANTED) {
+                l = mLocationManager.getLastKnownLocation(provider);
+            }
+            if (l == null) {
+                continue;
+            }
+            if (bestLocation == null || l.getAccuracy() < bestLocation.getAccuracy()) {
+                bestLocation = l;
+            }
+        }
+        return bestLocation;
+    }
+
     private void requestDirections(LatLng origin, LatLng dest) {
         Routing routing = new Routing.Builder()
-                .key(getString(R.string.google_api_key))
+                .key("AIzaSyB-51e2xvKleb-PqQ3O3F_lHD8srI5VoxQ")
                 .travelMode(AbstractRouting.TravelMode.WALKING)
                 .withListener(this)
                 .alternativeRoutes(true)
@@ -180,14 +208,19 @@ public class HighFiveRequestActivity extends FragmentActivity implements OnMapRe
     private void getDeviceLocation() {
         try {
             if (mLocationPermissionGranted) {
+
                 Task locationResult = fusedLocationProviderClient.getLastLocation();
                 locationResult.addOnCompleteListener(this, new OnCompleteListener<Location>() {
 
                     @Override
                     public void onComplete(@NonNull Task<Location> task) {
                         if (task.isSuccessful()) {
+
                             lastLocation = task.getResult();
-                            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(lastLocation.getLatitude(), lastLocation.getLongitude()), 18));
+                            if(lastLocation == null){
+                                lastLocation = getLastKnownLocation();
+                            }
+                            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(lastLocation.getLatitude(), lastLocation.getLongitude()),12));
                             currentUserLocationMarker.position(new LatLng(lastLocation.getLatitude(), lastLocation.getLongitude())).title("You are Here");
                             mMap.addMarker(currentUserLocationMarker);
 
@@ -227,7 +260,7 @@ public class HighFiveRequestActivity extends FragmentActivity implements OnMapRe
         }
     }
 
-    private void buildGoogleApiClient() {
+    protected synchronized void buildGoogleApiClient() {
         googleApiClient = new GoogleApiClient.Builder(this)
                 .addApi(LocationServices.API)
                 .addConnectionCallbacks(this)
@@ -319,9 +352,9 @@ public class HighFiveRequestActivity extends FragmentActivity implements OnMapRe
 
         LatLng latLng = new LatLng(location.getLatitude(),location.getLongitude());
         //Move camera at a steady pace with user movement
-
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-        mMap.animateCamera(CameraUpdateFactory.zoomTo(12));
+//
+//        mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+//        mMap.animateCamera(CameraUpdateFactory.zoomTo(12));
 
     }
 
@@ -347,8 +380,7 @@ public class HighFiveRequestActivity extends FragmentActivity implements OnMapRe
 
     private void createLocationRequest() {
         //remove location updates so that it resets
-        LocationServices.FusedLocationApi.removeLocationUpdates(googleApiClient, this); //Import should not be **android.Location.LocationListener**
-        //import should be **import com.google.android.gms.location.LocationListener**;
+        LocationServices.FusedLocationApi.removeLocationUpdates(googleApiClient, this);
 
         locationRequest = new LocationRequest();
         locationRequest.setInterval(5000);
