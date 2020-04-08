@@ -9,6 +9,6 @@ public class HugVolunteerFoundActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_hug_volunteer_found);
+        setContentView(R.layout.activity_hug__volunteer__found);
     }
 }
