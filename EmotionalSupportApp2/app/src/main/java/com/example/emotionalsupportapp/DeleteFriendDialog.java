@@ -5,13 +5,12 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import androidx.appcompat.app.AppCompatDialogFragment;
 
-public class FriendDialog extends AppCompatDialogFragment {
+public class DeleteFriendDialog extends AppCompatDialogFragment {
 
     private EditText editFriendId;
     public FriendDialogListener friendDialogListener;
@@ -24,17 +23,17 @@ public class FriendDialog extends AppCompatDialogFragment {
         editFriendId = view.findViewById(R.id.edit_friendId);
 
         builder.setView(view)
-                .setNegativeButton("cancel", new DialogInterface.OnClickListener() {
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
                     }
                 })
-                .setPositiveButton("add", new DialogInterface.OnClickListener() {
+                .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         String friendId = editFriendId.getText().toString();
-                        friendDialogListener.applyTexts(friendId);
+                        friendDialogListener.deleteFriendId(friendId);
                     }
                 });
         return builder.create();
@@ -51,6 +50,6 @@ public class FriendDialog extends AppCompatDialogFragment {
     }
 
     public interface FriendDialogListener{
-        void applyTexts(String friendId);
+        void deleteFriendId(String friendId);
     }
 }

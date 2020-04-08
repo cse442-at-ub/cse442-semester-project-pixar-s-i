@@ -32,7 +32,7 @@ import java.util.ArrayList;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class UsersFragment extends Fragment implements FriendDialog.FriendDialogListener {
+public class UsersFragment extends Fragment implements FriendDialog.FriendDialogListener, DeleteFriendDialog.FriendDialogListener {
 
     private RecyclerView recyclerView;
     private UserAdapter userAdapter;
@@ -41,6 +41,7 @@ public class UsersFragment extends Fragment implements FriendDialog.FriendDialog
     private String user_name;
 
     private Button addFriend;
+    private Button deleteFriend;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -60,7 +61,14 @@ public class UsersFragment extends Fragment implements FriendDialog.FriendDialog
         addFriend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openDialog();
+                openAddDialog();
+            }
+        });
+        deleteFriend = view.findViewById(R.id.delete_friend);
+        deleteFriend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openDeleteDialog();
             }
         });
         return view;
@@ -100,7 +108,7 @@ public class UsersFragment extends Fragment implements FriendDialog.FriendDialog
     }
 
 
-    public void openDialog(){
+    public void openAddDialog(){
         FriendDialog friendDialog = new FriendDialog();
         friendDialog.setTargetFragment(UsersFragment.this, 1);
         friendDialog.show(getFragmentManager(), "Friend Dialog");
@@ -165,7 +173,62 @@ public class UsersFragment extends Fragment implements FriendDialog.FriendDialog
                     String re = response.getString("response");
                     if (re.equals("ok")){
                         Toast.makeText(getActivity(), "Add Successfully", Toast.LENGTH_SHORT).show();
-                        Fragment currentFragment = getFragmentManager().findFragmentByTag("UsersFragment");
+                        initializeSql();
+                    } else{
+                        Toast.makeText(getActivity(), "Add Failed", Toast.LENGTH_SHORT).show();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("ERROR:", "Error on Volley: " + error.toString());
+            }
+        });
+        reqQueue.add(jsonObjectRequest);
+    }
+
+    public void openDeleteDialog(){
+        DeleteFriendDialog deleteFriendDialog = new DeleteFriendDialog();
+        deleteFriendDialog.setTargetFragment(UsersFragment.this, 1);
+        deleteFriendDialog.show(getFragmentManager(), "DeleteFriendDialog");
+    }
+
+    @Override
+    public void deleteFriendId(String friendId) {
+        if(friendId.equals("") || friendId.equals(userID)){
+            Toast.makeText(getActivity(), "Please enter an valid friend id", Toast.LENGTH_SHORT).show();
+        }
+        boolean check = false;
+        for(int i = 0; i < friends.size(); ++i){
+            if(friends.get(i).getFriendId().equals(friendId)){
+                check = true;
+                break;
+            }
+        }
+        if(check){
+            Log.d("Test", friendId);
+        }else{
+            Toast.makeText(getActivity(), "Please enter an valid friend id", Toast.LENGTH_SHORT).show();
+        }
+        deleteFriendToDatabase(friendId);
+    }
+
+    private void deleteFriendToDatabase(String friendId) {
+        String phpURLBase = "https://www-student.cse.buffalo.edu/CSE442-542/2020-spring/cse-442e/deleteFriend.php/?"
+                + "user_id=" + userID
+                + "&friend_id=" + friendId;
+        RequestQueue reqQueue;
+        reqQueue = Volley.newRequestQueue(getActivity().getApplicationContext());
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, phpURLBase, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    String re = response.getString("response");
+                    if (re.equals("ok")){
+                        Toast.makeText(getActivity(), "Delete Successfully", Toast.LENGTH_SHORT).show();
                         initializeSql();
                     } else{
                         Toast.makeText(getActivity(), "Add Failed", Toast.LENGTH_SHORT).show();
