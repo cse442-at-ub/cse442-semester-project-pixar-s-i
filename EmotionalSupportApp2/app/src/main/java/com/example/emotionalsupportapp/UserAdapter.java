@@ -36,6 +36,8 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         final Friend current_friend = friends.get(position);
         holder.username.setText(current_friend.getFriendName());
+        String friend_id = "#" + current_friend.getFriendId();
+        holder.user_id.setText(friend_id);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -53,11 +55,13 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
 
     public class ViewHolder extends RecyclerView.ViewHolder{
         TextView username;
+        TextView user_id;
 
         ViewHolder(View itemView){
             super(itemView);
 
             username = itemView.findViewById(R.id.username);
+            user_id = itemView.findViewById(R.id.user_id);
         }
     }
 }

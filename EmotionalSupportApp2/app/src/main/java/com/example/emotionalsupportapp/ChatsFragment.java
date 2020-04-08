@@ -69,8 +69,6 @@ public class ChatsFragment extends Fragment {
                         String senderName = jsonobject.getString("senderName");
                         String receiverId = jsonobject.getString("receiverId");
                         String receiverName = jsonobject.getString("receiverName");
-                        Log.d("test", senderId);
-                        Log.d("test", receiverId);
                         if (userID.equals(senderId)){
                             if (hasChatted.contains(receiverId)){
                                 continue;
