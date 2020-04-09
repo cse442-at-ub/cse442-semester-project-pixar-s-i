@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -27,13 +28,11 @@ public class LoginActivity extends AppCompatActivity {
     EditText eMail, password;
 
     String userID = "1";
-    String result = "";
+    String result = "failed";
     String signUpURL = "https://www-student.cse.buffalo.edu/CSE442-542/2020-spring/cse-442e/login.php";
 
     RequestQueue requestQueue;
 
-    private Button signUpLink;
-    private Button loggedInLink;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,10 +45,17 @@ public class LoginActivity extends AppCompatActivity {
         Intent intent = new Intent(this, SignUpActivity.class);
         startActivity(intent);
     }
+
+    public void displayToast(String message){
+        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
+    }
+
+
     public void openMain(View view){
         eMail = (EditText) findViewById(R.id.E_MailTB);
         password = (EditText) findViewById(R.id.passwordTB);
-        String sendLogIn = signUpURL + "?email=" + eMail.getText() + "&password=" + password.getText();
+        String sendLogIn = signUpURL + "?eMail=" + eMail.getText().toString() + "&password=" + password.getText().toString();
+        final Intent intent = new Intent(this, MainActivity.class);
 
         requestQueue = Volley.newRequestQueue(getApplicationContext());
 
@@ -60,6 +66,14 @@ public class LoginActivity extends AppCompatActivity {
                 try {
                     String returner = response.getString("response");
                     result = returner;
+
+                    if(!result.equals("failed")) {
+                        //intent.putExtra("EXTRA_USER_ID", userID);
+                        startActivity(intent);
+                    }
+                    else{
+                        displayToast("Password or E-Mail is Wrong...");
+                    }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -74,11 +88,6 @@ public class LoginActivity extends AppCompatActivity {
 
         requestQueue.add(jsonObjectRequest);
 
-
-        if(!result.equals("failed")) {
-            Intent intent = new Intent(this, MainActivity.class);
-            //intent.putExtra("EXTRA_USER_ID", userID);
-            startActivity(intent);
         }
-    }
+
 }

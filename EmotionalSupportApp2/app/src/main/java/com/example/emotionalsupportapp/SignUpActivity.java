@@ -3,6 +3,7 @@ package com.example.emotionalsupportapp;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.VoiceInteractor;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -41,6 +42,7 @@ public class SignUpActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
 
+
         emailText = (EditText) findViewById(R.id.emailText);
         passwordText = (EditText) findViewById(R.id.passwordText);
         passwordConText = (EditText) findViewById(R.id.passConText);
@@ -60,9 +62,13 @@ public class SignUpActivity extends AppCompatActivity {
 
     }
 
+    public void displayToast(String message){
+        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
+    }
+
 
     public void openMainer(){
-
+        final Intent intent = new Intent(this, LoginActivity.class);
         String signUpSendURL = signUpURL + "?eMail=" + emailText.getText().toString() + "&FirstName=" +
                 fNameText.getText().toString() + "&LastName=" + lNameText.getText().toString() +
                 "&password=" + passwordText.getText().toString();
@@ -79,6 +85,18 @@ public class SignUpActivity extends AppCompatActivity {
                     try {
                         String responder = response.getString("response");
                         result = responder;
+
+                        if (result.equals("ok")){
+                            startActivity(intent);
+                        }
+                        else{
+                            if(result.equals("exists")){
+                                displayToast("User Exists");
+                            }
+                            else{
+                                displayToast("Something Went Wrong :(");
+                            }
+                        }
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -92,15 +110,9 @@ public class SignUpActivity extends AppCompatActivity {
             });
 
             requestQueue.add(jsonObjectRequest);
-
-
-
-            if (result == ""){
-                Intent intent = new Intent(this, LoginActivity.class);
-                startActivity(intent);
-            }
-
         }
-
+        else{
+            displayToast("Passwords do not match...");
+        }
     }
 }

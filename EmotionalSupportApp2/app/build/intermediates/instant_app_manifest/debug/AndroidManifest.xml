@@ -33,6 +33,8 @@
         android:supportsRtl="true"
         android:testOnly="true"
         android:theme="@style/AppTheme" >
+        <activity android:name="com.example.emotionalsupportapp.ScoreboardActivity" />
+
         <uses-library
             android:name="org.apache.http.legacy"
             android:required="false" />
