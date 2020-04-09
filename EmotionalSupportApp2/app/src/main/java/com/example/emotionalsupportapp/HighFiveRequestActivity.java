@@ -92,7 +92,6 @@ public class HighFiveRequestActivity extends FragmentActivity implements OnMapRe
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
         search  = findViewById(R.id.request_high_five);
         currentUserLocationMarker = new MarkerOptions();
-
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.google_map);
