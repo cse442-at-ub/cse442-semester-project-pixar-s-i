@@ -1,45 +1,36 @@
 {
   "project_info": {
-    "project_number": "797018416339",
-    "firebase_url": "https://cse442-project.firebaseio.com",
-    "project_id": "cse442-project",
-    "storage_bucket": "cse442-project.appspot.com"
+    "project_number": "532823176370",
+    "firebase_url": "https://apiuserapp.firebaseio.com",
+    "project_id": "apiuserapp",
+    "storage_bucket": "apiuserapp.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:797018416339:android:2fa99cd852112bb23a2026",
+        "mobilesdk_app_id": "1:532823176370:android:d694cb98302663cb1bc5ab",
         "android_client_info": {
           "package_name": "com.example.emotionalsupportapp"
         }
       },
       "oauth_client": [
         {
-          "client_id": "797018416339-t439tb034mf8fviiou8hb0f2uru1khd1.apps.googleusercontent.com",
+          "client_id": "532823176370-kbq2o1p276mddi87umu1gult7m7illo3.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.example.emotionalsupportapp",
             "certificate_hash": "a299c7ee2dfb953309af6c64445dfad02365ed6c"
           }
-        },
-        {
-          "client_id": "797018416339-5q0s0bce6s6vf10kfluuk5l657g0me37.apps.googleusercontent.com",
-          "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyB7Npv9pKiUHiKTycCHFvhH0DIoaOg51RA"
+          "current_key": "AIzaSyAfuHP5LPn9MEplZIgfchFlNOoIyxe2pB4"
         }
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "797018416339-5q0s0bce6s6vf10kfluuk5l657g0me37.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
+          "other_platform_oauth_client": []
         }
       }
     }
