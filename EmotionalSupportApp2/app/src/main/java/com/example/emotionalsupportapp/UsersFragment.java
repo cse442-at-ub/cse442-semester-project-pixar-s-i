@@ -116,15 +116,18 @@ public class UsersFragment extends Fragment implements FriendDialog.FriendDialog
 
     @Override
     public void applyTexts(String friendId) {
-        if(friendId.equals("")){
+        if(friendId.equals("") || friendId.equals("0")){
             Toast.makeText(getActivity(), "Please enter an valid friend id", Toast.LENGTH_SHORT).show();
+            return;
         }
         if (friendId.equals(userID)){
             Toast.makeText(getActivity(), "You cannot add yourself as a friend", Toast.LENGTH_SHORT).show();
+            return;
         }
         for(int i = 0; i < friends.size(); ++i){
             if(friends.get(i).getFriendId().equals(friendId)){
                 Toast.makeText(getActivity(), "You have added the friend", Toast.LENGTH_SHORT).show();
+                return;
             }
         }
         getFriendName(friendId);
@@ -139,13 +142,10 @@ public class UsersFragment extends Fragment implements FriendDialog.FriendDialog
             public void onResponse(JSONObject response) {
                 try {
                     JSONObject re = response.getJSONObject("response");
-                    if (re.toString().equals("failed")){
-                        Toast.makeText(getActivity(), "Please enter an valid friend id", Toast.LENGTH_SHORT).show();
-                    } else{
-                        String friendName = re.getString("FirstName") + "%20" + re.getString("LastName");
-                        addFriendToDatabase(friendId, friendName);
-                    }
+                    String friendName = re.getString("FirstName") + "%20" + re.getString("LastName");
+                    addFriendToDatabase(friendId, friendName);
                 } catch (JSONException e) {
+                    Toast.makeText(getActivity(), "Please enter an valid friend id", Toast.LENGTH_SHORT).show();
                     e.printStackTrace();
                 }
             }
