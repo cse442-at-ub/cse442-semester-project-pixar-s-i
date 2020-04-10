@@ -34,6 +34,7 @@ public class TalkActivity extends AppCompatActivity {
     public RequestQueue reqQueue;
     String number = "111111111";
     String emergencyNumber = "(800)273-8255";
+    String emergencyNumberPlaceholder = "(555)427-2999";
     StateListener phoneStateListener;
    // Bundle savedInstanceState;
 
@@ -95,7 +96,7 @@ public class TalkActivity extends AppCompatActivity {
         Log.d("Number Updated:", number);
         Intent intent = new Intent(Intent.ACTION_CALL);
         //number
-        intent.setData(Uri.parse("tel: " + "(516)427-2987"));
+        intent.setData(Uri.parse("tel: " + emergencyNumberPlaceholder));
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(TalkActivity.this, new String[]{Manifest.permission.CALL_PHONE}, REQUEST_CALL);
             return;
