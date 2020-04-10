@@ -1206,6 +1206,7 @@ id high_five_rating_bar
 id history
 id home
 id homeAsUp
+id hotlineButton
 id hugBtn
 id hugNotifications
 id hugSwitch
