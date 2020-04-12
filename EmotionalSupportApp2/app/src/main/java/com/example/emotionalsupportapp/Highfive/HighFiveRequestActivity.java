@@ -1,4 +1,4 @@
-package com.example.emotionalsupportapp;
+package com.example.emotionalsupportapp.Highfive;
 
 import android.content.Context;
 import android.content.Intent;
@@ -32,6 +32,8 @@ import com.directions.route.Route;
 import com.directions.route.RouteException;
 import com.directions.route.Routing;
 import com.directions.route.RoutingListener;
+import com.example.emotionalsupportapp.MainActivity;
+import com.example.emotionalsupportapp.R;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.Api;
 import com.google.android.gms.common.api.GoogleApiClient;

@@ -5,7 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
+
+import com.example.emotionalsupportapp.Highfive.HighFiveActivity;
 
 public class MainActivity extends AppCompatActivity {
     int userID;
@@ -25,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
      * Called when high five button is clicked
      */
     public void goToHighFivePage(View view){
-        Intent intent = new Intent(this,HighFiveActivity.class);
+        Intent intent = new Intent(this, HighFiveActivity.class);
         intent.putExtra("EXTRA_USER_ID", userID);
         startActivity(intent);
     }

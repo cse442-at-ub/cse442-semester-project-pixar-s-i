@@ -1,6 +1,5 @@
-package com.example.emotionalsupportapp;
+package com.example.emotionalsupportapp.Highfive;
 
-import android.app.Notification;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -13,7 +12,6 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
 import com.android.volley.AuthFailureError;
@@ -25,6 +23,8 @@ import com.android.volley.RetryPolicy;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.emotionalsupportapp.MainActivity;
+import com.example.emotionalsupportapp.R;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -38,8 +38,6 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
-
-import static com.example.emotionalsupportapp.EmotionalSupport.CHANNEL_1_ID;
 
 public class HighFiveActivity extends AppCompatActivity {
     private NotificationManagerCompat notificationManager;

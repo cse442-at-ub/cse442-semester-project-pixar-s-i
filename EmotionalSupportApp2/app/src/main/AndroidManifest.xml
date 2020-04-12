@@ -19,13 +19,13 @@
         <activity android:name=".TalkNotificationsActivity" />
         <activity android:name=".MotivationNotificationsActivity" />
         <activity android:name=".HugNotificationsActivity" />
-        <activity android:name=".HighFiveNotificationsActivity" />
+        <activity android:name=".Highfive.HighFiveNotificationsActivity" />
         <activity android:name=".HugRequestActivity" />
         <activity android:name=".ChangeImage" />
         <activity android:name=".HistoryActivity" />
-        <activity android:name=".HighFiveRequestActivity" />
+        <activity android:name=".Highfive.HighFiveRequestActivity" />
         <activity android:name=".HugActivity" />
-        <activity android:name=".HighFiveActivity" />
+        <activity android:name=".Highfive.HighFiveActivity" />
         <activity android:name=".profilePage" />
         <activity android:name=".SignUpActivity" />
         <activity android:name=".MainActivity" />

@@ -8,6 +8,8 @@ import android.util.Pair;
 import android.view.View;
 import android.widget.TextView;
 
+import com.example.emotionalsupportapp.Highfive.HighFiveRatingActivity;
+
 public class VolunteerAndLocationInfoActivity extends AppCompatActivity {
 
     @Override
