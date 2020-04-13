@@ -1,6 +1,5 @@
 package com.example.emotionalsupportapp;
 
-
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -13,43 +12,40 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
-
-public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
-
-    private ArrayList<Friend> friends;
+public class TopFiveVolunteerAdapter extends RecyclerView.Adapter<TopFiveVolunteerAdapter.ViewHolder>  {
+    private ArrayList<Volunteer> topFiveVolunteers;
     private Context mContext;
 
-    public UserAdapter(ArrayList<Friend> friends, Context mContext){
-        this.friends = friends;
+    public TopFiveVolunteerAdapter(ArrayList<Volunteer> topFiveVolunteers, Context mContext){
+        this.topFiveVolunteers = topFiveVolunteers;
         this.mContext = mContext;
     }
 
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public TopFiveVolunteerAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.user_item, parent,false);
-        return new UserAdapter.ViewHolder(view);
+        return new TopFiveVolunteerAdapter.ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        final Friend current_friend = friends.get(position);
-        holder.username.setText(current_friend.getFriendName());
-        String friend_id = "#" + current_friend.getFriendId();
-        holder.user_id.setText(friend_id);
+    public void onBindViewHolder(@NonNull TopFiveVolunteerAdapter.ViewHolder holder, int position) {
+        final Volunteer volunteer = topFiveVolunteers.get(position);
+        holder.username.setText(volunteer.getVolunteerName());
+        holder.user_id.setText("");
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
             Intent intent = new Intent(mContext, MessageActivity.class);
-            intent.putExtra("FRIEND", current_friend);
-            mContext.startActivity(intent);
+                intent.putExtra("VOLUNTEER", volunteer);
+                mContext.startActivity(intent);
             }
         });
     }
 
     @Override
     public int getItemCount() {
-        return friends.size();
+        return topFiveVolunteers.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
@@ -61,6 +57,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
 
             username = itemView.findViewById(R.id.username);
             user_id = itemView.findViewById(R.id.user_id);
+
         }
     }
 }

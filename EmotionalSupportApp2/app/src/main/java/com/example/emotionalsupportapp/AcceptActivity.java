@@ -1,15 +1,12 @@
 package com.example.emotionalsupportapp;
 
-import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -24,40 +21,37 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-/**
- * A simple {@link Fragment} subclass.
- */
-public class ChatsFragment extends Fragment {
-    private String userID;
-    private ArrayList<Friend> friends;
+public class AcceptActivity extends AppCompatActivity {
+    private String userId;
+    private String userName;
+
+    private ArrayList<Volunteer> users;
     private ArrayList<String> hasChatted;
 
     private RecyclerView recyclerView;
-    private UserAdapter userAdapter;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        userID = getArguments().getString("EXTRA_USER_ID");
-        View view = inflater.inflate(R.layout.fragment_chats, container, false);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_accept);
 
-        recyclerView = view.findViewById(R.id.recycler_view);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        userId = getIntent().getStringExtra("EXTRA_USER_ID");
+        userName = getIntent().getStringExtra("EXTRA_USER_NAME");
 
-        friends = new ArrayList<>();
+        recyclerView = findViewById(R.id.recycler_view);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        users = new ArrayList<>();
         hasChatted = new ArrayList<>();
 
-        getFriendsHasChatted();
-
-        return view;
+        getVolunteerHasChatted();
     }
 
-    private void getFriendsHasChatted(){
-        friends.clear();
-        String phpURLBase = "https://www-student.cse.buffalo.edu/CSE442-542/2020-spring/cse-442e/getMessages.php/?user_id=" + userID + "&from_volunteer=0";
+    private void getVolunteerHasChatted(){
+        users.clear();
+        String phpURLBase = "https://www-student.cse.buffalo.edu/CSE442-542/2020-spring/cse-442e/getMessages.php/?user_id=" + userId + "&from_volunteer=1";
         RequestQueue reqQueue;
-        reqQueue = Volley.newRequestQueue(getActivity().getApplicationContext());
+        reqQueue = Volley.newRequestQueue(getApplicationContext());
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, phpURLBase, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
@@ -69,21 +63,21 @@ public class ChatsFragment extends Fragment {
                         String senderName = jsonobject.getString("senderName");
                         String receiverId = jsonobject.getString("receiverId");
                         String receiverName = jsonobject.getString("receiverName");
-                        if (userID.equals(senderId)){
+                        if (userId.equals(senderId)){
                             if (hasChatted.contains(receiverId)){
                                 continue;
                             }
                             hasChatted.add(receiverId);
-                            friends.add(new Friend(senderId, senderName, receiverId, receiverName));
-                        }else if (userID.equals(receiverId)){
+                            users.add(new Volunteer(senderId, senderName, receiverId, receiverName, "0"));
+                        }else if (userId.equals(receiverId)){
                             if (hasChatted.contains(senderId)){
                                 continue;
                             }
                             hasChatted.add(senderId);
-                            friends.add(new Friend(receiverId, receiverName, senderId, senderName));
+                            users.add(new Volunteer(receiverId, receiverName, senderId, senderName, "0"));
                         }
                     }
-                    userAdapter = new UserAdapter(friends, getContext());
+                    TopFiveVolunteerAdapter userAdapter = new TopFiveVolunteerAdapter(users, AcceptActivity.this);
                     recyclerView.setAdapter(userAdapter);
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -97,13 +91,4 @@ public class ChatsFragment extends Fragment {
         });
         reqQueue.add(jsonObjectRequest);
     }
-
-    @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
-        if (isVisibleToUser) {
-            getFragmentManager().beginTransaction().detach(this).attach(this).commit();
-        }
-    }
-
 }
