@@ -28,6 +28,6 @@
         android:layout_height="wrap_content"
         android:layout_x="160dp"
         android:layout_y="328dp"
-        android:text="accept"
+        android:text="chat"
         android:onClick="goToAcceptPage"/>
 </AbsoluteLayout>

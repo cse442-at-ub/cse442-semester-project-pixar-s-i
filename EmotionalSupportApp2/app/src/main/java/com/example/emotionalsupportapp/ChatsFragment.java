@@ -28,12 +28,12 @@ import java.util.ArrayList;
  * A simple {@link Fragment} subclass.
  */
 public class ChatsFragment extends Fragment {
-
-    private RecyclerView recyclerView;
-    private UserAdapter userAdapter;
     private String userID;
     private ArrayList<Friend> friends;
     private ArrayList<String> hasChatted;
+
+    private RecyclerView recyclerView;
+    private UserAdapter userAdapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -55,7 +55,7 @@ public class ChatsFragment extends Fragment {
 
     private void getFriendsHasChatted(){
         friends.clear();
-        String phpURLBase = "https://www-student.cse.buffalo.edu/CSE442-542/2020-spring/cse-442e/getMessages.php/?user_id=" + userID;
+        String phpURLBase = "https://www-student.cse.buffalo.edu/CSE442-542/2020-spring/cse-442e/getMessages.php/?user_id=" + userID + "&from_volunteer=0";
         RequestQueue reqQueue;
         reqQueue = Volley.newRequestQueue(getActivity().getApplicationContext());
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, phpURLBase, new Response.Listener<JSONObject>() {
