@@ -217,6 +217,7 @@ public class UsersFragment extends Fragment implements FriendDialog.FriendDialog
     }
 
     private void deleteFriendToDatabase(String friendId) {
+        deleteFriendMessages(friendId);
         String phpURLBase = "https://www-student.cse.buffalo.edu/CSE442-542/2020-spring/cse-442e/deleteFriend.php/?"
                 + "user_id=" + userID
                 + "&friend_id=" + friendId;
@@ -236,6 +237,23 @@ public class UsersFragment extends Fragment implements FriendDialog.FriendDialog
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("ERROR:", "Error on Volley: " + error.toString());
+            }
+        });
+        reqQueue.add(jsonObjectRequest);
+    }
+
+    private void deleteFriendMessages(String friendId) {
+        String phpURLBase = "https://www-student.cse.buffalo.edu/CSE442-542/2020-spring/cse-442e/deleteFriendMessages.php/?user_id=" + userID + "&friend_id=" + friendId + "&from_volunteer=0";
+        RequestQueue reqQueue;
+        reqQueue = Volley.newRequestQueue(getActivity().getApplicationContext());
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, phpURLBase, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
             }
         }, new Response.ErrorListener() {
             @Override

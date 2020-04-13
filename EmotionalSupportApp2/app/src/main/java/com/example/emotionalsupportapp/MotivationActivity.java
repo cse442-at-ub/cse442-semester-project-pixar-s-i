@@ -88,7 +88,7 @@ public class MotivationActivity extends Activity {
     }
 
     private void deleteVolunteerMessages() {
-        String phpURLBase = "https://www-student.cse.buffalo.edu/CSE442-542/2020-spring/cse-442e/deleteMessages.php/?user_id=" + userID;
+        String phpURLBase = "https://www-student.cse.buffalo.edu/CSE442-542/2020-spring/cse-442e/deleteMessages.php/?user_id=" + userID + "&from_volunteer=1";
         RequestQueue reqQueue;
         reqQueue = Volley.newRequestQueue(getApplicationContext());
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, phpURLBase, new Response.Listener<JSONObject>() {
