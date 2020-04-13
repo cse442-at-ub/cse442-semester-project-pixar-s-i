@@ -20,32 +20,16 @@ public class Friend implements Parcelable {
         return userId;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
-
     public String getUserName() {
         return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
     }
 
     public String getFriendId() {
         return friendId;
     }
 
-    public void setFriendId(String friendId) {
-        this.friendId = friendId;
-    }
-
     public String getFriendName() {
         return friendName;
-    }
-
-    public void setFriendName(String friendName) {
-        this.friendName = friendName;
     }
 
     public Friend(Parcel in){
