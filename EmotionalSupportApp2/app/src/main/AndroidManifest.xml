@@ -23,9 +23,6 @@
 
         <activity android:name=".SearchActivity" />
         <activity android:name=".MessageActivity" />
-
-
-        <activity android:name=".MessageActivity"></activity>
         <activity android:name=".ConnectNotificationsActivity" />
         <activity android:name=".TalkNotificationsActivity" />
         <activity android:name=".MotivationNotificationsActivity" />
@@ -62,7 +59,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <service android:name=".LocationService" />
             <service android:name=".Service.MyFirebaseMessagingService">
                     <intent-filter>
                             <action android:name="com.google.firebase.MESSAGING_EVENT" />
