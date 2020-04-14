@@ -15,6 +15,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".AcceptActivity"></activity>
+
+        <uses-library
+            android:name="org.apache.http.legacy"
+            android:required="false" />
+
+        <activity android:name=".SearchActivity" />
+        <activity android:name=".MessageActivity" />
 
 
         <activity android:name=".MessageActivity"></activity>
@@ -60,6 +68,7 @@
                             <action android:name="com.google.firebase.MESSAGING_EVENT" />
                     </intent-filter>
             </service>
+
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
