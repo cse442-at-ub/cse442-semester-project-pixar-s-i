@@ -25,7 +25,6 @@ import org.json.JSONObject;
 public class LoginActivity extends AppCompatActivity {
 
     EditText eMail, password;
-
     String userID = "1";
     String result = "";
     String signUpURL = "https://www-student.cse.buffalo.edu/CSE442-542/2020-spring/cse-442e/login.php";
@@ -68,7 +67,7 @@ public class LoginActivity extends AppCompatActivity {
         requestQueue.add(jsonObjectRequest);*/
         String passer = password.getText().toString();
         String emailer = eMail.getText().toString();
-        if(passer.equals("tester123") && emailer.equals("testemail@test.com")){
+        if(passer.equals("1") && emailer.equals("1")){
             result = "ok";
         }
         else{
@@ -81,6 +80,13 @@ public class LoginActivity extends AppCompatActivity {
             Intent intent = new Intent(this, MainActivity.class);
             intent.putExtra("EXTRA_USER_ID", userID);
             startActivity(intent);
+        }else{
+            Intent intent = new Intent(this, MainActivity.class);
+            intent.putExtra("EXTRA_USER_ID", userID);
+            startActivity(intent);
         }
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+
     }
 }

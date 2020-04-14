@@ -18,13 +18,15 @@ public class MessageAdpater extends RecyclerView.Adapter<MessageAdpater.ViewHold
     public static final int MSG_TYPE_LEFT = 0;
     public static final int MSG_TYPE_RIGHT = 1;
 
-    private ArrayList<String> chats;
+    private String userId;
+    private ArrayList<Chat> chats;
     private Context mContext;
 
 
-    public MessageAdpater(ArrayList<String> chats, Context mContext){
-            this.chats = chats;
-            this.mContext = mContext;
+    public MessageAdpater(String userId, ArrayList<Chat> chats, Context mContext){
+        this.userId = userId;
+        this.chats = chats;
+        this.mContext = mContext;
     }
 
     @NonNull
@@ -41,8 +43,8 @@ public class MessageAdpater extends RecyclerView.Adapter<MessageAdpater.ViewHold
 
     @Override
     public void onBindViewHolder(@NonNull MessageAdpater.ViewHolder holder, int position) {
-        String chat = chats.get(position);
-        holder.show_message.setText(chat);
+        Chat chat = chats.get(position);
+        holder.show_message.setText(chat.getMessage());
     }
 
     @Override
@@ -62,7 +64,11 @@ public class MessageAdpater extends RecyclerView.Adapter<MessageAdpater.ViewHold
 
     @Override
     public int getItemViewType(int position) {
-        return MSG_TYPE_RIGHT;
+        if (userId.equals(chats.get(position).getSenderId())){
+            return MSG_TYPE_RIGHT;
+        }else{
+            return MSG_TYPE_LEFT;
+        }
     }
 }
 

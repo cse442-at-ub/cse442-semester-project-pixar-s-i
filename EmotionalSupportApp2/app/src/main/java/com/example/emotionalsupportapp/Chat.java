@@ -1,33 +1,50 @@
 package com.example.emotionalsupportapp;
 
 public class Chat {
-    private String sender;
-    private String reciever;
+    private String senderId;
+    private String senderName;
+    private String receiverId;
+    private String receiverName;
     private String message;
 
-    public Chat(String sender, String reciever, String message) {
-        this.sender = sender;
-        this.reciever = reciever;
+    public Chat(String senderId, String senderName, String receiverId, String receiverName, String message) {
+        this.senderId = senderId;
+        this.senderName = senderName;
+        this.receiverId = receiverId;
+        this.receiverName = receiverName;
         this.message = message;
     }
 
-    public Chat() {
+    public String getSenderId() {
+        return senderId;
     }
 
-    public String getSender() {
-        return sender;
+    public void setSenderId(String sender) {
+        this.senderId = sender;
     }
 
-    public void setSender(String sender) {
-        this.sender = sender;
+    public String getSenderName() {
+        return senderName;
     }
 
-    public String getReciever() {
-        return reciever;
+    public void setSenderName(String senderName) {
+        this.senderName = senderName;
     }
 
-    public void setReciever(String reciever) {
-        this.reciever = reciever;
+    public String getReceiverId() {
+        return receiverId;
+    }
+
+    public void setReceiverId(String receiverId) {
+        this.receiverId = receiverId;
+    }
+
+    public String getReceiverName() {
+        return receiverName;
+    }
+
+    public void setReceiverName(String receiverName) {
+        this.receiverName = receiverName;
     }
 
     public String getMessage() {

@@ -1,4 +1,4 @@
-package com.example.emotionalsupportapp;
+package com.example.emotionalsupportapp.Highfive;
 
 //import android.support.v7.app.AppCompatActivity;
 import android.content.Intent;
@@ -7,6 +7,9 @@ import android.view.View;
 import android.widget.RatingBar;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.emotionalsupportapp.MainActivity;
+import com.example.emotionalsupportapp.R;
 
 public class HighFiveRatingActivity extends AppCompatActivity {
 

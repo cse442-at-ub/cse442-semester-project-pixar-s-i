@@ -1,9 +1,11 @@
-package com.example.emotionalsupportapp;
+package com.example.emotionalsupportapp.Highfive;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+
+import com.example.emotionalsupportapp.R;
 
 public class HighFiveVolunteerFoundActivity extends AppCompatActivity {
 

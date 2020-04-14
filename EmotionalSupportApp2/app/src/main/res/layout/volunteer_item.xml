@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="10dp">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/profile_image"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@mipmap/ic_launcher" />
+
+    <TextView
+        android:id="@+id/username"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="username"
+        android:layout_toRightOf="@id/profile_image"
+        android:layout_toEndOf="@id/profile_image"
+        android:layout_marginLeft="10dp"
+        android:layout_centerVertical="true"
+        android:textSize="18dp"/>
+
+    <Button
+        android:id="@+id/accept"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="accept"
+        android:layout_toRightOf="@id/username"
+        android:layout_toEndOf="@id/username"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="60dp"/>
+
+    <Button
+        android:id="@+id/decline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="decline"
+        android:layout_toRightOf="@id/accept"
+        android:layout_toEndOf="@id/accept"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="10dp"/>
+
+</RelativeLayout>
