@@ -25,7 +25,6 @@ import org.json.JSONObject;
 public class LoginActivity extends AppCompatActivity {
 
     EditText eMail, password;
-
     String userID = "1";
     String result = "";
     String signUpURL = "https://www-student.cse.buffalo.edu/CSE442-542/2020-spring/cse-442e/login.php";

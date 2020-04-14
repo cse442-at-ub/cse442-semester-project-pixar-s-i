@@ -1,8 +1,10 @@
-package com.example.emotionalsupportapp;
+package com.example.emotionalsupportapp.Hug;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.example.emotionalsupportapp.R;
 
 public class HugConfirmActivity extends AppCompatActivity {
 

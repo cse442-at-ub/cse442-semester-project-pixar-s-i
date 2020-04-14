@@ -3,6 +3,8 @@
     package="com.example.emotionalsupportapp">
     <uses-permission android:name="android.permission.INTERNET"></uses-permission>
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"></uses-permission>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"></uses-permission>
+
     <uses-permission android:name="android.permission.CALL_PHONE" />
 
 
@@ -14,18 +16,17 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
+
         <activity android:name=".MessageActivity"></activity>
         <activity android:name=".ConnectNotificationsActivity" />
         <activity android:name=".TalkNotificationsActivity" />
         <activity android:name=".MotivationNotificationsActivity" />
-        <activity android:name=".HugNotificationsActivity" />
-        <activity android:name=".Highfive.HighFiveNotificationsActivity" />
-        <activity android:name=".HugRequestActivity" />
+        <activity android:name=".Hug.HugNotificationsActivity" />
+
+        <activity android:name=".Hug.HugRequestActivity" />
         <activity android:name=".ChangeImage" />
         <activity android:name=".HistoryActivity" />
-        <activity android:name=".Highfive.HighFiveRequestActivity" />
-        <activity android:name=".HugActivity" />
-        <activity android:name=".Highfive.HighFiveActivity" />
+        <activity android:name=".Hug.HugActivity" />
         <activity android:name=".profilePage" />
         <activity android:name=".SignUpActivity" />
         <activity android:name=".MainActivity" />
@@ -37,6 +38,14 @@
         <activity android:name=".SignUpPictureActivity" />
         <activity android:name=".VolunteerAndLocationInfoActivity" />
         <activity android:name=".MissedMeetUpActivity" />
+
+        <activity android:name=".Highfive.HighFiveVolunteerFoundActivity"/>
+        <activity android:name=".Highfive.HighFiveVolunteerActivity"/>
+        <activity android:name=".Highfive.HighFiveNotificationsActivity" />
+        <activity android:name=".Highfive.HighFiveActivity" />
+        <activity android:name=".Highfive.HighFiveRequestActivity" />
+        <activity android:name=".Highfive.HighFiveLocationActivity"/>
+        <activity android:name=".Highfive.HighFiveRatingActivity"/>
 
         <activity android:name=".LoginActivity">
         <intent-filter>

@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.example.emotionalsupportapp.Highfive.HighFiveActivity;
+import com.example.emotionalsupportapp.Hug.HugActivity;
 
 public class MainActivity extends AppCompatActivity {
     int userID;
@@ -36,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
      * Called when hug button is clicked
      */
     public void goToHugPage(View view){
-        Intent intent = new Intent(this,HugActivity.class);
+        Intent intent = new Intent(this, HugActivity.class);
         intent.putExtra("EXTRA_USER_ID", userID);
         startActivity(intent);
     }

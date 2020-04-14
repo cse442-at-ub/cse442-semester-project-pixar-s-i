@@ -1,10 +1,13 @@
-package com.example.emotionalsupportapp;
+package com.example.emotionalsupportapp.Hug;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+
+import com.example.emotionalsupportapp.MainActivity;
+import com.example.emotionalsupportapp.R;
 
 public class HugRatingActivity extends AppCompatActivity {
 
