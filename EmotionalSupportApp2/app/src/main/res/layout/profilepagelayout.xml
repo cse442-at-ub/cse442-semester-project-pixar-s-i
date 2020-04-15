@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#7851A5"
-    tools:context=".profilePage"
+    tools:context=".Member.Profile.profilePage"
     android:id="@+id/absoluteLayout">
 
     <RatingBar
