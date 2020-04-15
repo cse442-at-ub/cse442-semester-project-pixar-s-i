@@ -26,7 +26,7 @@ import org.json.JSONObject;
 public class LoginActivity extends AppCompatActivity {
 
     EditText eMail, password;
-    String userID = "1";
+
     String result = "failed";
     String signUpURL = "https://www-student.cse.buffalo.edu/CSE442-542/2020-spring/cse-442e/login.php";
 
@@ -67,7 +67,7 @@ public class LoginActivity extends AppCompatActivity {
                     result = returner;
 
                     if(!result.equals("failed")) {
-                        //intent.putExtra("EXTRA_USER_ID", userID);
+                        intent.putExtra("EXTRA_USER_ID", result);
                         startActivity(intent);
                     }
                     else{

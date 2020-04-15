@@ -39,7 +39,7 @@ public class profilePage extends Activity {
     private TextView name;
     private  TextView emergencyContact;
     public RequestQueue reqQueue;
-    public int idNum = 1;
+    public String idNum;
     public String phpURLBase = "https://www-student.cse.buffalo.edu/CSE442-542/2020-spring/cse-442e/getInfoProfile.php/?id=" + idNum;
     public String phpURLHighFive = "https://www-student.cse.buffalo.edu/CSE442-542/2020-spring/cse-442e/getHighFiveRatingProfile.php/?id=" + idNum + "&meetingType=0";
     public String phpURLMotivation = "https://www-student.cse.buffalo.edu/CSE442-542/2020-spring/cse-442e/getHighFiveRatingProfile.php/?id=" + idNum + "&meetingType=2";
@@ -51,7 +51,7 @@ public class profilePage extends Activity {
         setContentView(R.layout.profilepagelayout);
 
         //SQL Initialization Here
-        String sessionId = getIntent().getStringExtra("EXTRA_USER_ID");
+        idNum = getIntent().getStringExtra("EXTRA_USER_ID");
         //idNum = Integer.getInteger(sessionId);
 
         //phpURLBase = "https://www-student.cse.buffalo.edu/CSE442-542/2020-spring/cse-442e/getInfoProfile.php/?id=" + idNum;
