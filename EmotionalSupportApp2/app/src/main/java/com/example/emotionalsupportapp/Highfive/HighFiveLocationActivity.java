@@ -1,4 +1,4 @@
-package com.example.emotionalsupportapp;
+package com.example.emotionalsupportapp.Highfive;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -9,6 +9,8 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.widget.Toast;
+
+import com.example.emotionalsupportapp.R;
 
 public class HighFiveLocationActivity extends AppCompatActivity {
 
@@ -36,8 +38,8 @@ public class HighFiveLocationActivity extends AppCompatActivity {
 
     //Method to Start location services
     void startLocationService(){
-        Intent intent = new Intent(HighFiveLocationActivity.this,LocationService.class);
-        startService(intent);
+       // Intent intent = new Intent(HighFiveLocationActivity.this, LocationService.class);
+        //startService(intent);
 
     }
 

@@ -13,9 +13,21 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 
 public class MessageActivity extends AppCompatActivity {
+    private boolean fromVolunteer;
 
     TextView username;
 
@@ -23,11 +35,9 @@ public class MessageActivity extends AppCompatActivity {
     EditText text_send;
 
     MessageAdpater messageAdpater;
-    ArrayList<String> chats;
+    ArrayList<Chat> chats;
 
     RecyclerView recyclerView;
-
-    Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,37 +63,105 @@ public class MessageActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(linearLayoutManager);
 
         username = findViewById(R.id.username);
-        intent =getIntent();
-        final String user = intent.getStringExtra("username");
-        username.setText(user);
-
         btn_send = findViewById(R.id.btn_send);
         text_send = findViewById(R.id.text_send);
 
         chats = new ArrayList<>();
 
-        btn_send.setOnClickListener(new View.OnClickListener() {
+        Bundle data =getIntent().getExtras();
+        try{
+            final Friend friend = data.getParcelable("FRIEND");
+            username.setText(friend.getFriendName());
+
+            readMessages(friend.getUserId(),friend.getFriendId(), "0");
+
+            btn_send.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    String msg = text_send.getText().toString();
+                    if (!msg.equals("")){
+                        sendMessage(friend.getUserId(),friend.getUserName(),friend.getFriendId(),friend.getFriendName(), msg, "0");
+                    }
+                    text_send.setText("");
+                }
+            });
+        }catch (Exception e){
+            final Volunteer volunteer = data.getParcelable("VOLUNTEER");
+            username.setText(volunteer.getVolunteerName());
+
+            readMessages(volunteer.getUserId(),volunteer.getVolunteerId(), "1");
+
+            btn_send.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    String msg = text_send.getText().toString();
+                    if (!msg.equals("")){
+                        sendMessage(volunteer.getUserId(),volunteer.getUserName(),volunteer.getVolunteerId(),volunteer.getVolunteerName(), msg, "1");
+                    }
+                    text_send.setText("");
+                }
+            });
+        }
+    }
+
+    private void sendMessage(final String senderId, final String senderName, final String receiverId, final String receiverName, final String message, final String fromVolunteer){
+        String phpURLBase =
+                "https://www-student.cse.buffalo.edu/CSE442-542/2020-spring/cse-442e/saveMessage.php/"
+                        + "?sender_id=" + senderId +
+                        "&sender_name=" + senderName +
+                        "&receiver_id=" + receiverId +
+                        "&receiver_name=" + receiverName +
+                        "&message=" + message +
+                        "&from_volunteer=" + fromVolunteer ;
+        RequestQueue reqQueue;
+        reqQueue = Volley.newRequestQueue(getApplicationContext());
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, phpURLBase, new Response.Listener<JSONObject>() {
             @Override
-            public void onClick(View v) {
-                String msg = text_send.getText().toString();
-                Log.d("CREATION", msg);
-                if (!msg.equals("")){
-                    sendMessage(user, msg); }
-                text_send.setText("");
+            public void onResponse(JSONObject response) {
+                readMessages(senderId, receiverId, fromVolunteer);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("ERROR:", "Error on Volley: " + error.toString());
             }
         });
-
-        readMessages();
-
+        reqQueue.add(jsonObjectRequest);
     }
 
-    private void sendMessage(String reciever, String message){
-        chats.add(message);
-    }
-
-    private void readMessages(){
-
-        messageAdpater = new MessageAdpater(chats, MessageActivity.this);
-        recyclerView.setAdapter(messageAdpater);
+    private void readMessages(final String userId, final  String friendId, final String fromVolunteer){
+        chats.clear();
+        String phpURLBase = "https://www-student.cse.buffalo.edu/CSE442-542/2020-spring/cse-442e/getMessages.php/?user_id=" + userId + "&from_volunteer=" + fromVolunteer;
+        RequestQueue reqQueue;
+        reqQueue = Volley.newRequestQueue(getApplicationContext());
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, phpURLBase, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    JSONArray re = response.getJSONArray("response");
+                    for (int i = 0; i < re.length(); i++) {
+                        JSONObject jsonobject = re.getJSONObject(i);
+                        String senderId = jsonobject.getString("senderId");
+                        String senderName = jsonobject.getString("senderName");
+                        String receiverId = jsonobject.getString("receiverId");
+                        String receiverName = jsonobject.getString("receiverName");
+                        String message = jsonobject.getString("message");
+                        if (friendId.equals(senderId) || friendId.equals(receiverId)){
+                            chats.add(new Chat(senderId,senderName,receiverId,receiverName,message));
+                        }
+                    }
+                     messageAdpater = new MessageAdpater(userId, chats, MessageActivity.this);
+                     recyclerView.setAdapter(messageAdpater);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("ERROR:", "Error on Volley: " + error.toString());
+            }
+        });
+        reqQueue.add(jsonObjectRequest);
     }
 }

@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -14,51 +13,52 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
-
 public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
 
-    private ArrayList<String> username = new ArrayList<>();
+    private ArrayList<Friend> friends;
     private Context mContext;
 
-    public UserAdapter(ArrayList<String> username, Context mContext){
-        this.username = username;
+    public UserAdapter(ArrayList<Friend> friends, Context mContext){
+        this.friends = friends;
         this.mContext = mContext;
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.user_item, parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.custom_listview, parent,false);
         return new UserAdapter.ViewHolder(view);
     }
-
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        final String current_username = username.get(position);
-        holder.username.setText(current_username);
+        final Friend current_friend = friends.get(position);
+        holder.username.setText(current_friend.getFriendName());
+        String friend_id = "#" + current_friend.getFriendId();
+        holder.user_id.setText(friend_id);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(mContext, MessageActivity.class);
-                intent.putExtra("username", current_username);
-                mContext.startActivity(intent);
+            Intent intent = new Intent(mContext, MessageActivity.class);
+            intent.putExtra("FRIEND", current_friend);
+            mContext.startActivity(intent);
             }
         });
     }
 
     @Override
     public int getItemCount() {
-        return username.size();
+        return friends.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
         TextView username;
-        RelativeLayout parent_layout;
+        TextView user_id;
 
         ViewHolder(View itemView){
             super(itemView);
 
             username = itemView.findViewById(R.id.username);
+            user_id = itemView.findViewById(R.id.user_id);
         }
     }
 }

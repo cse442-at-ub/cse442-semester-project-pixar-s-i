@@ -1141,7 +1141,6 @@ id button2
 id button3
 id button4
 id button5
-id button6
 id button7
 id button8
 id button9
@@ -1200,14 +1199,17 @@ id gone
 id google_map
 id group_divider
 id groups
+id hFiveSwitch
 id highFiveBtn
 id highFiveNotifications
 id high_five_rating_bar
 id history
 id home
 id homeAsUp
+id hotlineButton
 id hugBtn
 id hugNotifications
+id hugSwitch
 id hybrid
 id icon
 id icon_group
@@ -1241,6 +1243,7 @@ id middle
 id mini
 id motivationBtn
 id motivationNotifications
+id motivationSwitch
 id mtrl_child_content_container
 id mtrl_internal_children_alpha_tag
 id multiply
@@ -1339,12 +1342,6 @@ id textView10
 id textView11
 id textView12
 id textView13
-id textView14
-id textView15
-id textView16
-id textView17
-id textView18
-id textView19
 id textView2
 id textView20
 id textView3

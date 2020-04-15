@@ -2,8 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.emotionalsupportapp">
     <uses-permission android:name="android.permission.INTERNET"></uses-permission>
-    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"></uses-permission>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"></uses-permission>
 
+    <uses-permission android:name="android.permission.CALL_PHONE" />
 
 
     <application
@@ -13,32 +15,46 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".AcceptActivity"></activity>
+
         <uses-library
             android:name="org.apache.http.legacy"
             android:required="false" />
-        <activity android:name=".MessageActivity"></activity>
+
+        <activity android:name=".SearchActivity" />
+        <activity android:name=".MessageActivity" />
         <activity android:name=".ConnectNotificationsActivity" />
         <activity android:name=".TalkNotificationsActivity" />
         <activity android:name=".MotivationNotificationsActivity" />
-        <activity android:name=".HugNotificationsActivity" />
-        <activity android:name=".HighFiveNotificationsActivity" />
-        <activity android:name=".HugRequestActivity" />
+        <activity android:name=".Hug.HugNotificationsActivity" />
+
+        <activity android:name=".Hug.HugRequestActivity" />
         <activity android:name=".ChangeImage" />
         <activity android:name=".HistoryActivity" />
-        <activity android:name=".HighFiveRequestActivity" />
-        <activity android:name=".HugActivity" />
-        <activity android:name=".HighFiveActivity" />
+        <activity android:name=".Hug.HugActivity" />
         <activity android:name=".profilePage" />
         <activity android:name=".SignUpActivity" />
         <activity android:name=".MainActivity" />
         <activity android:name=".ConnectActivity" />
-        <activity android:name=".TalkActivity" />
+        <activity android:name=".TalkActivity" >
+             <intent-filter>
+                <action android:name="android.intent.action.PHONE_STATE" />
+             </intent-filter>
+        </activity>
         <activity android:name=".MotivationActivity" />
         <activity android:name=".NotificationsActivity" />
         <activity android:name=".SettingsActivity" />
         <activity android:name=".SignUpPictureActivity" />
         <activity android:name=".VolunteerAndLocationInfoActivity" />
         <activity android:name=".MissedMeetUpActivity" />
+
+        <activity android:name=".Highfive.HighFiveVolunteerFoundActivity"/>
+        <activity android:name=".Highfive.HighFiveVolunteerActivity"/>
+        <activity android:name=".Highfive.HighFiveNotificationsActivity" />
+        <activity android:name=".Highfive.HighFiveActivity" />
+        <activity android:name=".Highfive.HighFiveRequestActivity" />
+        <activity android:name=".Highfive.HighFiveLocationActivity"/>
+        <activity android:name=".Highfive.HighFiveRatingActivity"/>
 
         <activity android:name=".LoginActivity">
         <intent-filter>
@@ -47,10 +63,24 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <service android:name=".LocationService" />
+            <service android:name=".Service.MyFirebaseMessagingService">
+                    <intent-filter>
+                            <action android:name="com.google.firebase.MESSAGING_EVENT" />
+                    </intent-filter>
+            </service>
+
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyBaUPPSTrK4s6N7vgZ9tpGS3uzdfgjDviE" />
-    </application>
+            android:value="@string/google_maps_key" />
+        <!-- Set custom default icon. This is used when no icon is set for incoming notification messages.-->
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@drawable/ic_notifications_24" />
+        <!-- Set color used with incoming notification messages. This is used when no color is set for the incoming
+             notification message. -->
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_color"
+            android:resource="@color/colorAccent" />
+</application>
 
 </manifest>

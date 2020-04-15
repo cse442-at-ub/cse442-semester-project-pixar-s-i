@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".HugNotificationsActivity">
+    tools:context=".Hug.HugNotificationsActivity">
 
     <Switch
         android:id="@+id/turnOffAllNotifications"

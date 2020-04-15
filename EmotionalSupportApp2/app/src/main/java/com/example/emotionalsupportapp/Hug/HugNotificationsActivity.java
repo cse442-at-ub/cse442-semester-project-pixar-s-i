@@ -1,4 +1,4 @@
-package com.example.emotionalsupportapp;
+package com.example.emotionalsupportapp.Hug;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -11,9 +11,11 @@ import android.widget.DatePicker;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.emotionalsupportapp.R;
+
 import java.util.Calendar;
 
-public class HighFiveNotificationsActivity extends AppCompatActivity {
+public class HugNotificationsActivity extends AppCompatActivity {
 
     private TextView selectDateTurnOffNotifications;
     private DatePickerDialog.OnDateSetListener notificationsDateSetListener;
@@ -21,7 +23,7 @@ public class HighFiveNotificationsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_high_five_notifications);
+        setContentView(R.layout.activity_hug_notifications);
 
         selectDateTurnOffNotifications = findViewById(R.id.tvDate);
 
@@ -34,7 +36,7 @@ public class HighFiveNotificationsActivity extends AppCompatActivity {
                 int day = cal.get(Calendar.DAY_OF_MONTH);
 
                 DatePickerDialog dialog = new DatePickerDialog(
-                        HighFiveNotificationsActivity.this,
+                        HugNotificationsActivity.this,
                         android.R.style.Theme_Holo_Light_Dialog_MinWidth,
                         notificationsDateSetListener,
                         year,month,day);
@@ -53,7 +55,8 @@ public class HighFiveNotificationsActivity extends AppCompatActivity {
         };
     }
 
+
     public void turnOffNotificationsForever(View view) {
-        Toast.makeText(this, "You have selected turn off High Five notifications forever", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "You have selected turn off Hug notifications forever", Toast.LENGTH_SHORT).show();
     }
 }

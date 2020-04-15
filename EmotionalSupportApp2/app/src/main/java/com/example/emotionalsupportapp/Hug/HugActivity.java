@@ -1,4 +1,4 @@
-package com.example.emotionalsupportapp;
+package com.example.emotionalsupportapp.Hug;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -6,6 +6,9 @@ import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationManagerCompat;
+
+import com.example.emotionalsupportapp.MainActivity;
+import com.example.emotionalsupportapp.R;
 
 public class HugActivity extends AppCompatActivity {
 
