@@ -1343,6 +1343,7 @@ id textView11
 id textView12
 id textView13
 id textView2
+id textView20
 id textView3
 id textView4
 id textView5
@@ -1452,6 +1453,7 @@ layout activity_message
 layout activity_missed_meet_up
 layout activity_motivation_notifications
 layout activity_notifications
+layout activity_scoreboard
 layout activity_settings
 layout activity_sign_up
 layout activity_sign_up_picture

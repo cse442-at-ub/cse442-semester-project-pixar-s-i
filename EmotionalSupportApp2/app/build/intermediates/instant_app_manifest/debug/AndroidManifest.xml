@@ -43,6 +43,8 @@
         <activity android:name="com.example.emotionalsupportapp.MotivationNotificationsActivity" />
         <activity android:name="com.example.emotionalsupportapp.HugNotificationsActivity" />
         <activity android:name="com.example.emotionalsupportapp.HighFiveNotificationsActivity" />
+        <activity android:name="com.example.emotionalsupportapp.SignUpPictureActivity" />
+
         <activity android:name="com.example.emotionalsupportapp.HugRequestActivity" />
         <activity android:name="com.example.emotionalsupportapp.ChangeImage" />
         <activity android:name="com.example.emotionalsupportapp.HistoryActivity" />
