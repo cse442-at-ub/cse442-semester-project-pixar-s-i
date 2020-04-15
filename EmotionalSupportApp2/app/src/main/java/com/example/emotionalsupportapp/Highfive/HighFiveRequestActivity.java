@@ -1,8 +1,6 @@
 package com.example.emotionalsupportapp.Highfive;
 
-import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.Manifest;
 
@@ -12,7 +10,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 
 import android.widget.Toast;
@@ -26,7 +23,6 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.directions.route.AbstractRouting;
@@ -39,7 +35,6 @@ import com.example.emotionalsupportapp.R;
 import com.example.emotionalsupportapp.Service.RequestDialog;
 
 
-import com.example.emotionalsupportapp.Service.User;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationListener;
@@ -58,6 +53,9 @@ import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -75,12 +73,12 @@ public class HighFiveRequestActivity extends FragmentActivity implements OnMapRe
     private LocationCallback locationCallback;
     private MarkerOptions currentUserLocationMarker;
     private static final int REQUEST_CODE = 101;
-    private Location requestLocation;
-    private int interal = 5000;
+    private int interval = 5000;
     private Handler handler;
     private ProgressDialog progressDialog;
     private Boolean userFound;
-    private String userID;
+    private int userID;
+    private  LatLng dest;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -117,7 +115,7 @@ public class HighFiveRequestActivity extends FragmentActivity implements OnMapRe
     protected void onStart() {
         if (getIntent().getExtras() != null) {
             Bundle b = getIntent().getExtras();
-            userID = "1";
+            userID = b.getInt("EXTRA_USER_ID");
             if (b.getBoolean("notification")) {
                 openDialog();
             }
@@ -137,10 +135,20 @@ public class HighFiveRequestActivity extends FragmentActivity implements OnMapRe
                     matchedUser();
                 }else{
                     stopRepeatingTask();
+                    LatLng origin = new LatLng(lastLocation.getLatitude(),lastLocation.getLongitude());
+                    MarkerOptions options = new MarkerOptions();
+                    options.position(dest);
+
+                    options.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
+                    mMap.addMarker(currentUserLocationMarker);
+                    mMap.addMarker(options);
+                    Log.e("Location Found",dest + " " + origin);
+                    requestDirections(origin, dest);
+
                 }
 
             }finally {
-                handler.postDelayed(databaseChecker,interal);
+                handler.postDelayed(databaseChecker,interval);
             }
         }
     };
@@ -148,15 +156,33 @@ public class HighFiveRequestActivity extends FragmentActivity implements OnMapRe
     private void matchedUser() {
 
         String phpfile = "retrieveMatchedUser.php";
+
         StringBuilder fullURL = new StringBuilder();
         fullURL.append(getString(R.string.database_url));
         fullURL.append(phpfile);
+
         StringRequest jsonArrayRequest = new StringRequest(Request.Method.POST, fullURL.toString(), new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Log.e("Response",response + " ");
-                if(!response.isEmpty()){
-//                    userFound = true;
+              //  Log.e("Response",response + " ");
+                if(!response.equals("[]") && !response.equals("No such user exist in the MatchedUsers table")){
+                    try {
+
+                        JSONObject userdata = new JSONObject(response);
+                        //Log.e("Response",userdata.getString("userID1") + " ");
+
+                        if(!userdata.getString("userID1").equals(String.valueOf(userID))){
+
+                            dest = new LatLng(Double.valueOf(userdata.getString("xCord1")),Double.valueOf(userdata.getString("yCord1")));
+                        }else{
+                            dest = new LatLng(Double.valueOf(userdata.getString("xCord2")),Double.valueOf(userdata.getString("yCord2")));
+
+                        }
+                        userFound = true;
+
+                    } catch (JSONException e) {
+                        Log.e("JSON Exception",e + "");
+                    }
                 }
 
             }
@@ -171,7 +197,7 @@ public class HighFiveRequestActivity extends FragmentActivity implements OnMapRe
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 HashMap<String,String> query = new HashMap<>();
-                query.put("userID",userID);
+                query.put("userID",String.valueOf(userID));
                 return query;
             }
         };
@@ -316,7 +342,7 @@ public class HighFiveRequestActivity extends FragmentActivity implements OnMapRe
                 .key(getString(R.string.google_maps_key))
                 .travelMode(AbstractRouting.TravelMode.WALKING)
                 .withListener(this)
-                .alternativeRoutes(true)
+                .alternativeRoutes(false)
                 .waypoints(origin, dest)
                 .build();
         routing.execute();
@@ -383,6 +409,7 @@ public class HighFiveRequestActivity extends FragmentActivity implements OnMapRe
     public void onRoutingCancelled() {
 
     }
+
 
 
     @Override
