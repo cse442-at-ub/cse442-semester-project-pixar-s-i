@@ -14,7 +14,6 @@ public class HistoryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_history);
 
-        String sessionId = getIntent().getStringExtra("EXTRA_USER_ID");
-        userID = 1;
+        String userID = getIntent().getStringExtra("EXTRA_USER_ID");
     }
 }

@@ -31,8 +31,8 @@ public class MotivationActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.motivationlayout);
 
-//        String userID = getIntent().getStringExtra("EXTRA_USER_ID");
-        userID = "1";
+        userID = getIntent().getStringExtra("EXTRA_USER_ID");
+
 
         getUsername((new VolleyCallback() {
             @Override

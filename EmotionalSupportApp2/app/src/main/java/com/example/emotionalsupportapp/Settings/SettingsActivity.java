@@ -9,7 +9,7 @@ import android.view.View;
 import com.example.emotionalsupportapp.R;
 
 public class SettingsActivity extends AppCompatActivity {
-    int idNum;
+    String idNum;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,7 +17,7 @@ public class SettingsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_settings);
 
         String sessionId = getIntent().getStringExtra("EXTRA_USER_ID");
-        idNum = 1;
+        idNum = getIntent().getStringExtra("EXTRA_USER_ID");
     }
 
     public void goToNotifications(View view) {
