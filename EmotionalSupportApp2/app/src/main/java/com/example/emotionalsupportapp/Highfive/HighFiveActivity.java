@@ -85,6 +85,8 @@ public class HighFiveActivity extends AppCompatActivity {
         notificationManager = NotificationManagerCompat.from(this);
         highFiveSearch = new Intent(this, HighFiveRequestActivity.class);
         highFiveSearch.putExtra("userFound",false);
+        highFiveSearch.putExtra("EXTRA_USER_ID",getIntent().getExtras().getInt("EXTRA_USER_ID"));
+
         mList = findViewById(R.id.high_five_request_list);
         userList = new ArrayList<>();
         adapter = new RequestsListAdapter(getApplicationContext(), userList);
@@ -169,7 +171,9 @@ public class HighFiveActivity extends AppCompatActivity {
                     .setNegativeButton("Cancel", null)
                     .show();
         } else {
-            sendActiveUserPush();
+            if(!sendActiveUserPush()){
+                return;
+            }
             sendFCMPush();
             stopLocationUpdates();
             startActivity(highFiveSearch);
@@ -186,10 +190,10 @@ public class HighFiveActivity extends AppCompatActivity {
     }
 
     //Make a query to the database with the userid, latitude, and longitude
-    private void sendActiveUserPush() {
+    private boolean sendActiveUserPush() {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_CODE);
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, REQUEST_CODE);
+            return false;
 
         }
         fusedLocationProviderClient.getLastLocation()
@@ -214,7 +218,7 @@ public class HighFiveActivity extends AppCompatActivity {
                                             FCM_TOKEN = task.getResult().getToken();
                                             String phpfile = "writeCoord.php";
                                             HashMap<String,String> query = new HashMap<>();
-                                            query.put("userID","1");
+                                            query.put("userID",String.valueOf(getIntent().getExtras().getInt("EXTRA_USER_ID")));
                                             query.put("xCord",String.valueOf(lastLocation.getLatitude()));
                                             query.put("yCord",String.valueOf(lastLocation.getLongitude()));
                                             Log.e("Query",query.toString());
@@ -228,6 +232,7 @@ public class HighFiveActivity extends AppCompatActivity {
                     }
                 });
 
+        return true;
 
     }
 
@@ -340,7 +345,7 @@ public class HighFiveActivity extends AppCompatActivity {
         StringRequest jsonArrayRequest = new StringRequest(Request.Method.POST, fullURL.toString(), new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Log.e("Response",response + " ");
+            //    Log.e("Response",response + " ");
 
             }
         }, new Response.ErrorListener() {

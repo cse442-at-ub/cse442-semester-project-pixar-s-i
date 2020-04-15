@@ -34,8 +34,9 @@ public class TalkActivity extends AppCompatActivity {
     public RequestQueue reqQueue;
     String number = "111111111";
     String emergencyNumber = "(800)273-8255";
-    String emergencyNumberPlaceholder = "(555)427-2999";
-    StateListener phoneStateListener;
+//    String emergencyNumberPlaceholder = "(555)427-2999";
+
+//    StateListener phoneStateListener;
    // Bundle savedInstanceState;
 
 
@@ -50,9 +51,9 @@ public class TalkActivity extends AppCompatActivity {
         setContentView(R.layout.activity_talk);
 
         initializeSql();
-        phoneStateListener = new StateListener();
-        TelephonyManager telephonyManager =(TelephonyManager)getSystemService(TELEPHONY_SERVICE);
-        telephonyManager.listen(phoneStateListener, PhoneStateListener.LISTEN_CALL_STATE);
+//        phoneStateListener = new StateListener();
+//        TelephonyManager telephonyManager =(TelephonyManager)getSystemService(TELEPHONY_SERVICE);
+//        telephonyManager.listen(phoneStateListener, PhoneStateListener.LISTEN_CALL_STATE);
     }
     /*
      * Changes to the main high five page
@@ -76,15 +77,20 @@ public class TalkActivity extends AppCompatActivity {
 
         Log.d("Number Updated:", number);
         Intent intent = new Intent(Intent.ACTION_CALL);
-        //number
-        intent.setData(Uri.parse("tel: " + number));
+        if(number != null){
+            intent.setData(Uri.parse("tel: " + number));
+
+        }else{
+            intent.setData(Uri.parse("tel: " + "(111)1111111"));
+
+        }
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(TalkActivity.this, new String[]{Manifest.permission.CALL_PHONE}, REQUEST_CALL);
             return;
         }
         startActivity(intent);
-        String toPrint = phoneStateListener.currentState + ", Prev State = " + phoneStateListener.prevState;
-        Log.d("STATE: ", toPrint);
+//        String toPrint = phoneStateListener.currentState + ", Prev State = " + phoneStateListener.prevState;
+//        Log.d("STATE: ", toPrint);
 
         Log.d("ROR: ", "EXECUTED UNNESSICARILY");
 
@@ -96,14 +102,14 @@ public class TalkActivity extends AppCompatActivity {
         Log.d("Number Updated:", number);
         Intent intent = new Intent(Intent.ACTION_CALL);
         //number
-        intent.setData(Uri.parse("tel: " + emergencyNumberPlaceholder));
+        intent.setData(Uri.parse("tel: " + emergencyNumber));
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(TalkActivity.this, new String[]{Manifest.permission.CALL_PHONE}, REQUEST_CALL);
             return;
         }
         startActivity(intent);
-        String toPrint = phoneStateListener.currentState + ", Prev State = " + phoneStateListener.prevState;
-        Log.d("STATE: ", toPrint);
+//        String toPrint = phoneStateListener.currentState + ", Prev State = " + phoneStateListener.prevState;
+//        Log.d("STATE: ", toPrint);
 
         Log.d("ROR: ", "EXECUTED UNNESSICARILY");
 
