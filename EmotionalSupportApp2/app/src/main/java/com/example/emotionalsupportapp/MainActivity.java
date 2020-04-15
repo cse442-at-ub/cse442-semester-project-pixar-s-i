@@ -14,15 +14,15 @@ import com.example.emotionalsupportapp.Hug.HugActivity;
 import com.example.emotionalsupportapp.Member.Profile.profilePage;
 
 public class MainActivity extends AppCompatActivity {
-    int userID;
+
+    String userID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        String sessionId = getIntent().getStringExtra("EXTRA_USER_ID");
-        userID = 1;
+        userID = getIntent().getStringExtra("EXTRA_USER_ID");
     }
 
     /*
