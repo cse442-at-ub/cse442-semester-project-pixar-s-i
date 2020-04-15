@@ -1,4 +1,4 @@
-package com.example.emotionalsupportapp.Service;
+package com.example.emotionalsupportapp.Member.Profile;
 
 public class User {
 

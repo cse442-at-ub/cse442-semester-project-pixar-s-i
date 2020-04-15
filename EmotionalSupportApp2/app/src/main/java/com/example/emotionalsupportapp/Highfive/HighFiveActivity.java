@@ -31,9 +31,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.*;
 import com.example.emotionalsupportapp.MainActivity;
 import com.example.emotionalsupportapp.R;
-import com.example.emotionalsupportapp.Service.MyFirebaseMessagingService;
 import com.example.emotionalsupportapp.Service.RequestsListAdapter;
-import com.example.emotionalsupportapp.Service.User;
+import com.example.emotionalsupportapp.Member.Profile.User;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
@@ -73,7 +72,7 @@ public class HighFiveActivity extends AppCompatActivity {
     private Location lastLocation;
     LocationRequest locationRequest;
     LocationCallback locationCallBack;
-
+    private String userID;
     Intent highFiveSearch;
 
     @Override
@@ -85,7 +84,9 @@ public class HighFiveActivity extends AppCompatActivity {
         notificationManager = NotificationManagerCompat.from(this);
         highFiveSearch = new Intent(this, HighFiveRequestActivity.class);
         highFiveSearch.putExtra("userFound",false);
-        highFiveSearch.putExtra("EXTRA_USER_ID",getIntent().getExtras().getInt("EXTRA_USER_ID"));
+        userID = getIntent().getExtras().getString("EXTRA_USER_ID");
+        Log.e("UserID",userID);
+        highFiveSearch.putExtra("EXTRA_USER_ID",userID);
 
         mList = findViewById(R.id.high_five_request_list);
         userList = new ArrayList<>();
@@ -218,7 +219,7 @@ public class HighFiveActivity extends AppCompatActivity {
                                             FCM_TOKEN = task.getResult().getToken();
                                             String phpfile = "writeCoord.php";
                                             HashMap<String,String> query = new HashMap<>();
-                                            query.put("userID",String.valueOf(getIntent().getExtras().getInt("EXTRA_USER_ID")));
+                                            query.put("userID",userID);
                                             query.put("xCord",String.valueOf(lastLocation.getLatitude()));
                                             query.put("yCord",String.valueOf(lastLocation.getLongitude()));
                                             Log.e("Query",query.toString());

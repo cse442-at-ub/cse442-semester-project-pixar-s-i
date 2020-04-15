@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        userID = getIntent().getStringExtra("EXTRA_USER_ID");
+        userID = getIntent().getExtras().getString("EXTRA_USER_ID");
     }
 
     /*

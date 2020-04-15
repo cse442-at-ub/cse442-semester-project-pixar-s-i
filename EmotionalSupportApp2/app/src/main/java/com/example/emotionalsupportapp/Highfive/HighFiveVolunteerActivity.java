@@ -17,9 +17,9 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.emotionalsupportapp.MainActivity;
+import com.example.emotionalsupportapp.Member.Profile.User;
 import com.example.emotionalsupportapp.R;
 import com.example.emotionalsupportapp.Service.RequestsListAdapter;
-import com.example.emotionalsupportapp.Service.User;
 
 import org.json.JSONArray;
 import org.json.JSONException;

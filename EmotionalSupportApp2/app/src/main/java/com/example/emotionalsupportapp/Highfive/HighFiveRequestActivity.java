@@ -61,7 +61,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class HighFiveRequestActivity extends FragmentActivity implements OnMapReadyCallback, LocationListener, RoutingListener {
+public class HighFiveRequestActivity extends FragmentActivity implements OnMapReadyCallback, RoutingListener {
 
     private ArrayList<LatLng> markerPoints = new ArrayList<>();
     private List<Polyline> polylines;
@@ -77,7 +77,8 @@ public class HighFiveRequestActivity extends FragmentActivity implements OnMapRe
     private Handler handler;
     private ProgressDialog progressDialog;
     private Boolean userFound;
-    private int userID;
+    private String userID;
+    private String volunteerID;
     private  LatLng dest;
 
     @Override
@@ -95,27 +96,98 @@ public class HighFiveRequestActivity extends FragmentActivity implements OnMapRe
         locationRequest.setInterval(5000);
         locationRequest.setFastestInterval(1000);
         locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-        locationCallback = new LocationCallback() {
-            @Override
-            public void onLocationResult(LocationResult locationResult) {
-                if(locationResult == null){
-                    return;
-                }
-               lastLocation = locationResult.getLastLocation();
-            }
-        };
+        locationCallback = new UpdateLocation();
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.google_map);
+                .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+    }
+    public class UpdateLocation extends LocationCallback{
+        @Override
+        public void onLocationResult(LocationResult locationResult) {
+            if (locationResult == null) {
+                return;
+            }
+            lastLocation = locationResult.getLastLocation();
+            Log.e("Location Updating", lastLocation + "");
+            if (userFound) {
+                getVolunteerLocation();
+
+            }
+        }
+
+    }
+
+    public void getVolunteerLocation(){
+        String phpfile = "updateCoord.php";
+
+        StringBuilder fullURL = new StringBuilder();
+        fullURL.append(getString(R.string.database_url));
+        fullURL.append(phpfile);
+
+        StringRequest updateUserLocation = new StringRequest(Request.Method.POST, fullURL.toString(), new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.e("Response",response + "");
+                }
+
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e("Volley update Error",error + "");
+
+            }
+        }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                HashMap<String,String> query = new HashMap<>();
+                query.put("userID",userID);
+                query.put("xCord",Double.toString(lastLocation.getLatitude()));
+                query.put("yCord",Double.toString(lastLocation.getLongitude()));
+                return query;
+            }
+        };
+        phpfile = "retrieveUpdatedCoord.php";
+        fullURL = new StringBuilder();
+        fullURL.append(getString(R.string.database_url));
+        fullURL.append(phpfile);
+        StringRequest getUserLocation = new StringRequest(Request.Method.GET,fullURL.toString(),new Response.Listener<String>() {
+
+            @Override
+            public void onResponse(String response) {
+                Log.e("Response",response);
+
+            }
+        }, new Response.ErrorListener(){
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e("Volley Error Get Cord",error + "");
+            }
+        }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+
+                HashMap<String,String> query = new HashMap<>();
+                query.put("userID",volunteerID);
+                return query;
+            }
+        };
+
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(updateUserLocation);
+        requestQueue.add(getUserLocation);
+        updateDistance();
+
+
     }
 
     @Override
     protected void onStart() {
         if (getIntent().getExtras() != null) {
             Bundle b = getIntent().getExtras();
-            userID = b.getInt("EXTRA_USER_ID");
+            userID = b.getString("EXTRA_USER_ID");
             if (b.getBoolean("notification")) {
                 openDialog();
             }
@@ -134,25 +206,32 @@ public class HighFiveRequestActivity extends FragmentActivity implements OnMapRe
                 if(!userFound){
                     matchedUser();
                 }else{
-                    stopRepeatingTask();
-                    LatLng origin = new LatLng(lastLocation.getLatitude(),lastLocation.getLongitude());
-                    MarkerOptions options = new MarkerOptions();
-                    options.position(dest);
-
-                    options.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
-                    mMap.addMarker(currentUserLocationMarker);
-                    mMap.addMarker(options);
-                    Log.e("Location Found",dest + " " + origin);
-                    requestDirections(origin, dest);
-
+                    updateDistance();
                 }
 
             }finally {
-                handler.postDelayed(databaseChecker,interval);
+                if (userFound) {
+                    stopRepeatingTask();
+
+                } else {
+                    handler.postDelayed(databaseChecker, interval);
+                }
             }
         }
     };
 
+    private void updateDistance(){
+        LatLng origin = new LatLng(lastLocation.getLatitude(),lastLocation.getLongitude());
+        MarkerOptions options = new MarkerOptions();
+        options.position(dest);
+
+        options.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
+        mMap.addMarker(currentUserLocationMarker);
+        mMap.addMarker(options);
+        Log.e("Location Found",dest + " " + origin);
+        requestDirections(origin, dest);
+
+    }
     private void matchedUser() {
 
         String phpfile = "retrieveMatchedUser.php";
@@ -171,10 +250,11 @@ public class HighFiveRequestActivity extends FragmentActivity implements OnMapRe
                         JSONObject userdata = new JSONObject(response);
                         //Log.e("Response",userdata.getString("userID1") + " ");
 
-                        if(!userdata.getString("userID1").equals(String.valueOf(userID))){
-
+                        if(!userdata.getString("userID1").equals(userID)){
+                            volunteerID = userdata.getString("userID1");
                             dest = new LatLng(Double.valueOf(userdata.getString("xCord1")),Double.valueOf(userdata.getString("yCord1")));
                         }else{
+                            volunteerID = userdata.getString("userID2");
                             dest = new LatLng(Double.valueOf(userdata.getString("xCord2")),Double.valueOf(userdata.getString("yCord2")));
 
                         }
@@ -197,7 +277,7 @@ public class HighFiveRequestActivity extends FragmentActivity implements OnMapRe
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 HashMap<String,String> query = new HashMap<>();
-                query.put("userID",String.valueOf(userID));
+                query.put("userID",userID);
                 return query;
             }
         };
@@ -260,41 +340,6 @@ public class HighFiveRequestActivity extends FragmentActivity implements OnMapRe
         startLocationUpdates();
         updateLocationUI();
 
-        mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
-            @Override
-            public void onMapClick(LatLng latLng) {
-
-                if (markerPoints.size() > 1) {
-                    markerPoints.clear();
-                    mMap.clear();
-                    erasePolylines();
-                }
-                // Add current location
-                markerPoints.add(new LatLng(lastLocation.getLatitude(), lastLocation.getLongitude()));
-
-                markerPoints.add(latLng);
-
-                MarkerOptions options = new MarkerOptions();
-
-                options.position(latLng);
-
-                options.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
-                mMap.addMarker(currentUserLocationMarker);
-                mMap.addMarker(options);
-
-                if (markerPoints.size() >= 2) {
-                    LatLng origin = (LatLng) markerPoints.get(0);
-                    LatLng dest = (LatLng) markerPoints.get(1);
-
-                    //Getting URL to the Google Directions API
-
-                    requestDirections(origin, dest);
-
-
-                }
-            }
-
-        });
     }
 
     private void updateLocationUI() {
@@ -410,19 +455,6 @@ public class HighFiveRequestActivity extends FragmentActivity implements OnMapRe
 
     }
 
-
-
-    @Override
-    public void onLocationChanged(Location location) {
-        lastLocation = location;
-
-        LatLng latLng = new LatLng(location.getLatitude(),location.getLongitude());
-        //Move camera at a steady pace with user movement
-//
-//        mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-//        mMap.animateCamera(CameraUpdateFactory.zoomTo(12));
-
-    }
 
     @Override
     protected void onDestroy() {

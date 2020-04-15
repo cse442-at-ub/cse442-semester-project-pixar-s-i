@@ -35,14 +35,12 @@ public class HugRequestActivity extends FragmentActivity implements OnMapReadyCa
     private final String phpurl = "https://www-student.cse.buffalo.edu/CSE442-542/2020-spring/cse-442e/";
     private static final int REQUEST_CODE = 101;
     int id;
-    Button search;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hug_request);
 
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
-        search  = findViewById(R.id.request_hug);
         startLocationService();
     }
 
@@ -99,7 +97,6 @@ public class HugRequestActivity extends FragmentActivity implements OnMapReadyCa
 //
 //            }
 //        });
-        search.setText("Locating Hugger..");
 //        reqQueue.add(jsonObjectRequest);
     }
 
