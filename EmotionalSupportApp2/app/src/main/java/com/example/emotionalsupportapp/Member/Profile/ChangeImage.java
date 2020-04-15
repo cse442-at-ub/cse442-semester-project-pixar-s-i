@@ -10,15 +10,14 @@ import com.example.emotionalsupportapp.R;
 
 public class ChangeImage extends Activity {
     public Button button;
-    int userID;
+    String userID;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.changeimagelayout);
 
-        String sessionId = getIntent().getStringExtra("EXTRA_USER_ID");
-        userID = 1;
+        userID = getIntent().getStringExtra("EXTRA_USER_ID");
 
         button = (Button) findViewById(R.id.backButton);
         button.setOnClickListener(new View.OnClickListener() {

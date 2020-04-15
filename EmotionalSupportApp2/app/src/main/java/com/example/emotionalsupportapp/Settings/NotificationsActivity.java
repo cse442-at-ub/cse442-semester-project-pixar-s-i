@@ -8,7 +8,7 @@ import android.view.View;
 import com.example.emotionalsupportapp.R;
 
 public class NotificationsActivity extends AppCompatActivity {
-    int userID;
+    String userID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -16,7 +16,7 @@ public class NotificationsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_notifications);
 
         String sessionId = getIntent().getStringExtra("EXTRA_USER_ID");
-        userID = 1;
+        userID = getIntent().getStringExtra("EXTRA_USER_ID");;
     }
 
     public void goToHighFiveNotifications(View view) {

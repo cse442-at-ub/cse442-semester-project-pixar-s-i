@@ -29,7 +29,8 @@ import org.json.JSONObject;
 
 public class TalkActivity extends AppCompatActivity {
     private static final int REQUEST_CALL = 1;
-    public String phpURLBase = "https://www-student.cse.buffalo.edu/CSE442-542/2020-spring/cse-442e/getInfoProfile.php/?id=" + 1;
+    String userID = getIntent().getStringExtra("EXTRA_USER_ID");
+    public String phpURLBase = "https://www-student.cse.buffalo.edu/CSE442-542/2020-spring/cse-442e/getInfoProfile.php/?id=" + userID;
     public RequestQueue reqQueue;
     String number = "111111111";
     String emergencyNumber = "(800)273-8255";
@@ -61,6 +62,7 @@ public class TalkActivity extends AppCompatActivity {
      */
     public void goToHomePage(View view){
         Intent intent = new Intent(this, MainActivity.class);
+        intent.putExtra("EXTRA_USER_ID", userID);
         startActivity(intent);
     }
 
