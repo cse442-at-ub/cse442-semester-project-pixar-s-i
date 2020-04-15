@@ -15,38 +15,36 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".AcceptActivity"></activity>
+        <activity android:name=".Connect.AcceptActivity"></activity>
 
         <uses-library
             android:name="org.apache.http.legacy"
             android:required="false" />
 
-        <activity android:name=".SearchActivity" />
-        <activity android:name=".MessageActivity" />
-        <activity android:name=".ConnectNotificationsActivity" />
-        <activity android:name=".TalkNotificationsActivity" />
-        <activity android:name=".MotivationNotificationsActivity" />
+        <activity android:name=".Motivation.SearchActivity" />
+        <activity android:name=".Connect.MessageActivity" />
+        <activity android:name=".Connect.ConnectNotificationsActivity" />
+        <activity android:name=".Talk.TalkNotificationsActivity" />
+        <activity android:name=".Motivation.MotivationNotificationsActivity" />
         <activity android:name=".Hug.HugNotificationsActivity" />
 
         <activity android:name=".Hug.HugRequestActivity" />
-        <activity android:name=".ChangeImage" />
-        <activity android:name=".HistoryActivity" />
+        <activity android:name=".Member.Profile.ChangeImage" />
+        <activity android:name=".Settings.HistoryActivity" />
         <activity android:name=".Hug.HugActivity" />
-        <activity android:name=".profilePage" />
-        <activity android:name=".SignUpActivity" />
+        <activity android:name=".Member.Profile.profilePage" />
+        <activity android:name=".Member.Registration.SignUpActivity" />
         <activity android:name=".MainActivity" />
-        <activity android:name=".ConnectActivity" />
-        <activity android:name=".TalkActivity" >
+        <activity android:name=".Connect.ConnectActivity" />
+        <activity android:name=".Talk.TalkActivity" >
              <intent-filter>
                 <action android:name="android.intent.action.PHONE_STATE" />
              </intent-filter>
         </activity>
-        <activity android:name=".MotivationActivity" />
-        <activity android:name=".NotificationsActivity" />
-        <activity android:name=".SettingsActivity" />
-        <activity android:name=".SignUpPictureActivity" />
-        <activity android:name=".VolunteerAndLocationInfoActivity" />
-        <activity android:name=".MissedMeetUpActivity" />
+        <activity android:name=".Motivation.MotivationActivity" />
+        <activity android:name=".Settings.NotificationsActivity" />
+        <activity android:name=".Settings.SettingsActivity" />
+        <activity android:name=".Member.Registration.SignUpPictureActivity" />
 
         <activity android:name=".Highfive.HighFiveVolunteerFoundActivity"/>
         <activity android:name=".Highfive.HighFiveVolunteerActivity"/>
@@ -56,7 +54,7 @@
         <activity android:name=".Highfive.HighFiveLocationActivity"/>
         <activity android:name=".Highfive.HighFiveRatingActivity"/>
 
-        <activity android:name=".LoginActivity">
+        <activity android:name=".Member.Registration.LoginActivity">
         <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

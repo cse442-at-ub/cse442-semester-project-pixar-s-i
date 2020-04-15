@@ -6,8 +6,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import com.example.emotionalsupportapp.Connect.ConnectActivity;
+import com.example.emotionalsupportapp.Motivation.MotivationActivity;
+import com.example.emotionalsupportapp.Talk.TalkActivity;
 import com.example.emotionalsupportapp.Highfive.HighFiveActivity;
 import com.example.emotionalsupportapp.Hug.HugActivity;
+import com.example.emotionalsupportapp.Member.Profile.profilePage;
 
 public class MainActivity extends AppCompatActivity {
     int userID;
@@ -47,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
      * Called when Motivation button is clicked
      */
     public void goToMotivationPage(View view){
-        Intent intent = new Intent(this,MotivationActivity.class);
+        Intent intent = new Intent(this, MotivationActivity.class);
         intent.putExtra("EXTRA_USER_ID", userID);
         startActivity(intent);
     }
@@ -57,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
      * Called when talk button is clicked
      */
     public void goToTalkPage(View view){
-        Intent intent = new Intent(this,TalkActivity.class);
+        Intent intent = new Intent(this, TalkActivity.class);
         intent.putExtra("EXTRA_USER_ID", userID);
         startActivity(intent);
     }
@@ -67,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
      * Called when Connect button is clicked
      */
     public void goToConnectPage(View view){
-        Intent intent = new Intent(this,ConnectActivity.class);
+        Intent intent = new Intent(this, ConnectActivity.class);
         intent.putExtra("EXTRA_USER_ID", userID);
         startActivity(intent);
     }
@@ -77,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
      * Called when Profile button is clicked
      */
     public void goToProfilePage(View view){
-        Intent intent = new Intent(this,profilePage.class);
+        Intent intent = new Intent(this, profilePage.class);
         intent.putExtra("EXTRA_USER_ID", userID);
         startActivity(intent);
     }
