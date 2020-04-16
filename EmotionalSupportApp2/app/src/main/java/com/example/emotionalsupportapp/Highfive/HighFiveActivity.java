@@ -313,8 +313,8 @@ public class HighFiveActivity extends AppCompatActivity {
                         JSONObject jsonObject = response.getJSONObject(i);
                         String username = jsonObject.getString("userID");
                         String lat = jsonObject.getString("xCord");
-                             String lon = jsonObject.getString("yCord");
-                        User user = new User(username,lat,lon);
+                        String lon = jsonObject.getString("yCord");
+                        User user = new User(username,lat,lon,"Will","Phil");
                         userList.add(user);
                     }
                 }catch(JSONException e){

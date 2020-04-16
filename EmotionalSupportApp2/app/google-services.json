@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "532823176370",
+    "firebase_url": "https://apiuserapp.firebaseio.com",
+    "project_id": "apiuserapp",
+    "storage_bucket": "apiuserapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:532823176370:android:d694cb98302663cb1bc5ab",
+        "android_client_info": {
+          "package_name": "com.example.emotionalsupportapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "532823176370-kbq2o1p276mddi87umu1gult7m7illo3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.emotionalsupportapp",
+            "certificate_hash": "a299c7ee2dfb953309af6c64445dfad02365ed6c"
+          }
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAfuHP5LPn9MEplZIgfchFlNOoIyxe2pB4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -13,7 +13,6 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.emotionalsupportapp.R;
-import com.example.emotionalsupportapp.Service.TopFiveVolunteerAdapter;
 import com.example.emotionalsupportapp.Volunteer;
 
 import org.json.JSONArray;
@@ -67,7 +66,7 @@ public class SearchActivity extends AppCompatActivity {
                     topFiveVolunteers.add(new Volunteer(userId, userName, volunteerId,volunteerName,overallRating));
                 }
                 Collections.sort(topFiveVolunteers);
-                topFiveVolunteerAdapter = new TopFiveVolunteerAdapter(new ArrayList<>(topFiveVolunteers.subList(0, 5)), SearchActivity.this);
+                topFiveVolunteerAdapter = new TopFiveVolunteerAdapter(new ArrayList<>(topFiveVolunteers.subList(0, Math.min(topFiveVolunteers.size(), 5))), SearchActivity.this);
                 recyclerView.setAdapter(topFiveVolunteerAdapter);
             } catch (JSONException e) {
                 e.printStackTrace();

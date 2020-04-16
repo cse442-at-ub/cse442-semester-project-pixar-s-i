@@ -37,7 +37,6 @@ import com.example.emotionalsupportapp.Service.RequestDialog;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
-import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
@@ -221,6 +220,16 @@ public class HighFiveRequestActivity extends FragmentActivity implements OnMapRe
     };
 
     private void updateDistance(){
+        Location point = new Location("");
+        point.setLatitude(dest.latitude);
+        point.setLongitude(dest.longitude);
+        float distance = lastLocation.distanceTo(point);
+        if(distance<75){
+            Intent ratings = new Intent(this,HighFiveRatingActivity.class);
+            ratings.putExtra("EXTRA_USER_ID",userID);
+            ratings.putExtra("EXTRA_VOLUNTEER_ID",volunteerID);
+            startActivity(ratings);
+        }
         LatLng origin = new LatLng(lastLocation.getLatitude(),lastLocation.getLongitude());
         MarkerOptions options = new MarkerOptions();
         options.position(dest);

@@ -14,7 +14,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.emotionalsupportapp.R;
-import com.example.emotionalsupportapp.Service.TopFiveVolunteerAdapter;
+import com.example.emotionalsupportapp.Motivation.TopFiveVolunteerAdapter;
 import com.example.emotionalsupportapp.Volunteer;
 
 import org.json.JSONArray;
