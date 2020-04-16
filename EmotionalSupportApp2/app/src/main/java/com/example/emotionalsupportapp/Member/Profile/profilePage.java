@@ -53,6 +53,10 @@ public class profilePage extends Activity {
 
         //SQL Initialization Here
         idNum = getIntent().getStringExtra("EXTRA_USER_ID");
+
+        phpURLHighFive = "https://www-student.cse.buffalo.edu/CSE442-542/2020-spring/cse-442e/getHighFiveRatingProfile.php/?id=" + idNum;
+        phpURLBase = "https://www-student.cse.buffalo.edu/CSE442-542/2020-spring/cse-442e/getInfoProfile.php/?id=" + idNum+ "&meetingType=0";
+        phpURLMotivation = "https://www-student.cse.buffalo.edu/CSE442-542/2020-spring/cse-442e/getHighFiveRatingProfile.php/?id=" + idNum + "&meetingType=2";
         //idNum = Integer.getInteger(sessionId);
 
         //phpURLBase = "https://www-student.cse.buffalo.edu/CSE442-542/2020-spring/cse-442e/getInfoProfile.php/?id=" + idNum;
