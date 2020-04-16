@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="firebase_url" translatable="false" templateMergeStrategy="preserve">https://fcm.googleapis.com/fcm/send</string>
+    <string name="firebase_server_key" translatable="false" templateMergeStrategy="preserve">AAAAfA68dLI:APA91bG2quIgDe_LV1PqjhbcQ5qw5l7QlEzhdyivszhuy0aNv3Yps1SkMghU-1hAegK5bFhzXYgzAckZwL42M-tyCviO6kIS2b6DBEAYnNFWmuTdvi4BtuA8M8WpIs9YfilS8xOFLxO3</string>
+</resources>

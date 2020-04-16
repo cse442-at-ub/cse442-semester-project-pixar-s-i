@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="10dp"
-    android:id="@+id/parent_layout">
+    android:padding="10dp">
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/profile_image"
@@ -21,7 +19,18 @@
         android:layout_toRightOf="@id/profile_image"
         android:layout_toEndOf="@id/profile_image"
         android:layout_marginLeft="10dp"
+        android:textSize="20dp"/>
+
+    <TextView
+        android:id="@+id/user_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="user_id"
+        android:layout_toRightOf="@id/profile_image"
+        android:layout_toEndOf="@id/profile_image"
+        android:layout_below="@+id/username"
+        android:layout_marginLeft="10dp"
         android:layout_centerVertical="true"
-        android:textSize="18dp"/>
+        android:textSize="15dp"/>
 
 </RelativeLayout>
