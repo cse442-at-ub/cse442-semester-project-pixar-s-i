@@ -39,7 +39,7 @@ public class ConnectActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_connect);
 
-        final String userID = getIntent().getStringExtra("EXTRA_USER_ID");
+        userID = getIntent().getStringExtra("EXTRA_USER_ID");
         getUsername((new VolleyCallback() {
             @Override
             public void onSuccessResponse(String username) {
