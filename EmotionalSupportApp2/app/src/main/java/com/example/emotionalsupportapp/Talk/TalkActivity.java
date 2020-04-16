@@ -50,6 +50,7 @@ public class TalkActivity extends AppCompatActivity {
       //  savedInstanceState = savedInstanceState;
         setContentView(R.layout.activity_talk);
         userID = getIntent().getStringExtra("EXTRA_USER_ID");
+        phpURLBase = "https://www-student.cse.buffalo.edu/CSE442-542/2020-spring/cse-442e/getInfoProfile.php/?id=" + userID;
         initializeSql();
 //        phoneStateListener = new StateListener();
 //        TelephonyManager telephonyManager =(TelephonyManager)getSystemService(TELEPHONY_SERVICE);
