@@ -45,13 +45,8 @@
         <activity android:name=".Settings.NotificationsActivity" />
         <activity android:name=".Settings.SettingsActivity" />
         <activity android:name=".Member.Registration.SignUpPictureActivity" />
-
-        <activity android:name=".Highfive.HighFiveVolunteerFoundActivity"/>
-        <activity android:name=".Highfive.HighFiveVolunteerActivity"/>
-        <activity android:name=".Highfive.HighFiveNotificationsActivity" />
         <activity android:name=".Highfive.HighFiveActivity" />
         <activity android:name=".Highfive.HighFiveRequestActivity" />
-        <activity android:name=".Highfive.HighFiveLocationActivity"/>
         <activity android:name=".Highfive.HighFiveRatingActivity"/>
 
         <activity android:name=".Member.Registration.LoginActivity">

@@ -1,4 +1,4 @@
-package com.example.emotionalsupportapp.Service;
+package com.example.emotionalsupportapp.Motivation;
 
 import android.content.Context;
 import android.content.Intent;

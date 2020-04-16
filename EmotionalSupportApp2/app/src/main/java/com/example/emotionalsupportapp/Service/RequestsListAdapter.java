@@ -9,6 +9,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.emotionalsupportapp.Member.Profile.User;
 import com.example.emotionalsupportapp.R;
 
 import java.util.List;
