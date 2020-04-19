@@ -14,11 +14,9 @@ import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
-import androidx.core.app.NotificationManagerCompat;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -38,11 +36,7 @@ import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.iid.FirebaseInstanceId;
-import com.google.firebase.iid.InstanceIdResult;
 import com.google.firebase.messaging.FirebaseMessaging;
 
 import org.json.JSONArray;
@@ -57,10 +51,7 @@ import java.util.Map;
 public class HighFiveActivity extends AppCompatActivity {
 
     private static final int REQUEST_CODE = 101;
-    private NotificationManagerCompat notificationManager;
-    private FusedLocationProviderClient locationProviderClient;
 
-    private JSONArray users;
     private RecyclerView mList;
     private LinearLayoutManager linearLayoutManager;
     private DividerItemDecoration dividerItemDecoration;
@@ -80,8 +71,6 @@ public class HighFiveActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_high_five);
 
-        locationProviderClient = LocationServices.getFusedLocationProviderClient(this);
-        notificationManager = NotificationManagerCompat.from(this);
         highFiveSearch = new Intent(this, HighFiveRequestActivity.class);
         highFiveSearch.putExtra("userFound",false);
         userID = getIntent().getExtras().getString("EXTRA_USER_ID");

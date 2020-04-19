@@ -21,7 +21,13 @@ public class HighFiveRatingActivity extends AppCompatActivity {
         userID = getIntent().getExtras().getString("EXTRA_USER_ID");
     }
 
-    public void returnToMain(View view){
+    //Get the user information to be displayed on the page
+    public void getInfo(){
+
+    }
+
+    //Updating the user rating and return to the main page
+    public void updateRatingandReturnToMain(View view){
         Intent returnToMainIntent = new Intent(this, MainActivity.class);
         returnToMainIntent.putExtra("EXTRA_USER_ID",userID);
         startActivity(returnToMainIntent);
