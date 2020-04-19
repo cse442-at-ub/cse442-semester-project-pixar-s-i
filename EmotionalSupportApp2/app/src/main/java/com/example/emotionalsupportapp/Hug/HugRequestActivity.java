@@ -84,7 +84,7 @@ public class HugRequestActivity extends FragmentActivity implements OnMapReadyCa
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.map_high_five);
+                .findFragmentById(R.id.map_hug);
         mapFragment.getMapAsync(this);
 
     }
