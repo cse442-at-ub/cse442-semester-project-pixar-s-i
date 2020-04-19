@@ -58,6 +58,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
     }
 
+
     private void sendNotification(String title,String messageBody) {
         Intent intent = new Intent(this, HighFiveActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

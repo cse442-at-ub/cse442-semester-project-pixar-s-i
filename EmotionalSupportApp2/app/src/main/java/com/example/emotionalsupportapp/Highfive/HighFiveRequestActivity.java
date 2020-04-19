@@ -104,12 +104,12 @@ public class HighFiveRequestActivity extends FragmentActivity implements OnMapRe
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.map);
+                .findFragmentById(R.id.map_high_five);
         mapFragment.getMapAsync(this);
     }
 
 
-    public class UpdateLocation extends LocationCallback{
+    private class UpdateLocation extends LocationCallback{
         @Override
         public void onLocationResult(LocationResult locationResult) {
             if (locationResult == null) {
@@ -281,10 +281,10 @@ public class HighFiveRequestActivity extends FragmentActivity implements OnMapRe
                         JSONObject userdata = new JSONObject(response);
                         if(!userdata.getString("userID1").equals(userID)){
                             volunteerID = userdata.getString("userID1");
-                            dest = new LatLng(Double.valueOf(userdata.getString("xCord1")),Double.valueOf(userdata.getString("yCord1")));
+                            dest = new LatLng(Double.parseDouble(userdata.getString("xCord1")),Double.parseDouble(userdata.getString("yCord1")));
                         }else{
                             volunteerID = userdata.getString("userID2");
-                            dest = new LatLng(Double.valueOf(userdata.getString("xCord2")),Double.valueOf(userdata.getString("yCord2")));
+                            dest = new LatLng(Double.parseDouble(userdata.getString("xCord2")),Double.parseDouble(userdata.getString("yCord2")));
 
                         }
                         userFound = true;
@@ -304,7 +304,7 @@ public class HighFiveRequestActivity extends FragmentActivity implements OnMapRe
         }){
 
             @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
+            protected Map<String, String> getParams(){
                 HashMap<String,String> query = new HashMap<>();
                 query.put("userID",userID);
                 return query;
@@ -335,6 +335,7 @@ public class HighFiveRequestActivity extends FragmentActivity implements OnMapRe
 
     public void returnToMain(View view) {
         Intent returnToMainIntent = new Intent(this, MainActivity.class);
+        returnToMainIntent.putExtra("EXTRA_USER_ID",userID);
         startActivity(returnToMainIntent);
     }
 
@@ -395,13 +396,6 @@ public class HighFiveRequestActivity extends FragmentActivity implements OnMapRe
                 .waypoints(origin, dest)
                 .build();
         routing.execute();
-    }
-
-    private void erasePolylines() {
-        for(Polyline line: polylines){
-            line.remove();
-        }
-        polylines.clear();
     }
 
 
