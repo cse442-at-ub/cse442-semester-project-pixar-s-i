@@ -7,6 +7,8 @@ public class User {
     private String last_name;
     private String lat;
     private String lon;
+    private int high_five_rating;
+    private int hug_rating;
 
     public User(String _username,String _lat,String _lon,String first_name,String last_name){
         username = _username;

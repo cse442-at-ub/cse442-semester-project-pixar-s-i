@@ -31,9 +31,8 @@ import com.directions.route.RouteException;
 import com.directions.route.Routing;
 import com.directions.route.RoutingListener;
 import com.example.emotionalsupportapp.MainActivity;
+import com.example.emotionalsupportapp.Member.Registration.LoginActivity;
 import com.example.emotionalsupportapp.R;
-import com.example.emotionalsupportapp.Service.RequestDialog;
-
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
@@ -51,7 +50,6 @@ import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -62,7 +60,6 @@ import java.util.Map;
 
 public class HighFiveRequestActivity extends FragmentActivity implements OnMapReadyCallback, RoutingListener {
 
-    private ArrayList<LatLng> markerPoints = new ArrayList<>();
     private List<Polyline> polylines;
     private static final int[] COLORS = new int[]{R.color.colorPrimaryDark, R.color.colorPrimary, R.color.colorAccent, R.color.primary_dark_material_light};
     FusedLocationProviderClient fusedLocationProviderClient;
@@ -89,6 +86,14 @@ public class HighFiveRequestActivity extends FragmentActivity implements OnMapRe
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
         currentUserLocationMarker = new MarkerOptions();
 
+        userFound = false;
+        if (getIntent().getExtras() != null) {
+            Bundle b = getIntent().getExtras();
+            userID = b.getString("EXTRA_USER_ID");
+        }else{
+            Intent login = new Intent(this,LoginActivity.class);
+            startActivity(login);
+        }
         handler = new Handler();
         progressDialog = new ProgressDialog(this);
         locationRequest = new LocationRequest();
@@ -102,6 +107,8 @@ public class HighFiveRequestActivity extends FragmentActivity implements OnMapRe
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
     }
+
+
     public class UpdateLocation extends LocationCallback{
         @Override
         public void onLocationResult(LocationResult locationResult) {
@@ -109,6 +116,7 @@ public class HighFiveRequestActivity extends FragmentActivity implements OnMapRe
                 return;
             }
             lastLocation = locationResult.getLastLocation();
+            currentUserLocationMarker.position(new LatLng(lastLocation.getLatitude(),lastLocation.getLongitude()));
             Log.e("Location Updating", lastLocation + "");
             if (userFound) {
                 getVolunteerLocation();
@@ -118,6 +126,7 @@ public class HighFiveRequestActivity extends FragmentActivity implements OnMapRe
 
     }
 
+    //Gets volunteer's location and updates the route on the maps
     public void getVolunteerLocation(){
         String phpfile = "updateCoord.php";
 
@@ -178,24 +187,35 @@ public class HighFiveRequestActivity extends FragmentActivity implements OnMapRe
         requestQueue.add(updateUserLocation);
         requestQueue.add(getUserLocation);
         updateDistance();
-
-
     }
 
     @Override
     protected void onStart() {
-        if (getIntent().getExtras() != null) {
-            Bundle b = getIntent().getExtras();
-            userID = b.getString("EXTRA_USER_ID");
-            if (b.getBoolean("notification")) {
-                openDialog();
-            }
-            if(!b.getBoolean("Looking for user")){
-                userFound = false;
-                startRepeatingTask();
-            }
+
+        if(!userFound){
+            startRepeatingTask();
+        }else{
+
         }
         super.onStart();
+    }
+
+    public void startRepeatingTask(){
+        progressDialog.setMessage("Finding a high five...");
+        progressDialog.show();
+        databaseChecker.run();
+    }
+
+    public void stopRepeatingTask(){
+        handler.removeCallbacks(databaseChecker);
+        progressDialog.dismiss();
+
+    }
+
+    @Override
+    protected void onResume() {
+        startLocationUpdates();
+        super.onResume();
     }
 
     Runnable databaseChecker  = new Runnable() {
@@ -211,7 +231,6 @@ public class HighFiveRequestActivity extends FragmentActivity implements OnMapRe
             }finally {
                 if (userFound) {
                     stopRepeatingTask();
-
                 } else {
                     handler.postDelayed(databaseChecker, interval);
                 }
@@ -219,6 +238,7 @@ public class HighFiveRequestActivity extends FragmentActivity implements OnMapRe
         }
     };
 
+    //Update the marker on the map and request a new route between the points
     private void updateDistance(){
         Location point = new Location("");
         point.setLatitude(dest.latitude);
@@ -228,6 +248,7 @@ public class HighFiveRequestActivity extends FragmentActivity implements OnMapRe
             Intent ratings = new Intent(this,HighFiveRatingActivity.class);
             ratings.putExtra("EXTRA_USER_ID",userID);
             ratings.putExtra("EXTRA_VOLUNTEER_ID",volunteerID);
+            stopLocationUpdates();
             startActivity(ratings);
         }
         LatLng origin = new LatLng(lastLocation.getLatitude(),lastLocation.getLongitude());
@@ -241,6 +262,8 @@ public class HighFiveRequestActivity extends FragmentActivity implements OnMapRe
         requestDirections(origin, dest);
 
     }
+
+    //Check the match user table for to see if user was matched
     private void matchedUser() {
 
         String phpfile = "retrieveMatchedUser.php";
@@ -252,13 +275,10 @@ public class HighFiveRequestActivity extends FragmentActivity implements OnMapRe
         StringRequest jsonArrayRequest = new StringRequest(Request.Method.POST, fullURL.toString(), new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-              //  Log.e("Response",response + " ");
-                if(!response.equals("[]") && !response.equals("No such user exist in the MatchedUsers table")){
+                if(!response.equals("No such user exist in the MatchedUsers table")){
                     try {
 
                         JSONObject userdata = new JSONObject(response);
-                        //Log.e("Response",userdata.getString("userID1") + " ");
-
                         if(!userdata.getString("userID1").equals(userID)){
                             volunteerID = userdata.getString("userID1");
                             dest = new LatLng(Double.valueOf(userdata.getString("xCord1")),Double.valueOf(userdata.getString("yCord1")));
@@ -294,25 +314,6 @@ public class HighFiveRequestActivity extends FragmentActivity implements OnMapRe
         requestQueue.add(jsonArrayRequest);
     }
 
-    public void startRepeatingTask(){
-        progressDialog.setMessage("Finding a high five...");
-        progressDialog.show();
-        databaseChecker.run();
-    }
-
-    public void stopRepeatingTask(){
-        handler.removeCallbacks(databaseChecker);
-        progressDialog.dismiss();
-
-    }
-
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        startLocationUpdates();
-
-    }
 
     //Add dialog for when user tries to go back asking if they want to
     @Override
@@ -326,16 +327,10 @@ public class HighFiveRequestActivity extends FragmentActivity implements OnMapRe
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_CODE);
         }
         fusedLocationProviderClient.requestLocationUpdates(locationRequest, locationCallback, Looper.myLooper());
-
     }
 
     private void stopLocationUpdates(){
         fusedLocationProviderClient.removeLocationUpdates(locationCallback);
-    }
-
-    public void openDialog(){
-        RequestDialog dialog = new RequestDialog();
-        dialog.show(getSupportFragmentManager(),"High Five Dialog");
     }
 
     public void returnToMain(View view) {
@@ -468,8 +463,8 @@ public class HighFiveRequestActivity extends FragmentActivity implements OnMapRe
     @Override
     protected void onDestroy() {
         stopLocationUpdates();
-        super.onDestroy();
         stopRepeatingTask();
+        super.onDestroy();
     }
 }
 

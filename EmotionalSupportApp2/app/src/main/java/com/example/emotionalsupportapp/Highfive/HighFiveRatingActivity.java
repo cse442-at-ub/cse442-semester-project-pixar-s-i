@@ -13,17 +13,17 @@ import com.example.emotionalsupportapp.R;
 
 public class HighFiveRatingActivity extends AppCompatActivity {
 
+    private String userID;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_high_five_rating);
+        userID = getIntent().getExtras().getString("EXTRA_USER_ID");
     }
-    //final RatingBar ratingBar = findViewById(R.id.high_five_rating_bar);
-    //Button submitButton = findViewById(R.id.submit_button);
-
 
     public void returnToMain(View view){
         Intent returnToMainIntent = new Intent(this, MainActivity.class);
+        returnToMainIntent.putExtra("EXTRA_USER_ID",userID);
         startActivity(returnToMainIntent);
     }
 }

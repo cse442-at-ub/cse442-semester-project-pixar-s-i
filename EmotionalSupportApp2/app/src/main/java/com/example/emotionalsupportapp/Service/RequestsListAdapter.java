@@ -35,8 +35,8 @@ public class RequestsListAdapter extends RecyclerView.Adapter<RequestsListAdapte
     public void onBindViewHolder(@NonNull RequestsListAdapter.ViewHolder holder, int position) {
        User person = userList.get(position);
         holder.textUsername.setText(person.getUsername());
-        holder.textFirstName.setText("First Name");
-        holder.textLastName.setText("Last Name");
+        holder.textFirstName.setText(person.getFirst_name());
+        holder.textLastName.setText(person.getLast_name());
     }
 
     @Override
