@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 
 import com.example.emotionalsupportapp.Connect.ConnectActivity;
 import com.example.emotionalsupportapp.Motivation.MotivationActivity;
@@ -23,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         userID = getIntent().getExtras().getString("EXTRA_USER_ID");
+
     }
 
     /*
@@ -84,5 +86,9 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, profilePage.class);
         intent.putExtra("EXTRA_USER_ID", userID);
         startActivity(intent);
+    }
+
+    public void checkUnseenMessage(){
+
     }
 }
