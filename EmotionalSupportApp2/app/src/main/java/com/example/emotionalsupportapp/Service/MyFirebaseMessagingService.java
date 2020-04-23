@@ -13,6 +13,7 @@ import android.util.Log;
 import androidx.core.app.NotificationCompat;
 
 import com.example.emotionalsupportapp.Highfive.HighFiveActivity;
+import com.example.emotionalsupportapp.Hug.HugActivity;
 import com.example.emotionalsupportapp.R;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
@@ -60,7 +61,14 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
 
     private void sendNotification(String title,String messageBody) {
-        Intent intent = new Intent(this, HighFiveActivity.class);
+        Intent intent;
+
+        if(title.equals("Hug Request")){
+            intent = new Intent(this, HugActivity.class);
+        }
+        else{
+            intent = new Intent(this, HighFiveActivity.class);
+        }
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         intent.putExtra("notification",true);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
