@@ -1,8 +1,15 @@
 package com.example.emotionalsupportapp;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -16,6 +23,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.emotionalsupportapp.Connect.ConnectActivity;
 import com.example.emotionalsupportapp.Motivation.MotivationActivity;
+import com.example.emotionalsupportapp.Settings.MessageNotification;
 import com.example.emotionalsupportapp.Talk.TalkActivity;
 import com.example.emotionalsupportapp.Highfive.HighFiveActivity;
 import com.example.emotionalsupportapp.Hug.HugActivity;
@@ -28,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
 
     String userID;
     TextView hasUnseenMessages;
+    private final String MESSAGE_CHANNEL_ID = "message_notifications";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
 
         userID = getIntent().getExtras().getString("EXTRA_USER_ID");
 
+        createNotificationChannel();
         hasUnseenMessages = findViewById(R.id.has_unseen_messages);
         checkUnseenMessage(hasUnseenMessages);
     }
@@ -113,6 +123,7 @@ public class MainActivity extends AppCompatActivity {
                     String check = response.getString("response");
                     if (check.equals("exist")){
                         hasUnseenMessages.setText("!");
+                        showMessageNotification();
                     }else{
                         hasUnseenMessages.setText("");
                     }
@@ -120,6 +131,7 @@ public class MainActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
             }
+
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
@@ -127,6 +139,33 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         reqQueue.add(jsonObjectRequest);
+    }
+
+    private void createNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel messageChannel = new NotificationChannel(
+                    MESSAGE_CHANNEL_ID,
+                    "Message Channel",
+                    NotificationManager.IMPORTANCE_DEFAULT
+            );
+            messageChannel.setDescription("This is Message Channel");
+
+            NotificationManager manager = getSystemService(NotificationManager.class);
+            manager.createNotificationChannel(messageChannel);
+        }
+    }
+
+    private void showMessageNotification() {
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(
+                MainActivity.this, MESSAGE_CHANNEL_ID
+        )
+                .setSmallIcon(R.drawable.ic_message)
+                .setContentTitle("New Notification")
+                .setContentText("New Message")
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+
+        NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(this);
+        notificationManagerCompat.notify(0,builder.build());
     }
 
     @Override
