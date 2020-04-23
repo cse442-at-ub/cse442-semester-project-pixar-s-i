@@ -117,10 +117,9 @@ public class HighFiveRequestActivity extends FragmentActivity implements OnMapRe
             }
             lastLocation = locationResult.getLastLocation();
             currentUserLocationMarker.position(new LatLng(lastLocation.getLatitude(),lastLocation.getLongitude()));
-            Log.e("Location Updating", lastLocation + "");
+            Log.d("Location Updating", lastLocation + "");
             if (userFound) {
                 getVolunteerLocation();
-
             }
         }
 
@@ -384,8 +383,6 @@ public class HighFiveRequestActivity extends FragmentActivity implements OnMapRe
             Log.e("Exception: %s", e.getMessage());
         }
     }
-
-    //Method to Start location services
 
     private void requestDirections(LatLng origin, LatLng dest) {
         Routing routing = new Routing.Builder()

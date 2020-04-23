@@ -3,5 +3,10 @@
 
 
     <string name="database_url" translatable="false">https://www-student.cse.buffalo.edu/CSE442-542/2020-spring/cse-442e/</string>
-
+    <string name="hug_list" translatable="false">allActiveHugUsers.php</string>
+    <string name="high_five_list" translatable="false">allActiveUsers.php</string>
+    <string name="hug_match_table" translatable="false">matchHugUsers.php</string>
+    <string name="update_coordinates" translatable="false">writeCoord.php</string>
+    <string name="retrieve_coordinates" translatable="false">retrieveUpdatedCoord.php</string>
+    <string name="matched_hug_finder" translatable="false">retrieveMatchedHugUser.php</string>
 </resources>

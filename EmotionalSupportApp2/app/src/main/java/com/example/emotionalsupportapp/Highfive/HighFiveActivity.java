@@ -28,6 +28,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.*;
 import com.example.emotionalsupportapp.MainActivity;
+import com.example.emotionalsupportapp.Member.Registration.LoginActivity;
 import com.example.emotionalsupportapp.R;
 import com.example.emotionalsupportapp.Service.RequestsListAdapter;
 import com.example.emotionalsupportapp.Member.Profile.User;
@@ -72,10 +73,15 @@ public class HighFiveActivity extends AppCompatActivity {
         setContentView(R.layout.activity_high_five);
 
         highFiveSearch = new Intent(this, HighFiveRequestActivity.class);
-        highFiveSearch.putExtra("userFound",false);
-        userID = getIntent().getExtras().getString("EXTRA_USER_ID");
-        Log.d("UserID",userID);
+        if (getIntent().getExtras() != null) {
+            Bundle b = getIntent().getExtras();
+            userID = b.getString("EXTRA_USER_ID");
+        }else{
+            Intent login = new Intent(this, LoginActivity.class);
+            startActivity(login);
+        }
         highFiveSearch.putExtra("EXTRA_USER_ID",userID);
+
 
         mList = findViewById(R.id.high_five_request_list);
         userList = new ArrayList<>();
@@ -265,7 +271,7 @@ public class HighFiveActivity extends AppCompatActivity {
                     }
                 }) {
             @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
+            public Map<String, String> getHeaders() {
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("Authorization", "key=" + getString(R.string.firebase_server_key));
                 params.put("Content-Type", "application/json");
@@ -344,7 +350,7 @@ public class HighFiveActivity extends AppCompatActivity {
         }){
 
             @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
+            protected Map<String, String> getParams() {
 
                 return query;
             }
