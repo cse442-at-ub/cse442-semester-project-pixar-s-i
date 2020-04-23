@@ -301,7 +301,7 @@ public class HugRequestActivity extends FragmentActivity implements OnMapReadyCa
         point.setLongitude(dest.longitude);
         float distance = lastLocation.distanceTo(point);
         if(distance<75){
-            Intent ratings = new Intent(this, HighFiveRatingActivity.class);
+            Intent ratings = new Intent(this, HugRatingActivity.class);
             ratings.putExtra("EXTRA_USER_ID",userID);
             ratings.putExtra("EXTRA_VOLUNTEER_ID",volunteerID);
             stopLocationUpdates();
