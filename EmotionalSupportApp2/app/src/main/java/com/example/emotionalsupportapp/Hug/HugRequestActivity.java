@@ -173,7 +173,7 @@ public class HugRequestActivity extends FragmentActivity implements OnMapReadyCa
         StringRequest jsonArrayRequest = new StringRequest(Request.Method.POST, fullURL.toString(), new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                if(!response.equals("No such user exist in the MatchedUsers table")){
+                if(!response.equals("No such user exist in the MatchedHugUsers table")){
                     try {
 
                         JSONObject userdata = new JSONObject(response);
