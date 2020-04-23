@@ -23,6 +23,7 @@ import com.example.emotionalsupportapp.MainActivity;
 import com.example.emotionalsupportapp.R;
 import com.example.emotionalsupportapp.Settings.SettingsActivity;
 import com.example.emotionalsupportapp.Member.Registration.LoginActivity;
+import com.example.emotionalsupportapp.Member.Profile.ComplaintsActivity;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -30,6 +31,7 @@ import org.json.JSONObject;
 
 public class profilePage extends Activity {
     private Button changeImage;
+    private Button report;
     private ImageButton LogoutBtn;
     private ImageView profilePicture;
     private Button BackBtn;
@@ -43,7 +45,7 @@ public class profilePage extends Activity {
     public String idNum;
     public String phpURLBase = "https://www-student.cse.buffalo.edu/CSE442-542/2020-spring/cse-442e/getInfoProfile.php/?id=" + idNum;
     public String phpURLHighFive = "https://www-student.cse.buffalo.edu/CSE442-542/2020-spring/cse-442e/getHighFiveRatingProfile.php/?id=" + idNum + "&meetingType=0";
-    public String phpURLMotivation = "https://www-student.cse.buffalo.edu/CSE442-542/2020-spring/cse-442e/getHighFiveRatingProfile.php/?id=" + idNum + "&meetingType=2";
+    public String phpURLMotivation = "https://www-student.cse.buffalo.edu/CSE442-542/2020-spring/cse-442e/getMotivationRatingProfile.php/?id=" + idNum + "&meetingType=2";
 
 
     @Override
@@ -56,7 +58,7 @@ public class profilePage extends Activity {
 
         phpURLHighFive = "https://www-student.cse.buffalo.edu/CSE442-542/2020-spring/cse-442e/getHighFiveRatingProfile.php/?id=" + idNum;
         phpURLBase = "https://www-student.cse.buffalo.edu/CSE442-542/2020-spring/cse-442e/getInfoProfile.php/?id=" + idNum+ "&meetingType=0";
-        phpURLMotivation = "https://www-student.cse.buffalo.edu/CSE442-542/2020-spring/cse-442e/getHighFiveRatingProfile.php/?id=" + idNum + "&meetingType=2";
+        phpURLMotivation = "https://www-student.cse.buffalo.edu/CSE442-542/2020-spring/cse-442e/getMotivationRatingProfile.php/?id=" + idNum + "&meetingType=2";
         //idNum = Integer.getInteger(sessionId);
 
         //phpURLBase = "https://www-student.cse.buffalo.edu/CSE442-542/2020-spring/cse-442e/getInfoProfile.php/?id=" + idNum;
@@ -72,6 +74,16 @@ public class profilePage extends Activity {
                 startActivity(intent);
             }
 
+        });
+
+        report =  findViewById(R.id.reportButton);
+        report.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view){
+                Intent intent = new Intent(profilePage.this, ComplaintsActivity.class);
+                intent.putExtra("EXTRA_USER_ID", idNum);
+                startActivity(intent);
+            }
         });
         LogoutBtn =  findViewById(R.id.logout);
         LogoutBtn.setOnClickListener(new View.OnClickListener() {
@@ -178,7 +190,7 @@ public class profilePage extends Activity {
             public void onResponse(JSONObject responses) {
                 try {
                     Log.d("JSON: ", "Resp = " + responses.toString());
-                    String prof = responses.getString("Ratings");
+                    String prof = responses.getString("HighFiveRating");
 
                     highFiverBar.setRating(Integer.parseInt(prof));
 
@@ -199,8 +211,8 @@ public class profilePage extends Activity {
             @Override
             public void onResponse(JSONObject responses) {
                 try {
-                    Log.d("JSON: ", "Resp = " + responses.toString());
-                    String prof = responses.getString("Ratings");
+                    Log.d("JSON: ", "Resp1 = " + responses.toString());
+                    String prof = responses.getString("MotivationRating");
 
                     motivationBar.setRating(Integer.parseInt(prof));
 
