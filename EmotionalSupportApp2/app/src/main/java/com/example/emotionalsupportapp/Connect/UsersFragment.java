@@ -22,6 +22,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.emotionalsupportapp.R;
 import com.example.emotionalsupportapp.Service.UserAdapter;
+import com.google.gson.JsonObject;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -91,7 +92,8 @@ public class UsersFragment extends Fragment implements FriendDialog.FriendDialog
                         String userName = jsonobject.getString("userName");
                         String friendId = jsonobject.getString("friendId");
                         String friendName = jsonobject.getString("friendName");
-                        friends.add(new Friend(userId, userName, friendId, friendName));
+
+                        friends.add(new Friend(userId, userName, friendId, friendName, ""));
                     }
                     userAdapter = new UserAdapter(friends, getContext());
                     recyclerView.setAdapter(userAdapter);
@@ -263,5 +265,13 @@ public class UsersFragment extends Fragment implements FriendDialog.FriendDialog
             }
         });
         reqQueue.add(jsonObjectRequest);
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser) {
+            getFragmentManager().beginTransaction().detach(this).attach(this).commit();
+        }
     }
 }
