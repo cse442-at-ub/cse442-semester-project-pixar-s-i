@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Switch;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -25,6 +26,7 @@ public class SignUpActivity extends AppCompatActivity {
 
     EditText emailText, passwordText, passwordConText, fNameText, lNameText;
     Button nowCreated;
+    Switch genderSwitch, choiceSwitch;
     String result;
     RequestQueue requestQueue;
     String signUpURL = "https://www-student.cse.buffalo.edu/CSE442-542/2020-spring/cse-442e/signup.php";
@@ -41,6 +43,9 @@ public class SignUpActivity extends AppCompatActivity {
         fNameText = (EditText) findViewById(R.id.fNameText);
         lNameText = (EditText) findViewById(R.id.lNameText);
         result = "";
+
+        genderSwitch = findViewById(R.id.genderSwitch);
+        choiceSwitch = findViewById(R.id.ChoiceSwitch);
 
         requestQueue = Volley.newRequestQueue(getApplicationContext());
 
@@ -63,7 +68,7 @@ public class SignUpActivity extends AppCompatActivity {
         final Intent intent = new Intent(this, LoginActivity.class);
         String signUpSendURL = signUpURL + "?eMail=" + emailText.getText().toString() + "&FirstName=" +
                 fNameText.getText().toString() + "&LastName=" + lNameText.getText().toString() +
-                "&password=" + passwordText.getText().toString();
+                "&password=" + passwordText.getText().toString() + "&male_female=" + genderSwitch.isChecked() + "&sameSex=" + choiceSwitch.isChecked();
 
         String pass1 = passwordText.getText().toString();
         String pass2 = passwordConText.getText().toString();
