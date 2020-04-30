@@ -65,8 +65,8 @@ public class ComplaintsActivity extends Activity {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
-                            String resp = response.getString("response");
-                            displayToast(resp);
+                            String respo = response.getString("response");
+                            displayToast(respo);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
