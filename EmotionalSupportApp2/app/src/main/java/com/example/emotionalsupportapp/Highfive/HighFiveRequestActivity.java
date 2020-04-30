@@ -12,7 +12,9 @@ import android.os.Looper;
 import android.util.Log;
 import android.view.View;
 
+import android.widget.Button;
 import android.widget.Toast;
+import android.content.Intent;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
@@ -34,6 +36,7 @@ import com.example.emotionalsupportapp.MainActivity;
 import com.example.emotionalsupportapp.Member.Registration.LoginActivity;
 import com.example.emotionalsupportapp.R;
 
+import com.example.emotionalsupportapp.Service.CancelHighFiveDialog;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
@@ -76,6 +79,7 @@ public class HighFiveRequestActivity extends FragmentActivity implements OnMapRe
     private String userID;
     private String volunteerID;
     private  LatLng dest;
+    private Button cancelButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,7 +89,7 @@ public class HighFiveRequestActivity extends FragmentActivity implements OnMapRe
         polylines = new ArrayList<>();
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
         currentUserLocationMarker = new MarkerOptions();
-
+               // currentUserLocationMarker. get current user info
         userFound = false;
         if (getIntent().getExtras() != null) {
             Bundle b = getIntent().getExtras();
@@ -106,6 +110,33 @@ public class HighFiveRequestActivity extends FragmentActivity implements OnMapRe
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map_high_five);
         mapFragment.getMapAsync(this);
+        cancelButton = (Button) findViewById(R.id.cancel_button);
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                    if(userID != null){
+                        openDialog();
+                        cancelRequest(userID);
+                        returnToMain();
+                    }
+            }
+        });
+    }
+
+    public void returnToMain (){
+        Intent returnToMainIntent = new Intent(this, MainActivity.class);
+        returnToMainIntent.putExtra("EXTRA_USER_ID", userID);
+        startActivity(returnToMainIntent);
+    }
+    public void openDialog(){
+        CancelHighFiveDialog dialog = new CancelHighFiveDialog();
+        dialog.show(getSupportFragmentManager(), "cancel high five dialog");
+
+    }
+
+    private void cancelRequest(String volunteerID) {
+        removeMatchedUsers(volunteerID);
+        returnToMain();
     }
 
 
@@ -223,13 +254,15 @@ public class HighFiveRequestActivity extends FragmentActivity implements OnMapRe
             try{
                 if(!userFound){
                     matchedUser();
+                    //
                 }else{
                     updateDistance();
                 }
 
             }finally {
-                if (userFound) {
+                if (userFound) {//dont stop until get matched user info
                     stopRepeatingTask();
+                    //pull
                 } else {
                     handler.postDelayed(databaseChecker, interval);
                 }
@@ -255,6 +288,7 @@ public class HighFiveRequestActivity extends FragmentActivity implements OnMapRe
         options.position(dest);
 
         options.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
+
         mMap.addMarker(currentUserLocationMarker);
         mMap.addMarker(options);
         Log.e("Location Found",dest + " " + origin);
@@ -456,6 +490,36 @@ public class HighFiveRequestActivity extends FragmentActivity implements OnMapRe
         stopLocationUpdates();
         stopRepeatingTask();
         super.onDestroy();
+    }
+
+    public void removeMatchedUsers(final String userID){
+        String phpfile = "removeUserFromMatchedTB.php";
+        String result = "";
+        StringBuilder fullURL = new StringBuilder();
+        fullURL.append(getString(R.string.database_url));
+        fullURL.append(phpfile);
+
+        StringRequest jsonArrayRequest = new StringRequest(Request.Method.POST, fullURL.toString(), new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.d("Response", response);
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        }){
+            @Override
+            protected Map<String, String> getParams(){
+                HashMap<String,String> query = new HashMap<>();
+                query.put("userID", userID);
+                return query;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(jsonArrayRequest);
     }
 }
 
