@@ -189,23 +189,9 @@ public class HighFiveRequestActivity extends FragmentActivity implements OnMapRe
                 Log.e("Response",response);
                 try {
                     JSONObject userdata = new JSONObject(response);
-                    if(userdata.getString("xCord").equals("200")){
-                        AlertDialog.Builder canceled = new AlertDialog.Builder(HighFiveRequestActivity.this);
-                        canceled.setTitle("Request Canceled");
-                        canceled.setMessage("The user has canceled the high five request");
-                        canceled.setCancelable(false);
-                        canceled.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                returnToMain();
-                            }
-                        });
-                        canceled.show();
-                    }
-                    else{
                         dest.setLatitude(Double.parseDouble(userdata.getString("xCord")));
                         dest.setLongitude(Double.parseDouble(userdata.getString("yCord")));
-                    }
+
                 } catch (JSONException e) {
                     Log.e("Retrive Error JSON",e + "");
                 }
@@ -299,7 +285,21 @@ public class HighFiveRequestActivity extends FragmentActivity implements OnMapRe
 
     //Update the marker on the map and request a new route between the points
     private void updateDistance(){
-
+        if(dest.getLatitude() == 200){
+            stopLocationUpdates();
+            stopRepeatingTask();
+            AlertDialog.Builder canceled = new AlertDialog.Builder(HighFiveRequestActivity.this);
+            canceled.setTitle("Request Canceled");
+            canceled.setMessage("The user has canceled the high five request");
+            canceled.setCancelable(false);
+            canceled.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    returnToMain();
+                }
+            });
+            canceled.show();
+        }
         float distance = lastLocation.distanceTo(dest);
         if(distance<75){
             Intent ratings = new Intent(this,HighFiveRatingActivity.class);
