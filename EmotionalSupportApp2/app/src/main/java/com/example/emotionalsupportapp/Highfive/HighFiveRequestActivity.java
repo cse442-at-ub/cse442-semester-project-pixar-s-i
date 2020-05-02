@@ -182,7 +182,7 @@ public class HighFiveRequestActivity extends FragmentActivity implements OnMapRe
         fullURL = new StringBuilder();
         fullURL.append(getString(R.string.database_url));
         fullURL.append(phpfile);
-        StringRequest getUserLocation = new StringRequest(Request.Method.GET,fullURL.toString(),new Response.Listener<String>() {
+        StringRequest getUserLocation = new StringRequest(Request.Method.POST,fullURL.toString(),new Response.Listener<String>() {
 
             @Override
             public void onResponse(String response) {
@@ -253,6 +253,7 @@ public class HighFiveRequestActivity extends FragmentActivity implements OnMapRe
 
     public void startRepeatingTask(){
         progressDialog.setMessage("Finding a high five...");
+        progressDialog.setCancelable(false);
         progressDialog.show();
         databaseChecker.run();
     }
@@ -312,6 +313,8 @@ public class HighFiveRequestActivity extends FragmentActivity implements OnMapRe
 
         mMap.addMarker(currentUserLocationMarker);
         mMap.addMarker(volunteerLocationMarker);
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(origin,12));
+
         Log.e("Location Found",dest + " " + origin);
         requestDirections(origin, destination);
 
@@ -394,7 +397,6 @@ public class HighFiveRequestActivity extends FragmentActivity implements OnMapRe
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-        startLocationUpdates();
         updateLocationUI();
 
     }
