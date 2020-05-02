@@ -77,6 +77,7 @@ public class HugRequestActivity extends FragmentActivity implements OnMapReadyCa
     private Handler handler;
     private GoogleMap mMap;
     private MarkerOptions currentUserLocationMarker;
+    private MarkerOptions volunteerLocationMarker;
     private LatLng dest;
     private ProgressDialog progressDialog;
 
@@ -95,6 +96,7 @@ public class HugRequestActivity extends FragmentActivity implements OnMapReadyCa
             startActivity(login);
         }
         currentUserLocationMarker = new MarkerOptions();
+        volunteerLocationMarker = new MarkerOptions();
         handler = new Handler();
         progressDialog = new ProgressDialog(this);
         locationRequest = new LocationRequest();
