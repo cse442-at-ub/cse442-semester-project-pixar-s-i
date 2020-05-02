@@ -21,7 +21,6 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -65,6 +64,7 @@ public class HighFiveActivity extends AppCompatActivity {
     LocationRequest locationRequest;
     LocationCallback locationCallBack;
     private String userID;
+    private String username;
     Intent highFiveSearch;
 
     @Override
@@ -76,12 +76,13 @@ public class HighFiveActivity extends AppCompatActivity {
         if (getIntent().getExtras() != null) {
             Bundle b = getIntent().getExtras();
             userID = b.getString("EXTRA_USER_ID");
+            username = b.getString("EXTRA_USERNAME");
         }else{
             Intent login = new Intent(this, LoginActivity.class);
             startActivity(login);
         }
         highFiveSearch.putExtra("EXTRA_USER_ID",userID);
-
+        highFiveSearch.putExtra("EXTRA_USERNAME",username);
 
         mList = findViewById(R.id.high_five_request_list);
         userList = new ArrayList<>();
@@ -231,7 +232,7 @@ public class HighFiveActivity extends AppCompatActivity {
     //Sends a notification request to the firebase messaging service specific to people subscribed to the high five topic
     private void sendFCMPush() {
         FirebaseMessaging.getInstance().subscribeToTopic("High_Five");
-        String msg = "User Request High Five";
+        String msg = username + " requested a High Five";
         String title = "High Five Request";
         String token = "/topics/High_Five";
         JSONObject obj = null;
@@ -362,7 +363,6 @@ public class HighFiveActivity extends AppCompatActivity {
         };
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(jsonArrayRequest);
-
     }
 
 }

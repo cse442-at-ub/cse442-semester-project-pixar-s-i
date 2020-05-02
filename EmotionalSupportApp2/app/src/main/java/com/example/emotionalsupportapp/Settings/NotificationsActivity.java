@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.example.emotionalsupportapp.R;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 public class NotificationsActivity extends AppCompatActivity {
     String userID;
@@ -20,6 +21,8 @@ public class NotificationsActivity extends AppCompatActivity {
     }
 
     public void goToHighFiveNotifications(View view) {
+        FirebaseMessaging.getInstance().unsubscribeFromTopic("High_Five");
+
     }
 
     public void goToHugNotifications(View view) {

@@ -81,6 +81,8 @@ public class HighFiveRequestActivity extends FragmentActivity implements OnMapRe
     private ProgressDialog progressDialog;
     private Boolean userFound;
     private String userID;
+    private String username;
+
     private String volunteerID;
     private  Location dest;
     private Button cancelButton;
@@ -100,12 +102,13 @@ public class HighFiveRequestActivity extends FragmentActivity implements OnMapRe
         if (getIntent().getExtras() != null) {
             Bundle b = getIntent().getExtras();
             userID = b.getString("EXTRA_USER_ID");
+            username = b.getString("EXTRA_USERNAME");
         }else{
             Intent login = new Intent(this,LoginActivity.class);
             startActivity(login);
         }
 
-        dialog = new CancelHighFiveDialog(userID);
+        dialog = new CancelHighFiveDialog(userID,username);
         handler = new Handler();
         progressDialog = new ProgressDialog(this);
         lastLocation = new Location("");
@@ -222,6 +225,7 @@ public class HighFiveRequestActivity extends FragmentActivity implements OnMapRe
         stopRepeatingTask();
         Intent main = new Intent(this,HighFiveActivity.class);
         main.putExtra("EXTRA_USER_ID",userID);
+        main.putExtra("EXTRA_USERNAME",username);
         startActivity(main);
     }
 
@@ -240,6 +244,13 @@ public class HighFiveRequestActivity extends FragmentActivity implements OnMapRe
     public void startRepeatingTask(){
         progressDialog.setMessage("Finding a high five...");
         progressDialog.setCancelable(false);
+        progressDialog.setButton(DialogInterface.BUTTON_NEGATIVE, "Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                removeActiveUser(userID);
+                returnToMain();
+            }
+        });
         progressDialog.show();
         databaseChecker.run();
     }
@@ -321,37 +332,7 @@ public class HighFiveRequestActivity extends FragmentActivity implements OnMapRe
         }
     }
 
-    //Removes the user from the matched database table
-    public void removeMatched(final String userID){
 
-        String phpfile = "removeUserFromMatchedTB.php";
-        String result = "";
-        StringBuilder fullURL = new StringBuilder();
-        fullURL.append(getString(R.string.database_url));
-        fullURL.append(phpfile);
-
-        StringRequest removeUserRequest = new StringRequest(Request.Method.POST, fullURL.toString(), new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                Log.d("Response", response);
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-
-            }
-        }){
-            @Override
-            protected Map<String, String> getParams(){
-                HashMap<String,String> query = new HashMap<>();
-                query.put("userID", userID);
-                return query;
-            }
-        };
-
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
-        requestQueue.add(removeUserRequest);
-    }
     //Check the match user table for to see if user was matched
     private void matchedUser() {
 
@@ -406,7 +387,72 @@ public class HighFiveRequestActivity extends FragmentActivity implements OnMapRe
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(jsonArrayRequest);
     }
+    //Removes the user from the matched database table
+    public void removeMatched(final String userID){
 
+        String phpfile = "removeUserFromMatchedTB.php";
+        String result = "";
+        StringBuilder fullURL = new StringBuilder();
+        fullURL.append(getString(R.string.database_url));
+        fullURL.append(phpfile);
+
+        StringRequest removeUserRequest = new StringRequest(Request.Method.POST, fullURL.toString(), new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.d("Response", response);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        }){
+            @Override
+            protected Map<String, String> getParams(){
+                HashMap<String,String> query = new HashMap<>();
+                query.put("userID", userID);
+                return query;
+            }
+        };
+
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(removeUserRequest);
+    }
+
+    //Removes user from the active user table if they click cancel
+    private void removeActiveUser(final String userID){
+        final ProgressDialog canceling = new ProgressDialog(this);
+        canceling.setMessage("Canceling request..");
+        canceling.setCancelable(false);
+        String phpfile = getString(R.string.cancel_waiting_high_five);
+        StringBuilder fullURL = new StringBuilder();
+        fullURL.append(getString(R.string.database_url));
+        fullURL.append(phpfile);
+
+        StringRequest removeUserRequest = new StringRequest(Request.Method.POST, fullURL.toString(), new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.d("Response", response);
+                canceling.dismiss();
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e("Waiting HighFive Error", error + "");
+                canceling.dismiss();
+            }
+        }){
+            @Override
+            protected Map<String, String> getParams(){
+                HashMap<String,String> query = new HashMap<>();
+                query.put("userID", userID);
+                return query;
+            }
+        };
+
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(removeUserRequest);
+    }
 
     //Add dialog for when user tries to go back asking if they want to
     @Override

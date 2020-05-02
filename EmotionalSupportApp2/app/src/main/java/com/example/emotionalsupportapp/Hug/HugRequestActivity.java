@@ -2,7 +2,6 @@ package com.example.emotionalsupportapp.Hug;
 
 import android.Manifest;
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -32,13 +31,8 @@ import com.directions.route.Route;
 import com.directions.route.RouteException;
 import com.directions.route.Routing;
 import com.directions.route.RoutingListener;
-import com.example.emotionalsupportapp.Highfive.HighFiveActivity;
-import com.example.emotionalsupportapp.Highfive.HighFiveRatingActivity;
-import com.example.emotionalsupportapp.Highfive.HighFiveRequestActivity;
-import com.example.emotionalsupportapp.MainActivity;
 import com.example.emotionalsupportapp.Member.Registration.LoginActivity;
 import com.example.emotionalsupportapp.R;
-import com.example.emotionalsupportapp.Service.CancelHighFiveDialog;
 import com.example.emotionalsupportapp.Service.CancelHugDialog;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
@@ -55,7 +49,6 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -71,6 +64,7 @@ public class HugRequestActivity extends FragmentActivity implements OnMapReadyCa
     private List<Polyline> polylines;
     private static final int[] COLORS = new int[]{R.color.colorPrimaryDark, R.color.colorPrimary, R.color.colorAccent, R.color.primary_dark_material_light};
     private String userID;
+    private String username;
     private String volunteerID;
     private static final int REQUEST_CODE = 101;
     private boolean userFound;
@@ -99,6 +93,7 @@ public class HugRequestActivity extends FragmentActivity implements OnMapReadyCa
         if (getIntent().getExtras() != null) {
             Bundle b = getIntent().getExtras();
             userID = b.getString("EXTRA_USER_ID");
+            username = b.getString("EXTRA_USERNAME");
         }else{
             Intent login = new Intent(this, LoginActivity.class);
             startActivity(login);
@@ -106,7 +101,7 @@ public class HugRequestActivity extends FragmentActivity implements OnMapReadyCa
         currentUserLocationMarker = new MarkerOptions();
         volunteerLocationMarker = new MarkerOptions();
 
-        dialog = new CancelHugDialog(userID);
+        dialog = new CancelHugDialog(userID,username);
         lastLocation = new Location("");
         dest = new Location("");
         handler = new Handler();
@@ -142,8 +137,23 @@ public class HugRequestActivity extends FragmentActivity implements OnMapReadyCa
         }
         super.onStart();
     }
+
+    @Override
+    protected void onResume() {
+        startLocationUpdates();
+        super.onResume();
+    }
+
     public void startRepeatingTask(){
         progressDialog.setMessage("Finding a high five...");
+        progressDialog.setCancelable(false);
+        progressDialog.setButton(DialogInterface.BUTTON_NEGATIVE, "Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                removeActiveUser(userID);
+                returnToMain();
+            }
+        });
         progressDialog.show();
         databaseChecker.run();
     }
@@ -152,12 +162,6 @@ public class HugRequestActivity extends FragmentActivity implements OnMapReadyCa
         handler.removeCallbacks(databaseChecker);
         progressDialog.dismiss();
 
-    }
-
-    @Override
-    protected void onResume() {
-        startLocationUpdates();
-        super.onResume();
     }
 
     Runnable databaseChecker  = new Runnable() {
@@ -179,6 +183,15 @@ public class HugRequestActivity extends FragmentActivity implements OnMapReadyCa
             }
         }
     };
+
+    public void returnToMain(){
+        stopRepeatingTask();
+        Intent main = new Intent(this, HugActivity.class);
+        main.putExtra("EXTRA_USER_ID",userID);
+        main.putExtra("EXTRA_USERNAME",username);
+        startActivity(main);
+    }
+
 
     /**
      * Check the match user table for to see if user was matched
@@ -238,6 +251,73 @@ public class HugRequestActivity extends FragmentActivity implements OnMapReadyCa
         requestQueue.add(jsonArrayRequest);
     }
 
+
+    //Removes the user from the matched database table
+    public void removeMatched(final String userID){
+
+        String phpfile = "removeUserFromMatchedTB.php";
+        StringBuilder fullURL = new StringBuilder();
+        fullURL.append(getString(R.string.database_url));
+        fullURL.append(phpfile);
+
+        StringRequest removeUserRequest = new StringRequest(Request.Method.POST, fullURL.toString(), new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.d("Response", response);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        }){
+            @Override
+            protected Map<String, String> getParams(){
+                HashMap<String,String> query = new HashMap<>();
+                query.put("userID", userID);
+                return query;
+            }
+        };
+
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(removeUserRequest);
+    }
+
+    //Removes user from the active user table if they click cancel
+    private void removeActiveUser(final String userID){
+        final ProgressDialog canceling = new ProgressDialog(this);
+        canceling.setMessage("Canceling request..");
+        canceling.setCancelable(false);
+        String phpfile = getString(R.string.cancel_waiting_hug);
+        StringBuilder fullURL = new StringBuilder();
+        fullURL.append(getString(R.string.database_url));
+        fullURL.append(phpfile);
+
+        StringRequest removeUserRequest = new StringRequest(Request.Method.POST, fullURL.toString(), new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.d("Response", response);
+                canceling.dismiss();
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e("Waiting HighFive Error", error + "");
+                canceling.dismiss();
+            }
+        }){
+            @Override
+            protected Map<String, String> getParams(){
+                HashMap<String,String> query = new HashMap<>();
+                query.put("userID", userID);
+                return query;
+            }
+        };
+
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(removeUserRequest);
+    }
+
     private  class UpdateLocation extends LocationCallback{
         @Override
         public void onLocationResult(LocationResult locationResult) {
@@ -277,7 +357,7 @@ public class HugRequestActivity extends FragmentActivity implements OnMapReadyCa
             }
         }){
             @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
+            protected Map<String, String> getParams(){
                 HashMap<String,String> query = new HashMap<>();
                 query.put("userID",userID);
                 query.put("xCord",Double.toString(lastLocation.getLatitude()));
@@ -304,7 +384,7 @@ public class HugRequestActivity extends FragmentActivity implements OnMapReadyCa
             }
         }){
             @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
+            protected Map<String, String> getParams(){
 
                 HashMap<String,String> query = new HashMap<>();
                 query.put("userID",volunteerID);
@@ -359,44 +439,6 @@ public class HugRequestActivity extends FragmentActivity implements OnMapReadyCa
 
     }
 
-    public void returnToMain(){
-        stopRepeatingTask();
-        Intent main = new Intent(this, HugActivity.class);
-        main.putExtra("EXTRA_USER_ID",userID);
-        startActivity(main);
-    }
-
-    //Removes the user from the matched database table
-    public void removeMatched(final String userID){
-
-        String phpfile = "removeUserFromMatchedTB.php";
-        String result = "";
-        StringBuilder fullURL = new StringBuilder();
-        fullURL.append(getString(R.string.database_url));
-        fullURL.append(phpfile);
-
-        StringRequest removeUserRequest = new StringRequest(Request.Method.POST, fullURL.toString(), new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                Log.d("Response", response);
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-
-            }
-        }){
-            @Override
-            protected Map<String, String> getParams(){
-                HashMap<String,String> query = new HashMap<>();
-                query.put("userID", userID);
-                return query;
-            }
-        };
-
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
-        requestQueue.add(removeUserRequest);
-    }
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
@@ -468,12 +510,10 @@ public class HugRequestActivity extends FragmentActivity implements OnMapReadyCa
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        switch(requestCode){
-            case REQUEST_CODE:
-                if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
-                    startLocationUpdates();
-                }
-                break;
+        if (requestCode == REQUEST_CODE) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                startLocationUpdates();
+            }
         }
     }
 

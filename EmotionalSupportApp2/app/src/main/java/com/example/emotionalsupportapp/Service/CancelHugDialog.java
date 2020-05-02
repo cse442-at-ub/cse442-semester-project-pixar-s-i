@@ -25,8 +25,10 @@ import java.util.Map;
 public class CancelHugDialog extends AppCompatDialogFragment {
 
     private String userId;
-    public CancelHugDialog(String userID){
+    private String username;
+    public CancelHugDialog(String userID,String userName){
         userId = userID;
+        username = userName;
     }
 
     @Override
@@ -41,6 +43,7 @@ public class CancelHugDialog extends AppCompatDialogFragment {
                 cancelRequest(userId);
                 Intent main = new Intent(getActivity(), HighFiveActivity.class);
                 main.putExtra("EXTRA_USER_ID",userId);
+                main.putExtra("EXTRA_USERNAME",username);
                 startActivity(main);
             }
         });

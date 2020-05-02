@@ -21,7 +21,6 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -30,7 +29,6 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.emotionalsupportapp.Highfive.HighFiveActivity;
 import com.example.emotionalsupportapp.MainActivity;
 import com.example.emotionalsupportapp.Member.Profile.User;
 import com.example.emotionalsupportapp.Member.Registration.LoginActivity;
@@ -58,6 +56,7 @@ public class HugActivity extends AppCompatActivity {
     private RecyclerView hugList;
     private RecyclerView.Adapter adapter;
     private String userID;
+    private String username;
     Intent hugRequest;
     private List<User> users;
     private FusedLocationProviderClient fusedLocationProviderClient;
@@ -78,6 +77,8 @@ public class HugActivity extends AppCompatActivity {
         if (getIntent().getExtras() != null) {
             Bundle b = getIntent().getExtras();
             userID = b.getString("EXTRA_USER_ID");
+            username = b.getString("EXTRA_USERNAME");
+
         }else{
             Intent login = new Intent(this, LoginActivity.class);
             startActivity(login);
@@ -99,8 +100,6 @@ public class HugActivity extends AppCompatActivity {
         hugList.setLayoutManager(linearLayoutManager);
         hugList.addItemDecoration(dividerItemDecoration);
         hugList.setAdapter(adapter);
-        final ProgressDialog progressDialog = new ProgressDialog(this);
-
 
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
         locationRequest = new LocationRequest();
@@ -111,10 +110,7 @@ public class HugActivity extends AppCompatActivity {
         locationCallback = new LocationCallback(){
             @Override
             public void onLocationResult(LocationResult locationResult) {
-                if(locationResult == null){
-                    return;
-                }
-                else{
+                if(locationResult != null){
                     lastLocation = locationResult.getLastLocation();
                     sendLocation(lastLocation);
                 }
@@ -273,12 +269,12 @@ public class HugActivity extends AppCompatActivity {
     //Sends a notification request to the firebase messaging service specific to people subscribed to the high five topic
     private void sendFCMPush() {
         FirebaseMessaging.getInstance().subscribeToTopic("Hug");
-        String msg = "A User Requested a Hug";
+        String msg = username +" requested a Hug";
         String title = "Hug Request";
         String token = "/topics/Hug";
         JSONObject obj = null;
-        JSONObject objData = null;
-        JSONObject dataobjData = null;
+        JSONObject objData;
+        JSONObject dataobjData;
 
         try {
             obj = new JSONObject();
@@ -318,8 +314,8 @@ public class HugActivity extends AppCompatActivity {
                     }
                 }) {
             @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String, String> params = new HashMap<String, String>();
+            public Map<String, String> getHeaders(){
+                Map<String, String> params = new HashMap<>();
                 params.put("Authorization", "key=" + getString(R.string.firebase_server_key));
                 params.put("Content-Type", "application/json");
                 return params;
