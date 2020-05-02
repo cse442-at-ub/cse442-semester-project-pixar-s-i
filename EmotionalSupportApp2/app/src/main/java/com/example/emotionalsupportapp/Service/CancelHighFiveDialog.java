@@ -101,8 +101,8 @@ public class CancelHighFiveDialog extends AppCompatDialogFragment {
             protected Map<String, String> getParams() throws AuthFailureError {
                 HashMap<String,String> query = new HashMap<>();
                 query.put("userID",userID);
-                query.put("xCord","Canceled");
-                query.put("yCord","Canceled");
+                query.put("xCord","200");
+                query.put("yCord","200");
                 return query;
             }
         };

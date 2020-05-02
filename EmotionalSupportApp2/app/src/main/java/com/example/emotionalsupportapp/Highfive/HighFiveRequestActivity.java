@@ -189,7 +189,7 @@ public class HighFiveRequestActivity extends FragmentActivity implements OnMapRe
                 Log.e("Response",response);
                 try {
                     JSONObject userdata = new JSONObject(response);
-                    if(userdata.getString("xCord").equals("Canceled")){
+                    if(userdata.getString("xCord").equals("200")){
                         AlertDialog.Builder canceled = new AlertDialog.Builder(HighFiveRequestActivity.this);
                         canceled.setTitle("Request Canceled");
                         canceled.setMessage("The user has canceled the high five request");
@@ -479,6 +479,7 @@ public class HighFiveRequestActivity extends FragmentActivity implements OnMapRe
 
     @Override
     public void onRoutingSuccess(ArrayList<Route> route, int shortestRouteIndex) {
+        Log.e("Routing Success",route + "");
         if(polylines.size()>0) {
             for (Polyline poly : polylines) {
                 poly.remove();
@@ -510,12 +511,14 @@ public class HighFiveRequestActivity extends FragmentActivity implements OnMapRe
     @Override
     protected void onPause() {
         stopRepeatingTask();
+        stopLocationUpdates();
         super.onPause();
     }
 
     @Override
     protected void onStop() {
         stopRepeatingTask();
+        stopLocationUpdates();
         super.onStop();
     }
 
