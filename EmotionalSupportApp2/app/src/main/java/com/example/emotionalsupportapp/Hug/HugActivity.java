@@ -132,6 +132,16 @@ public class HugActivity extends AppCompatActivity {
         super.onStart();
     }
 
+    @Override
+    public void onBackPressed() {
+        returnToMain();
+    }
+
+    public void returnToMain(){
+        Intent returnToMainIntent = new Intent(this, MainActivity.class);
+        returnToMainIntent.putExtra("EXTRA_USER_ID",userID);
+        startActivity(returnToMainIntent);
+    }
 
     // Creates a query with the location information for this user and calls Send request to the server
     private void sendLocation(Location location){

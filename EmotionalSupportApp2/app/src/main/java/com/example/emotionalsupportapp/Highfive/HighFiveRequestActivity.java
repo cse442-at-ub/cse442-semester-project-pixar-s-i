@@ -120,7 +120,7 @@ public class HighFiveRequestActivity extends FragmentActivity implements OnMapRe
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map_high_five);
         mapFragment.getMapAsync(this);
-        cancelButton = (Button) findViewById(R.id.cancel_button);
+        cancelButton = (Button) findViewById(R.id.cancel_high_five_button);
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -288,7 +288,7 @@ public class HighFiveRequestActivity extends FragmentActivity implements OnMapRe
         if(dest.getLatitude() == 200){
             stopLocationUpdates();
             stopRepeatingTask();
-            AlertDialog.Builder canceled = new AlertDialog.Builder(HighFiveRequestActivity.this);
+            AlertDialog.Builder canceled = new AlertDialog.Builder(this);
             canceled.setTitle("Request Canceled");
             canceled.setMessage("The user has canceled the high five request");
             canceled.setCancelable(false);
@@ -299,27 +299,59 @@ public class HighFiveRequestActivity extends FragmentActivity implements OnMapRe
                 }
             });
             canceled.show();
+        }else{
+            float distance = lastLocation.distanceTo(dest);
+            if(distance<75){
+                Intent ratings = new Intent(this,HighFiveRatingActivity.class);
+                ratings.putExtra("EXTRA_USER_ID",userID);
+                ratings.putExtra("EXTRA_VOLUNTEER_ID",volunteerID);
+                stopLocationUpdates();
+                removeMatched(userID);
+                startActivity(ratings);
+            }
+            LatLng origin = new LatLng(lastLocation.getLatitude(),lastLocation.getLongitude());
+            LatLng destination = new LatLng(dest.getLatitude(),dest.getLongitude());
+
+            mMap.addMarker(currentUserLocationMarker);
+            mMap.addMarker(volunteerLocationMarker);
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(origin,12));
+
+            Log.e("Location Found",dest + " " + origin);
+            requestDirections(origin, destination);
         }
-        float distance = lastLocation.distanceTo(dest);
-        if(distance<75){
-            Intent ratings = new Intent(this,HighFiveRatingActivity.class);
-            ratings.putExtra("EXTRA_USER_ID",userID);
-            ratings.putExtra("EXTRA_VOLUNTEER_ID",volunteerID);
-            stopLocationUpdates();
-            startActivity(ratings);
-        }
-        LatLng origin = new LatLng(lastLocation.getLatitude(),lastLocation.getLongitude());
-        LatLng destination = new LatLng(dest.getLatitude(),dest.getLongitude());
-
-        mMap.addMarker(currentUserLocationMarker);
-        mMap.addMarker(volunteerLocationMarker);
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(origin,12));
-
-        Log.e("Location Found",dest + " " + origin);
-        requestDirections(origin, destination);
-
     }
 
+    //Removes the user from the matched database table
+    public void removeMatched(final String userID){
+
+        String phpfile = "removeUserFromMatchedTB.php";
+        String result = "";
+        StringBuilder fullURL = new StringBuilder();
+        fullURL.append(getString(R.string.database_url));
+        fullURL.append(phpfile);
+
+        StringRequest removeUserRequest = new StringRequest(Request.Method.POST, fullURL.toString(), new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.d("Response", response);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        }){
+            @Override
+            protected Map<String, String> getParams(){
+                HashMap<String,String> query = new HashMap<>();
+                query.put("userID", userID);
+                return query;
+            }
+        };
+
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(removeUserRequest);
+    }
     //Check the match user table for to see if user was matched
     private void matchedUser() {
 
@@ -506,7 +538,6 @@ public class HighFiveRequestActivity extends FragmentActivity implements OnMapRe
     public void onRoutingCancelled() {
 
     }
-
 
     @Override
     protected void onPause() {

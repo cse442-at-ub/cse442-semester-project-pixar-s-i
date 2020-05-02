@@ -127,9 +127,14 @@ public class HighFiveActivity extends AppCompatActivity {
         super.onStart();
     }
 
+    @Override
+    public void onBackPressed() {
+        returnToMain();
+    }
 
-    public void returnToMain(View view) {
+    public void returnToMain() {
         Intent returnToMainIntent = new Intent(this, MainActivity.class);
+        returnToMainIntent.putExtra("EXTRA_USER_ID",userID);
         startActivity(returnToMainIntent);
 
     }

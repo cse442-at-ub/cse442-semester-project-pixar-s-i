@@ -1,8 +1,10 @@
 package com.example.emotionalsupportapp.Hug;
 
 import android.Manifest;
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
@@ -30,11 +32,14 @@ import com.directions.route.Route;
 import com.directions.route.RouteException;
 import com.directions.route.Routing;
 import com.directions.route.RoutingListener;
+import com.example.emotionalsupportapp.Highfive.HighFiveActivity;
 import com.example.emotionalsupportapp.Highfive.HighFiveRatingActivity;
 import com.example.emotionalsupportapp.Highfive.HighFiveRequestActivity;
 import com.example.emotionalsupportapp.MainActivity;
 import com.example.emotionalsupportapp.Member.Registration.LoginActivity;
 import com.example.emotionalsupportapp.R;
+import com.example.emotionalsupportapp.Service.CancelHighFiveDialog;
+import com.example.emotionalsupportapp.Service.CancelHugDialog;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
@@ -78,8 +83,11 @@ public class HugRequestActivity extends FragmentActivity implements OnMapReadyCa
     private GoogleMap mMap;
     private MarkerOptions currentUserLocationMarker;
     private MarkerOptions volunteerLocationMarker;
-    private LatLng dest;
+    private Location dest;
     private ProgressDialog progressDialog;
+    private Button cancelButton;
+    private CancelHugDialog dialog;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,6 +105,10 @@ public class HugRequestActivity extends FragmentActivity implements OnMapReadyCa
         }
         currentUserLocationMarker = new MarkerOptions();
         volunteerLocationMarker = new MarkerOptions();
+
+        dialog = new CancelHugDialog(userID);
+        lastLocation = new Location("");
+        dest = new Location("");
         handler = new Handler();
         progressDialog = new ProgressDialog(this);
         locationRequest = new LocationRequest();
@@ -109,7 +121,15 @@ public class HugRequestActivity extends FragmentActivity implements OnMapReadyCa
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map_hug);
         mapFragment.getMapAsync(this);
-
+        cancelButton = (Button) findViewById(R.id.cancel_hug_button);
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(userID != null){
+                    dialog.show(getSupportFragmentManager(),"Cancel Hug Dialog");
+                }
+            }
+        });
     }
 
     @Override
@@ -177,16 +197,20 @@ public class HugRequestActivity extends FragmentActivity implements OnMapReadyCa
             public void onResponse(String response) {
                 if(!response.equals("No such user exist in the MatchedHugUsers table")){
                     try {
+                        Log.e("Matched Table",response + "");
 
                         JSONObject userdata = new JSONObject(response);
                         if(!userdata.getString("userID1").equals(userID)){
                             volunteerID = userdata.getString("userID1");
-                            dest = new LatLng(Double.parseDouble(userdata.getString("xCord1")),Double.parseDouble(userdata.getString("yCord1")));
+                            dest.setLatitude(Double.parseDouble(userdata.getString("xCord1")));
+                            dest.setLongitude(Double.parseDouble(userdata.getString("yCord1")));
                         }else{
                             volunteerID = userdata.getString("userID2");
-                            dest = new LatLng(Double.parseDouble(userdata.getString("xCord2")),Double.parseDouble(userdata.getString("yCord2")));
-
+                            dest.setLatitude(Double.parseDouble(userdata.getString("xCord2")));
+                            dest.setLongitude(Double.parseDouble(userdata.getString("yCord2")));
                         }
+                        volunteerLocationMarker.position(new LatLng(dest.getLatitude(),dest.getLongitude()));
+                        volunteerLocationMarker.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
                         userFound = true;
 
                     } catch (JSONException e) {
@@ -298,28 +322,81 @@ public class HugRequestActivity extends FragmentActivity implements OnMapReadyCa
      * Update the marker on the map and request a new route between the points
      */
     private void updateDistance(){
-        Location point = new Location("");
-        point.setLatitude(dest.latitude);
-        point.setLongitude(dest.longitude);
-        float distance = lastLocation.distanceTo(point);
-        if(distance<75){
-            Intent ratings = new Intent(this, HugRatingActivity.class);
-            ratings.putExtra("EXTRA_USER_ID",userID);
-            ratings.putExtra("EXTRA_VOLUNTEER_ID",volunteerID);
-            stopLocationUpdates();
-            startActivity(ratings);
-        }
-        LatLng origin = new LatLng(lastLocation.getLatitude(),lastLocation.getLongitude());
-        MarkerOptions options = new MarkerOptions();
-        options.position(dest);
 
-        options.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
-        mMap.addMarker(currentUserLocationMarker);
-        mMap.addMarker(options);
-        Log.d("Location Found",dest + " " + origin);
-        requestDirections(origin, dest);
+        if(dest.getLatitude() == 200){
+            stopLocationUpdates();
+            stopRepeatingTask();
+            AlertDialog.Builder canceled = new AlertDialog.Builder(this);
+            canceled.setTitle("Request Canceled");
+            canceled.setMessage("The user has canceled the high five request");
+            canceled.setCancelable(false);
+            canceled.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    returnToMain();
+                }
+            });
+            canceled.show();
+        }
+        else{
+            float distance = lastLocation.distanceTo(dest);
+            if(distance<75){
+                Intent ratings = new Intent(this, HugRatingActivity.class);
+                ratings.putExtra("EXTRA_USER_ID",userID);
+                ratings.putExtra("EXTRA_VOLUNTEER_ID",volunteerID);
+                stopLocationUpdates();
+                removeMatched(userID);
+                startActivity(ratings);
+            }
+            LatLng origin = new LatLng(lastLocation.getLatitude(),lastLocation.getLongitude());
+            LatLng destination = new LatLng(dest.getLatitude(),dest.getLongitude());
+
+            mMap.addMarker(currentUserLocationMarker);
+            mMap.addMarker(volunteerLocationMarker);
+            Log.d("Location Found",dest + " " + origin);
+            requestDirections(origin, destination);
+        }
+
     }
 
+    public void returnToMain(){
+        stopRepeatingTask();
+        Intent main = new Intent(this, HugActivity.class);
+        main.putExtra("EXTRA_USER_ID",userID);
+        startActivity(main);
+    }
+
+    //Removes the user from the matched database table
+    public void removeMatched(final String userID){
+
+        String phpfile = "removeUserFromMatchedTB.php";
+        String result = "";
+        StringBuilder fullURL = new StringBuilder();
+        fullURL.append(getString(R.string.database_url));
+        fullURL.append(phpfile);
+
+        StringRequest removeUserRequest = new StringRequest(Request.Method.POST, fullURL.toString(), new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.d("Response", response);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        }){
+            @Override
+            protected Map<String, String> getParams(){
+                HashMap<String,String> query = new HashMap<>();
+                query.put("userID", userID);
+                return query;
+            }
+        };
+
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(removeUserRequest);
+    }
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
@@ -421,7 +498,6 @@ public class HugRequestActivity extends FragmentActivity implements OnMapReadyCa
                 poly.remove();
             }
         }
-
         polylines = new ArrayList<>();
         //add route(s) to the map.
         for (int i = 0; i <route.size(); i++) {

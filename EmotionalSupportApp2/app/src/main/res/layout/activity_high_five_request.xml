@@ -14,9 +14,8 @@
         tools:context=".MapsActivity"
         android:name="com.google.android.gms.maps.SupportMapFragment">
 
-
     <Button
-        android:id="@+id/cancel_button"
+        android:id="@+id/cancel_high_five_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal|bottom"
