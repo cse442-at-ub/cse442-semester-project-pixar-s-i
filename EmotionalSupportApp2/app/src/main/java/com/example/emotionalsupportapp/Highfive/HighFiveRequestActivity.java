@@ -108,6 +108,8 @@ public class HighFiveRequestActivity extends FragmentActivity implements OnMapRe
         dialog = new CancelHighFiveDialog(userID);
         handler = new Handler();
         progressDialog = new ProgressDialog(this);
+        lastLocation = new Location("");
+        dest = new Location("");
         locationRequest = new LocationRequest();
         locationRequest.setInterval(5000);
         locationRequest.setFastestInterval(1000);
@@ -331,6 +333,7 @@ public class HighFiveRequestActivity extends FragmentActivity implements OnMapRe
                     try {
 
                         JSONObject userdata = new JSONObject(response);
+                        Log.e("Matched Table",userdata + "");
                         if(!userdata.getString("userID1").equals(userID)){
                             volunteerID = userdata.getString("userID1");
                             dest.setLatitude(Double.parseDouble(userdata.getString("xCord1")));
