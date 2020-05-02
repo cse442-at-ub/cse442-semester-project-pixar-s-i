@@ -115,7 +115,7 @@ public class HighFiveRequestActivity extends FragmentActivity implements OnMapRe
             @Override
             public void onClick(View view) {
                     if(userID != null){
-                        openDialog();
+
                         cancelRequest(userID);
                         returnToMain();
                     }
@@ -127,16 +127,6 @@ public class HighFiveRequestActivity extends FragmentActivity implements OnMapRe
         Intent returnToMainIntent = new Intent(this, MainActivity.class);
         returnToMainIntent.putExtra("EXTRA_USER_ID", userID);
         startActivity(returnToMainIntent);
-    }
-    public void openDialog(){
-        CancelHighFiveDialog dialog = new CancelHighFiveDialog();
-        dialog.show(getSupportFragmentManager(), "cancel high five dialog");
-
-    }
-
-    private void cancelRequest(String volunteerID) {
-        removeMatchedUsers(volunteerID);
-        returnToMain();
     }
 
 
@@ -492,7 +482,11 @@ public class HighFiveRequestActivity extends FragmentActivity implements OnMapRe
         super.onDestroy();
     }
 
-    public void removeMatchedUsers(final String userID){
+    public void cancelRequest(final String userID){
+
+        CancelHighFiveDialog dialog = new CancelHighFiveDialog();
+        dialog.show(getSupportFragmentManager(), "cancel high five dialog");
+
         String phpfile = "removeUserFromMatchedTB.php";
         String result = "";
         StringBuilder fullURL = new StringBuilder();
@@ -503,11 +497,12 @@ public class HighFiveRequestActivity extends FragmentActivity implements OnMapRe
             @Override
             public void onResponse(String response) {
                 Log.d("Response", response);
-
+                        dialog.dismiss();
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                dialog.dismiss();
 
             }
         }){
