@@ -4,8 +4,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -45,6 +49,7 @@ public class SearchActivity extends AppCompatActivity {
     }
 
     private void getTopFiveVolunteers() {
+        topFiveVolunteers.clear();
         String phpURLBase = "https://www-student.cse.buffalo.edu/CSE442-542/2020-spring/cse-442e/getAllRatings.php";
         RequestQueue reqQueue;
         reqQueue = Volley.newRequestQueue(getApplicationContext());
@@ -81,5 +86,9 @@ public class SearchActivity extends AppCompatActivity {
         reqQueue.add(jsonObjectRequest);
     }
 
+    public void refreshVolunteers(View view) {
+        getTopFiveVolunteers();
+        Log.d("TEST", "11111111111111111111");
+    }
 
 }
