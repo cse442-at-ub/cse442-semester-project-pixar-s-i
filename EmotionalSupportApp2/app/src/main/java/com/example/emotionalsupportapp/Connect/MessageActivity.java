@@ -132,6 +132,7 @@ public class MessageActivity extends AppCompatActivity {
 
     private void readMessages(final String userId, final  String friendId, final String fromVolunteer){
         chats.clear();
+        updateMessages(friendId, userId);
         String phpURLBase = "https://www-student.cse.buffalo.edu/CSE442-542/2020-spring/cse-442e/getMessages.php/?user_id=" + userId + "&from_volunteer=" + fromVolunteer;
         RequestQueue reqQueue;
         reqQueue = Volley.newRequestQueue(getApplicationContext());
@@ -147,8 +148,9 @@ public class MessageActivity extends AppCompatActivity {
                         String receiverId = jsonobject.getString("receiverId");
                         String receiverName = jsonobject.getString("receiverName");
                         String message = jsonobject.getString("message");
+                        String hasSeen = jsonobject.getString("hasSeen");
                         if (friendId.equals(senderId) || friendId.equals(receiverId)){
-                            chats.add(new Chat(senderId,senderName,receiverId,receiverName,message));
+                            chats.add(new Chat(senderId,senderName,receiverId,receiverName,message,hasSeen));
                         }
                     }
                      messageAdpater = new MessageAdpater(userId, chats, MessageActivity.this);
@@ -156,6 +158,24 @@ public class MessageActivity extends AppCompatActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("ERROR:", "Error on Volley: " + error.toString());
+            }
+        });
+        reqQueue.add(jsonObjectRequest);
+    }
+
+    private void updateMessages(final String senderId, final String receiverId){
+        String phpURLBase = "https://www-student.cse.buffalo.edu/CSE442-542/2020-spring/cse-442e/updateMessages.php/?" +
+                "sender_id=" + senderId + "&receiver_id=" + receiverId;
+        RequestQueue reqQueue;
+        reqQueue = Volley.newRequestQueue(getApplicationContext());
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, phpURLBase, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
             }
         }, new Response.ErrorListener() {
             @Override

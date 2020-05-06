@@ -6,13 +6,15 @@ public class Chat {
     private String receiverId;
     private String receiverName;
     private String message;
+    private String hasSeen;
 
-    public Chat(String senderId, String senderName, String receiverId, String receiverName, String message) {
+    public Chat(String senderId, String senderName, String receiverId, String receiverName, String message, String hasSeen) {
         this.senderId = senderId;
         this.senderName = senderName;
         this.receiverId = receiverId;
         this.receiverName = receiverName;
         this.message = message;
+        this.hasSeen = hasSeen;
     }
 
     public String getSenderId() {
@@ -53,5 +55,13 @@ public class Chat {
 
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    public void setHasSeen(String hasSeen) {
+        this.hasSeen = hasSeen;
+    }
+
+    public String getHasSeen() {
+        return hasSeen;
     }
 }
