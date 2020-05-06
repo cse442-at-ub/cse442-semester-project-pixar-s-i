@@ -13,6 +13,8 @@ import android.os.Looper;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -50,6 +52,7 @@ import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -82,11 +85,20 @@ public class HugRequestActivity extends FragmentActivity implements OnMapReadyCa
     private Button cancelButton;
     private CancelHugDialog dialog;
 
+    private ImageView volunteerImageView;
+    private TextView volunteerTextView;
+    private String volunteerName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hug_request);
+
+        polylines = new ArrayList<>();
+
+        volunteerImageView = (ImageView) findViewById(R.id.hug_volunteer_info_button);
+        volunteerTextView = (TextView) findViewById(R.id.hug_volunteer_info_text);
+        volunteerTextView.setVisibility(View.INVISIBLE);
 
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
         userFound = false;
@@ -145,7 +157,7 @@ public class HugRequestActivity extends FragmentActivity implements OnMapReadyCa
     }
 
     public void startRepeatingTask(){
-        progressDialog.setMessage("Finding a high five...");
+        progressDialog.setMessage("Finding a hug...");
         progressDialog.setCancelable(false);
         progressDialog.setButton(DialogInterface.BUTTON_NEGATIVE, "Cancel", new DialogInterface.OnClickListener() {
             @Override
@@ -177,6 +189,7 @@ public class HugRequestActivity extends FragmentActivity implements OnMapReadyCa
             }finally {
                 if (userFound) {
                     stopRepeatingTask();
+                    getUserName(volunteerID);
                 } else {
                     handler.postDelayed(databaseChecker, interval);
                 }
@@ -255,7 +268,7 @@ public class HugRequestActivity extends FragmentActivity implements OnMapReadyCa
     //Removes the user from the matched database table
     public void removeMatched(final String userID){
 
-        String phpfile = "removeUserFromMatchedTB.php";
+        String phpfile = "removeMatchedHugUser";
         StringBuilder fullURL = new StringBuilder();
         fullURL.append(getString(R.string.database_url));
         fullURL.append(phpfile);
@@ -337,7 +350,7 @@ public class HugRequestActivity extends FragmentActivity implements OnMapReadyCa
      * Gets volunteer's location and updates the route on the maps
      */
     public void getVolunteerLocation(){
-        String phpfile = getString(R.string.update_coordinates);
+        String phpfile = getString(R.string.update_hug_coordinates);
 
         StringBuilder fullURL = new StringBuilder();
         fullURL.append(getString(R.string.database_url));
@@ -369,7 +382,7 @@ public class HugRequestActivity extends FragmentActivity implements OnMapReadyCa
         fullURL = new StringBuilder();
         fullURL.append(getString(R.string.database_url));
         fullURL.append(phpfile);
-        StringRequest getUserLocation = new StringRequest(Request.Method.GET,fullURL.toString(),new Response.Listener<String>() {
+        StringRequest getUserLocation = new StringRequest(Request.Method.POST,fullURL.toString(),new Response.Listener<String>() {
 
             @Override
             public void onResponse(String response) {
@@ -563,5 +576,63 @@ public class HugRequestActivity extends FragmentActivity implements OnMapReadyCa
         stopLocationUpdates();
         stopRepeatingTask();
         super.onDestroy();
+    }
+
+
+    //Gets volunteer info first and lastname from users table
+    private void getUserName(final String volunteerID){
+        final ProgressDialog progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Loading...");
+        progressDialog.show();
+        String phpfile = "getUserData.php";
+        StringBuilder fullURL = new StringBuilder();
+        fullURL.append(getString(R.string.database_url));
+        fullURL.append(phpfile);
+
+        StringRequest getUserData = new StringRequest(Request.Method.POST, fullURL.toString(), new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                if(!response.equals("User: doesn't exist in the users table.")){
+                    try{
+                        JSONArray userData = new JSONArray(response);
+                        Log.e("Users Table", userData + "");
+                        volunteerName = userData.getString(0);
+
+                    }catch(JSONException e){
+                        Log.e("JSON Exception",e + "");
+                    }
+                    progressDialog.dismiss();
+
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e("Response Error", error + " ");
+                progressDialog.dismiss();
+
+            }
+        }){
+            @Override
+            protected  Map<String,String>getParams(){
+                HashMap<String, String> query = new HashMap<>();
+                query.put("userID", volunteerID);
+                return query;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(getUserData);
+    }
+
+    public void displayHugVolunteerinfo(View view){
+
+        if(volunteerTextView.getVisibility() == View.INVISIBLE){
+            volunteerTextView.setText("Volunteer Info:"+ "\n" + "Name: " +volunteerName);
+
+            volunteerTextView.setVisibility(View.VISIBLE);
+        }else{
+            volunteerTextView.setVisibility(View.INVISIBLE);
+        }
     }
 }

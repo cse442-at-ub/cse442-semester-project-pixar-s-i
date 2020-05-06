@@ -214,7 +214,7 @@ public class HighFiveRequestActivity extends FragmentActivity implements OnMapRe
                         dest.setLongitude(Double.parseDouble(userdata.getString("yCord")));
 
                 } catch (JSONException e) {
-                    Log.e("Retrive Error JSON",e + "");
+                    Log.e("Retrieve Error JSON",e + "");
                 }
 
             }
@@ -335,7 +335,6 @@ public class HighFiveRequestActivity extends FragmentActivity implements OnMapRe
                 Intent ratings = new Intent(this,HighFiveRatingActivity.class);
                 ratings.putExtra("EXTRA_USER_ID",userID);
                 ratings.putExtra("EXTRA_VOLUNTEER_ID",volunteerID);
-                ratings.putExtra("EXTRA_VOLUNTEER_NAME", volunteerName);
                 ratings.putExtra("EXTRA_USER_NAME", username);
                 stopLocationUpdates();
                 removeMatched(userID);
@@ -645,9 +644,6 @@ public class HighFiveRequestActivity extends FragmentActivity implements OnMapRe
                             JSONArray userData = new JSONArray(response);
                             Log.e("Users Table", userData + "");
                             volunteerName = userData.getString(0);
-//                            MarkerOptions options = new MarkerOptions()
-//                                .snippet(volunteerName);
-//                        volunteerInfoMarker = mMap.addMarker(options);
 
                     }catch(JSONException e){
                         Log.e("JSON Exception",e + "");

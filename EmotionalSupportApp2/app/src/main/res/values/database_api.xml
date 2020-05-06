@@ -7,6 +7,7 @@
     <string name="high_five_list" translatable="false">allActiveUsers.php</string>
     <string name="hug_match_table" translatable="false">matchHugUsers.php</string>
     <string name="update_coordinates" translatable="false">writeCoord.php</string>
+    <string name="update_hug_coordinates" translatable="false">matchHugUsers.php</string>
     <string name="retrieve_coordinates" translatable="false">retrieveUpdatedCoord.php</string>
     <string name="matched_hug_finder" translatable="false">retrieveMatchedHugUser.php</string>
     <string name="cancel_waiting_high_five">removeUserFromActiveTB.php</string>

@@ -49,13 +49,11 @@ public class HighFiveRatingActivity extends AppCompatActivity {
             Bundle b = getIntent().getExtras();
             userID = b.getString("EXTRA_USER_ID");
             volunteerID = b.getString("EXTRA_VOLUNTEER_ID");
-            volunteerName = b.getString("EXTRA_VOLUNTEER_NAME");
             userName= b.getString("EXTRA_USER_NAME");
-        }else{
-            Intent login = new Intent(this, LoginActivity.class);
-            startActivity(login);
         }
-        textView.setText("How was your High Five with " + volunteerName +" ?");
+
+            textView.setText("How was your High Five with your volunteer?");
+
 
     }
 
@@ -76,7 +74,7 @@ public class HighFiveRatingActivity extends AppCompatActivity {
 
     private void updateRating(final String volunteerID, final String rating){
         final ProgressDialog progressDialog = new ProgressDialog(this);
-        progressDialog.setMessage("Submitting rating " + volunteerName +"...");
+        progressDialog.setMessage("Submitting rating. Please wait.");
         progressDialog.show();
         String phpfile = "updateHighFiveRating.php";
         StringBuilder fullURL = new StringBuilder();
