@@ -71,6 +71,12 @@ public class SearchActivity extends AppCompatActivity {
                     topFiveVolunteers.add(new Volunteer(userId, userName, volunteerId,volunteerName,overallRating));
                 }
                 Collections.sort(topFiveVolunteers);
+                for (Volunteer volunteer: topFiveVolunteers){
+                    if (volunteer.getUserName().equals(userName)){
+                        topFiveVolunteers.remove(volunteer);
+                        break;
+                    }
+                }
                 topFiveVolunteerAdapter = new TopFiveVolunteerAdapter(new ArrayList<>(topFiveVolunteers.subList(0, Math.min(topFiveVolunteers.size(), 5))), SearchActivity.this);
                 recyclerView.setAdapter(topFiveVolunteerAdapter);
             } catch (JSONException e) {
