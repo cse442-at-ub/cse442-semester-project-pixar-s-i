@@ -83,7 +83,7 @@ public class HighFiveRequestActivity extends FragmentActivity implements OnMapRe
     private MarkerOptions currentUserLocationMarker;
     private MarkerOptions volunteerLocationMarker;
     private static final int REQUEST_CODE = 101;
-    private int interval = 5000;
+    private int interval = 2000;
     private Handler handler;
     private ProgressDialog progressDialog;
     private Boolean userFound;
@@ -96,7 +96,7 @@ public class HighFiveRequestActivity extends FragmentActivity implements OnMapRe
     private  Location dest;
     private Button cancelButton;
     private CancelHighFiveDialog dialog;
-//    private Marker volunteerInfoMarker;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -125,7 +125,7 @@ public class HighFiveRequestActivity extends FragmentActivity implements OnMapRe
         dialog = new CancelHighFiveDialog(userID,username);
         handler = new Handler();
         progressDialog = new ProgressDialog(this);
-        lastLocation = new Location("");
+        lastLocation = null;
         dest = new Location("");
         locationRequest = new LocationRequest();
         locationRequest.setInterval(5000);
@@ -161,6 +161,9 @@ public class HighFiveRequestActivity extends FragmentActivity implements OnMapRe
             }
             lastLocation = locationResult.getLastLocation();
             currentUserLocationMarker.position(new LatLng(lastLocation.getLatitude(),lastLocation.getLongitude()));
+            if(mMap != null){
+                mMap.addMarker(currentUserLocationMarker);
+            }
             Log.d("Location Updating", lastLocation + "");
             if (userFound) {
                 getVolunteerLocation();
@@ -332,26 +335,45 @@ public class HighFiveRequestActivity extends FragmentActivity implements OnMapRe
         }else{
             float distance = lastLocation.distanceTo(dest);
             if(distance<75){
-                Intent ratings = new Intent(this,HighFiveRatingActivity.class);
-                ratings.putExtra("EXTRA_USER_ID",userID);
-                ratings.putExtra("EXTRA_VOLUNTEER_ID",volunteerID);
-                ratings.putExtra("EXTRA_USER_NAME", username);
-                stopLocationUpdates();
-                removeMatched(userID);
-                startActivity(ratings);
+                userIsClose();
             }
             LatLng origin = new LatLng(lastLocation.getLatitude(),lastLocation.getLongitude());
             LatLng destination = new LatLng(dest.getLatitude(),dest.getLongitude());
 
             mMap.addMarker(currentUserLocationMarker);
             mMap.addMarker(volunteerLocationMarker);
-            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(origin,12));
 
             Log.e("Location Found",dest + " " + origin);
             requestDirections(origin, destination);
         }
     }
 
+    private void userIsClose(){
+        final Intent ratings = new Intent(this,HighFiveRatingActivity.class);
+        stopLocationUpdates();
+        AlertDialog.Builder finisher = new AlertDialog.Builder(this);
+        finisher.setTitle(username + " is here");
+        finisher.setMessage(username + " is near by, commence high five ");
+        finisher.setCancelable(false);
+        finisher.setPositiveButton("Rate", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                ratings.putExtra("EXTRA_USER_ID",userID);
+                ratings.putExtra("EXTRA_VOLUNTEER_ID",volunteerID);
+                ratings.putExtra("EXTRA_USER_NAME", username);
+                removeMatched(userID);
+                startActivity(ratings);
+            }
+        });
+        finisher.setNegativeButton("Back", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                removeMatched(userID);
+                returnToMain();
+            }
+        });
+        finisher.show();
+    }
 
     //Check the match user table for to see if user was matched
     private void matchedUser() {

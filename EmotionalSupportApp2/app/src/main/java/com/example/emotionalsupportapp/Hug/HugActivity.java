@@ -85,6 +85,7 @@ public class HugActivity extends AppCompatActivity {
         }
 
         hugRequest.putExtra("EXTRA_USER_ID",userID);
+        hugRequest.putExtra("EXTRA_USERNAME",username);
         progressDialog = new ProgressDialog(this);
 
         hugList = findViewById(R.id.hug_request_list);

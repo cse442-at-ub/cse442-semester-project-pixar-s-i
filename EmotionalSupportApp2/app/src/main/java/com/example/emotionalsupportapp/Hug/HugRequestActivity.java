@@ -33,6 +33,7 @@ import com.directions.route.Route;
 import com.directions.route.RouteException;
 import com.directions.route.Routing;
 import com.directions.route.RoutingListener;
+import com.example.emotionalsupportapp.Highfive.HighFiveRatingActivity;
 import com.example.emotionalsupportapp.Member.Registration.LoginActivity;
 import com.example.emotionalsupportapp.R;
 import com.example.emotionalsupportapp.Service.CancelHugDialog;
@@ -71,7 +72,7 @@ public class HugRequestActivity extends FragmentActivity implements OnMapReadyCa
     private String volunteerID;
     private static final int REQUEST_CODE = 101;
     private boolean userFound;
-    private int interval = 5000;
+    private int interval = 2000;
 
     private Location lastLocation;
     private LocationRequest locationRequest;
@@ -114,7 +115,7 @@ public class HugRequestActivity extends FragmentActivity implements OnMapReadyCa
         volunteerLocationMarker = new MarkerOptions();
 
         dialog = new CancelHugDialog(userID,username);
-        lastLocation = new Location("");
+        lastLocation = null;
         dest = new Location("");
         handler = new Handler();
         progressDialog = new ProgressDialog(this);
@@ -145,14 +146,21 @@ public class HugRequestActivity extends FragmentActivity implements OnMapReadyCa
         if(!userFound){
             startRepeatingTask();
         }else{
-            startLocationUpdates();
+            updateDistance();
         }
+        startLocationUpdates();
+
         super.onStart();
     }
 
     @Override
     protected void onResume() {
         startLocationUpdates();
+        if(!userFound){
+            startRepeatingTask();
+        }else{
+            updateDistance();
+        }
         super.onResume();
     }
 
@@ -339,6 +347,9 @@ public class HugRequestActivity extends FragmentActivity implements OnMapReadyCa
             }
             lastLocation = locationResult.getLastLocation();
             currentUserLocationMarker.position(new LatLng(lastLocation.getLatitude(),lastLocation.getLongitude()));
+            if(mMap != null){
+                mMap.addMarker(currentUserLocationMarker);
+            }
             Log.d("Location Updating", lastLocation + "");
             if (userFound) {
                 getVolunteerLocation();
@@ -434,12 +445,7 @@ public class HugRequestActivity extends FragmentActivity implements OnMapReadyCa
         else{
             float distance = lastLocation.distanceTo(dest);
             if(distance<75){
-                Intent ratings = new Intent(this, HugRatingActivity.class);
-                ratings.putExtra("EXTRA_USER_ID",userID);
-                ratings.putExtra("EXTRA_VOLUNTEER_ID",volunteerID);
-                stopLocationUpdates();
-                removeMatched(userID);
-                startActivity(ratings);
+                userIsClose();
             }
             LatLng origin = new LatLng(lastLocation.getLatitude(),lastLocation.getLongitude());
             LatLng destination = new LatLng(dest.getLatitude(),dest.getLongitude());
@@ -458,6 +464,32 @@ public class HugRequestActivity extends FragmentActivity implements OnMapReadyCa
         startLocationUpdates();
         updateLocationUI();
 
+    }
+    private void userIsClose(){
+        final Intent ratings = new Intent(this, HugRatingActivity.class);
+        stopLocationUpdates();
+        AlertDialog.Builder finisher = new AlertDialog.Builder(this);
+        finisher.setTitle(volunteerName + " is here");
+        finisher.setMessage(volunteerName + " is near by, commence hug ");
+        finisher.setCancelable(false);
+        finisher.setPositiveButton("Rate", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                ratings.putExtra("EXTRA_USER_ID",userID);
+                ratings.putExtra("EXTRA_VOLUNTEER_ID",volunteerID);
+                ratings.putExtra("EXTRA_USER_NAME", username);
+                removeMatched(userID);
+                startActivity(ratings);
+            }
+        });
+        finisher.setNegativeButton("Back", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                removeMatched(userID);
+                returnToMain();
+            }
+        });
+        finisher.show();
     }
 
     private void requestDirections(LatLng origin, LatLng dest) {

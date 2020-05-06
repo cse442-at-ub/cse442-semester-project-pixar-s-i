@@ -232,6 +232,7 @@ public class HighFiveActivity extends AppCompatActivity {
     //Sends a notification request to the firebase messaging service specific to people subscribed to the high five topic
     private void sendFCMPush() {
         FirebaseMessaging.getInstance().subscribeToTopic("High_Five");
+
         String msg = username + " requested a High Five";
         String title = "High Five Request";
         String token = "/topics/High_Five";
