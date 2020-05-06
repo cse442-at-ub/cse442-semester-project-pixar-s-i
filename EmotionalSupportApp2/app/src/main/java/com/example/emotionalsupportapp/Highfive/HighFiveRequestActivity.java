@@ -8,14 +8,19 @@ import android.content.Intent;
 import android.Manifest;
 
 import android.content.pm.PackageManager;
+import android.icu.text.DisplayContext;
 import android.location.Location;
+import android.nfc.Tag;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.content.Intent;
 
@@ -51,11 +56,13 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -82,17 +89,24 @@ public class HighFiveRequestActivity extends FragmentActivity implements OnMapRe
     private Boolean userFound;
     private String userID;
     private String username;
-
+    private ImageView volunteerImageView;
+    private TextView volunteerTextView;
+    private String volunteerName;
     private String volunteerID;
     private  Location dest;
     private Button cancelButton;
     private CancelHighFiveDialog dialog;
-
+//    private Marker volunteerInfoMarker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_high_five_request);
+
+
+        volunteerImageView = (ImageView) findViewById(R.id.volunteer_info_button);
+        volunteerTextView = (TextView) findViewById(R.id.volunteer_info_text);
+        volunteerTextView.setVisibility(View.INVISIBLE);
 
         polylines = new ArrayList<>();
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
@@ -132,6 +146,10 @@ public class HighFiveRequestActivity extends FragmentActivity implements OnMapRe
                     }
             }
         });
+
+
+
+
     }
 
 
@@ -286,7 +304,8 @@ public class HighFiveRequestActivity extends FragmentActivity implements OnMapRe
             }finally {
                 if (userFound) {//dont stop until get matched user info
                     stopRepeatingTask();
-                    //pull
+                    getUserName(volunteerID);
+
                 } else {
                     handler.postDelayed(databaseChecker, interval);
                 }
@@ -316,6 +335,8 @@ public class HighFiveRequestActivity extends FragmentActivity implements OnMapRe
                 Intent ratings = new Intent(this,HighFiveRatingActivity.class);
                 ratings.putExtra("EXTRA_USER_ID",userID);
                 ratings.putExtra("EXTRA_VOLUNTEER_ID",volunteerID);
+                ratings.putExtra("EXTRA_VOLUNTEER_NAME", volunteerName);
+                ratings.putExtra("EXTRA_USER_NAME", username);
                 stopLocationUpdates();
                 removeMatched(userID);
                 startActivity(ratings);
@@ -388,7 +409,7 @@ public class HighFiveRequestActivity extends FragmentActivity implements OnMapRe
         requestQueue.add(jsonArrayRequest);
     }
     //Removes the user from the matched database table
-    public void removeMatched(final String userID){
+        public void removeMatched(final String userID){
 
         String phpfile = "removeUserFromMatchedTB.php";
         String result = "";
@@ -606,5 +627,67 @@ public class HighFiveRequestActivity extends FragmentActivity implements OnMapRe
         super.onDestroy();
     }
 
+    //Gets volunteer info first and lastname from users table
+    private void getUserName(final String volunteerID){
+        final ProgressDialog progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Loading...");
+        progressDialog.show();
+        String phpfile = "getUserData.php";
+        StringBuilder fullURL = new StringBuilder();
+        fullURL.append(getString(R.string.database_url));
+        fullURL.append(phpfile);
+
+        StringRequest getUserData = new StringRequest(Request.Method.POST, fullURL.toString(), new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                if(!response.equals("User: doesn't exist in the users table.")){
+                    try{
+                            JSONArray userData = new JSONArray(response);
+                            Log.e("Users Table", userData + "");
+                            volunteerName = userData.getString(0);
+//                            MarkerOptions options = new MarkerOptions()
+//                                .snippet(volunteerName);
+//                        volunteerInfoMarker = mMap.addMarker(options);
+
+                    }catch(JSONException e){
+                        Log.e("JSON Exception",e + "");
+                    }
+                    progressDialog.dismiss();
+
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e("Response Error", error + " ");
+                progressDialog.dismiss();
+
+            }
+        }){
+            @Override
+            protected  Map<String,String>getParams(){
+                HashMap<String, String> query = new HashMap<>();
+                query.put("userID", volunteerID);
+                return query;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(getUserData);
+    }
+
+    public void displayVolunteerinfo(View view){
+       // volunteerTextView.setText(volunteerName);
+
+        if(volunteerTextView.getVisibility() == View.INVISIBLE){
+            volunteerTextView.setText("Volunteer Info:"+ "\n" + "Name: " +volunteerName);
+
+            volunteerTextView.setVisibility(View.VISIBLE);
+        }else{
+            volunteerTextView.setVisibility(View.INVISIBLE);
+        }
+    }
+
 }
+
 
