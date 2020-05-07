@@ -33,7 +33,6 @@ public class HighFiveRatingActivity extends AppCompatActivity {
     private String userID;
     private String userName;
     private String volunteerID;
-    private String voluneerName;
     private Button submitButton;
     private String rating;
     private RatingBar ratingBar;
