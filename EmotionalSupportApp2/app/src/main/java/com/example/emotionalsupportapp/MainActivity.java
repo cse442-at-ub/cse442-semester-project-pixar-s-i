@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -35,17 +36,27 @@ public class MainActivity extends AppCompatActivity {
 
     private String userID;
     private String userName;
+    private SharedPreferences sp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        if (getIntent().getExtras() != null) {
+        sp = this.getSharedPreferences("Login",MODE_PRIVATE);
+        if (sp.getBoolean("Login",false)) {
+            userID = sp.getString("userID","");
+            userName = sp.getString("username","");
+            if(userName.isEmpty()){
+                getUserName(userID);
+            }
+            Log.e("UserID Main",userID + " " + userName);
+        }
+        else if(getIntent().getExtras() != null){
             userID = getIntent().getExtras().getString("EXTRA_USER_ID");
             getUserName(userID);
         }
         else{
+
             Intent login = new Intent(this, LoginActivity.class);
             startActivity(login);
         }
@@ -65,7 +76,10 @@ public class MainActivity extends AppCompatActivity {
                 try {
                     JSONArray userdata = new JSONArray(response);
                     Log.e("Username ",userdata.getString(0) + "");
+                    SharedPreferences.Editor ed = sp.edit();
                     userName = userdata.getString(0);
+                    ed.putString("username",userName);
+                    ed.commit();
                 } catch (JSONException e) {
                     Log.e("Username Json Error",e + "");
                 }

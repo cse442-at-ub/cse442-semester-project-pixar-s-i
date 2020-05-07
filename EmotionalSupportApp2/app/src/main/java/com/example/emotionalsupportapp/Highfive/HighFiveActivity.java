@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationManager;
@@ -57,7 +58,7 @@ public class HighFiveActivity extends AppCompatActivity {
     private DividerItemDecoration dividerItemDecoration;
     private List<User> userList;
     private RecyclerView.Adapter adapter;
-
+    private SharedPreferences sp;
     // Location Information
     private FusedLocationProviderClient fusedLocationProviderClient;
     private Location lastLocation;
@@ -73,7 +74,13 @@ public class HighFiveActivity extends AppCompatActivity {
         setContentView(R.layout.activity_high_five);
 
         highFiveSearch = new Intent(this, HighFiveRequestActivity.class);
-        if (getIntent().getExtras() != null) {
+        sp = getSharedPreferences("Login",MODE_PRIVATE);
+        if(sp.getBoolean("Login",false)){
+            userID = sp.getString("userID","");
+            username = sp.getString("username","");
+            Log.e("UserID Main",userID);
+        }
+       else if (getIntent().getExtras() != null) {
             Bundle b = getIntent().getExtras();
             userID = b.getString("EXTRA_USER_ID");
             username = b.getString("EXTRA_USERNAME");
@@ -254,7 +261,7 @@ public class HighFiveActivity extends AppCompatActivity {
             dataobjData = new JSONObject();
             dataobjData.put("text", msg);
             dataobjData.put("title", title);
-
+            dataobjData.put("userID",userID);
             obj.put("to", token);
 
             obj.put("notification", objData);

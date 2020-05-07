@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationManager;
@@ -67,6 +68,7 @@ public class HugActivity extends AppCompatActivity {
     private Location lastLocation;
     private ProgressDialog progressDialog;
     private static final int REQUEST_CODE = 101;
+    private SharedPreferences sp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,7 +76,14 @@ public class HugActivity extends AppCompatActivity {
         setContentView(R.layout.activity_hug);
 
         hugRequest = new Intent(this,HugRequestActivity.class);
-        if (getIntent().getExtras() != null) {
+        sp = getSharedPreferences("Login",MODE_PRIVATE);
+        if(sp.getBoolean("Login",false)){
+            userID = sp.getString("userID","");
+            username = sp.getString("username","");
+
+            Log.e("UserID Main",userID);
+        }
+        else if (getIntent().getExtras() != null) {
             Bundle b = getIntent().getExtras();
             userID = b.getString("EXTRA_USER_ID");
             username = b.getString("EXTRA_USERNAME");
@@ -291,6 +300,7 @@ public class HugActivity extends AppCompatActivity {
             dataobjData = new JSONObject();
             dataobjData.put("text", msg);
             dataobjData.put("title", title);
+            dataobjData.put("userID",userID);
 
             obj.put("to", token);
 
