@@ -12,4 +12,5 @@
     <string name="matched_hug_finder" translatable="false">retrieveMatchedHugUser.php</string>
     <string name="cancel_waiting_high_five">removeUserFromActiveTB.php</string>
     <string name="cancel_waiting_hug">removeFromActiveHugUsers.php</string>
+    <string name="update_hug_rating">updateHugRating.php</string>
 </resources>
