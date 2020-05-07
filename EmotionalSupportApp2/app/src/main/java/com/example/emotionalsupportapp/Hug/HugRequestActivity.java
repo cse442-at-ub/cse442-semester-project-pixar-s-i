@@ -451,7 +451,7 @@ public class HugRequestActivity extends FragmentActivity implements OnMapReadyCa
             }
             LatLng origin = new LatLng(lastLocation.getLatitude(),lastLocation.getLongitude());
             LatLng destination = new LatLng(dest.getLatitude(),dest.getLongitude());
-
+            mMap.clear();
             mMap.addMarker(currentUserLocationMarker);
             mMap.addMarker(volunteerLocationMarker);
             Log.d("Location Found",dest + " " + origin);
