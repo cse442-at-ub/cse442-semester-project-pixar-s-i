@@ -169,4 +169,9 @@ public class MainActivity extends AppCompatActivity {
         intent.putExtra("EXTRA_USER_ID", userID);
         startActivity(intent);
     }
+
+    @Override
+    public void onBackPressed() {
+  
+    }
 }

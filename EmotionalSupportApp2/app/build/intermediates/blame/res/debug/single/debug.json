@@ -136,6 +136,10 @@
         "source": "C:\\Users\\phill\\.gradle\\caches\\transforms-2\\files-2.1\\78c84ba685873cf0d7d6a4b8f7528c0d\\material-1.0.0\\res\\layout\\design_layout_snackbar_include.xml"
     },
     {
+        "merged": "C:\\Users\\phill\\StudioProjects\\EmotionalSupportApp2\\app\\build\\intermediates\\res\\merged\\debug\\drawable-anydpi-v21_ic_info.xml.flat",
+        "source": "C:\\Users\\phill\\StudioProjects\\EmotionalSupportApp2\\app\\build\\generated\\res\\pngs\\debug\\drawable-anydpi-v21\\ic_info.xml"
+    },
+    {
         "merged": "C:\\Users\\phill\\StudioProjects\\EmotionalSupportApp2\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4_abc_textfield_default_mtrl_alpha.9.png.flat",
         "source": "C:\\Users\\phill\\.gradle\\caches\\transforms-2\\files-2.1\\5456b9688cce9c425608c0682c90c3f2\\appcompat-1.0.2\\res\\drawable-hdpi-v4\\abc_textfield_default_mtrl_alpha.9.png"
     },
@@ -150,6 +154,10 @@
     {
         "merged": "C:\\Users\\phill\\StudioProjects\\EmotionalSupportApp2\\app\\build\\intermediates\\res\\merged\\debug\\animator_mtrl_fab_transformation_sheet_expand_spec.xml.flat",
         "source": "C:\\Users\\phill\\.gradle\\caches\\transforms-2\\files-2.1\\78c84ba685873cf0d7d6a4b8f7528c0d\\material-1.0.0\\res\\animator\\mtrl_fab_transformation_sheet_expand_spec.xml"
+    },
+    {
+        "merged": "C:\\Users\\phill\\StudioProjects\\EmotionalSupportApp2\\app\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi_ic_info.png.flat",
+        "source": "C:\\Users\\phill\\StudioProjects\\EmotionalSupportApp2\\app\\src\\main\\res\\drawable-mdpi\\ic_info.png"
     },
     {
         "merged": "C:\\Users\\phill\\StudioProjects\\EmotionalSupportApp2\\app\\build\\intermediates\\res\\merged\\debug\\color_abc_tint_edittext.xml.flat",
@@ -248,6 +256,10 @@
         "source": "C:\\Users\\phill\\.gradle\\caches\\transforms-2\\files-2.1\\5456b9688cce9c425608c0682c90c3f2\\appcompat-1.0.2\\res\\drawable-xhdpi-v4\\abc_scrubber_control_to_pressed_mtrl_005.png"
     },
     {
+        "merged": "C:\\Users\\phill\\StudioProjects\\EmotionalSupportApp2\\app\\build\\intermediates\\res\\merged\\debug\\drawable-ldpi_ic_info.png.flat",
+        "source": "C:\\Users\\phill\\StudioProjects\\EmotionalSupportApp2\\app\\build\\generated\\res\\pngs\\debug\\drawable-ldpi\\ic_info.png"
+    },
+    {
         "merged": "C:\\Users\\phill\\StudioProjects\\EmotionalSupportApp2\\app\\build\\intermediates\\res\\merged\\debug\\drawable_abc_ic_voice_search_api_material.xml.flat",
         "source": "C:\\Users\\phill\\.gradle\\caches\\transforms-2\\files-2.1\\5456b9688cce9c425608c0682c90c3f2\\appcompat-1.0.2\\res\\drawable\\abc_ic_voice_search_api_material.xml"
     },
@@ -304,6 +316,10 @@
         "source": "C:\\Users\\phill\\.gradle\\caches\\transforms-2\\files-2.1\\5456b9688cce9c425608c0682c90c3f2\\appcompat-1.0.2\\res\\drawable\\abc_cab_background_internal_bg.xml"
     },
     {
+        "merged": "C:\\Users\\phill\\StudioProjects\\EmotionalSupportApp2\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xxxhdpi_ic_info.png.flat",
+        "source": "C:\\Users\\phill\\StudioProjects\\EmotionalSupportApp2\\app\\build\\generated\\res\\pngs\\debug\\drawable-xxxhdpi\\ic_info.png"
+    },
+    {
         "merged": "C:\\Users\\phill\\StudioProjects\\EmotionalSupportApp2\\app\\build\\intermediates\\res\\merged\\debug\\layout_layout_dialog.xml.flat",
         "source": "C:\\Users\\phill\\StudioProjects\\EmotionalSupportApp2\\app\\src\\main\\res\\layout\\layout_dialog.xml"
     },
@@ -330,6 +346,10 @@
     {
         "merged": "C:\\Users\\phill\\StudioProjects\\EmotionalSupportApp2\\app\\build\\intermediates\\res\\merged\\debug\\color_mtrl_bottom_nav_item_tint.xml.flat",
         "source": "C:\\Users\\phill\\.gradle\\caches\\transforms-2\\files-2.1\\78c84ba685873cf0d7d6a4b8f7528c0d\\material-1.0.0\\res\\color\\mtrl_bottom_nav_item_tint.xml"
+    },
+    {
+        "merged": "C:\\Users\\phill\\StudioProjects\\EmotionalSupportApp2\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi_ic_info.png.flat",
+        "source": "C:\\Users\\phill\\StudioProjects\\EmotionalSupportApp2\\app\\src\\main\\res\\drawable-xhdpi\\ic_info.png"
     },
     {
         "merged": "C:\\Users\\phill\\StudioProjects\\EmotionalSupportApp2\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4_common_full_open_on_phone.png.flat",
@@ -1132,6 +1152,10 @@
         "source": "C:\\Users\\phill\\.gradle\\caches\\transforms-2\\files-2.1\\5456b9688cce9c425608c0682c90c3f2\\appcompat-1.0.2\\res\\drawable-mdpi-v4\\abc_btn_switch_to_on_mtrl_00001.9.png"
     },
     {
+        "merged": "C:\\Users\\phill\\StudioProjects\\EmotionalSupportApp2\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi_ic_info.png.flat",
+        "source": "C:\\Users\\phill\\StudioProjects\\EmotionalSupportApp2\\app\\src\\main\\res\\drawable-xxhdpi\\ic_info.png"
+    },
+    {
         "merged": "C:\\Users\\phill\\StudioProjects\\EmotionalSupportApp2\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xxhdpi_ic_launcher_round.png.flat",
         "source": "C:\\Users\\phill\\StudioProjects\\EmotionalSupportApp2\\app\\src\\main\\res\\mipmap-xxhdpi\\ic_launcher_round.png"
     },
@@ -1170,6 +1194,10 @@
     {
         "merged": "C:\\Users\\phill\\StudioProjects\\EmotionalSupportApp2\\app\\build\\intermediates\\res\\merged\\debug\\layout_abc_popup_menu_header_item_layout.xml.flat",
         "source": "C:\\Users\\phill\\.gradle\\caches\\transforms-2\\files-2.1\\5456b9688cce9c425608c0682c90c3f2\\appcompat-1.0.2\\res\\layout\\abc_popup_menu_header_item_layout.xml"
+    },
+    {
+        "merged": "C:\\Users\\phill\\StudioProjects\\EmotionalSupportApp2\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi_ic_info.png.flat",
+        "source": "C:\\Users\\phill\\StudioProjects\\EmotionalSupportApp2\\app\\src\\main\\res\\drawable-hdpi\\ic_info.png"
     },
     {
         "merged": "C:\\Users\\phill\\StudioProjects\\EmotionalSupportApp2\\app\\build\\intermediates\\res\\merged\\debug\\drawable_abc_list_divider_material.xml.flat",
@@ -1466,6 +1494,10 @@
     {
         "merged": "C:\\Users\\phill\\StudioProjects\\EmotionalSupportApp2\\app\\build\\intermediates\\res\\merged\\debug\\anim_abc_fade_in.xml.flat",
         "source": "C:\\Users\\phill\\.gradle\\caches\\transforms-2\\files-2.1\\5456b9688cce9c425608c0682c90c3f2\\appcompat-1.0.2\\res\\anim\\abc_fade_in.xml"
+    },
+    {
+        "merged": "C:\\Users\\phill\\StudioProjects\\EmotionalSupportApp2\\app\\build\\intermediates\\res\\merged\\debug\\drawable_volunteer_info_boarder.xml.flat",
+        "source": "C:\\Users\\phill\\StudioProjects\\EmotionalSupportApp2\\app\\src\\main\\res\\drawable\\volunteer_info_boarder.xml"
     },
     {
         "merged": "C:\\Users\\phill\\StudioProjects\\EmotionalSupportApp2\\app\\build\\intermediates\\res\\merged\\debug\\drawable_common_google_signin_btn_text_light.xml.flat",

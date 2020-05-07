@@ -623,6 +623,7 @@ color background_floating_material_dark
 color background_floating_material_light
 color background_material_dark
 color background_material_light
+color black
 color bright_foreground_disabled_material_dark
 color bright_foreground_disabled_material_light
 color bright_foreground_inverse_material_dark
@@ -649,6 +650,7 @@ color common_google_signin_btn_text_light_disabled
 color common_google_signin_btn_text_light_focused
 color common_google_signin_btn_text_light_pressed
 color common_google_signin_btn_tint
+color darkGrey
 color design_bottom_navigation_shadow_color
 color design_default_color_primary
 color design_default_color_primary_dark
@@ -734,6 +736,7 @@ color switch_thumb_normal_material_dark
 color switch_thumb_normal_material_light
 color tooltip_background_dark
 color tooltip_background_light
+color white
 dimen abc_action_bar_content_inset_material
 dimen abc_action_bar_content_inset_with_nav
 dimen abc_action_bar_default_height_material
@@ -1065,6 +1068,7 @@ drawable design_snackbar_background
 drawable googleg_disabled_color_18
 drawable googleg_standard_color_18
 drawable ic_action_name
+drawable ic_info
 drawable ic_launcher_background
 drawable ic_launcher_foreground
 drawable ic_mtrl_chip_checked_black
@@ -1088,6 +1092,7 @@ drawable notification_tile_bg
 drawable notify_panel_notification_icon_bg
 drawable tooltip_frame_dark
 drawable tooltip_frame_light
+drawable volunteer_info_boarder
 id ALT
 id CTRL
 id E_MailTB
@@ -1143,7 +1148,8 @@ id button3
 id button4
 id button6
 id buttonPanel
-id cancel_button
+id cancel_high_five_button
+id cancel_hug_button
 id center
 id center_horizontal
 id center_vertical
@@ -1211,6 +1217,8 @@ id hugBtn
 id hugNotifications
 id hug_rating_bar
 id hug_request_list
+id hug_volunteer_info_button
+id hug_volunteer_info_text
 id hybrid
 id icon
 id icon_group
@@ -1377,6 +1385,9 @@ id view_offset_helper
 id view_pager
 id visible
 id volunteer
+id volunteer_info_button
+id volunteer_info_text
+id volunteer_interaction_text
 id wide
 id withText
 id wrap
@@ -1532,6 +1543,9 @@ string abc_toolbar_collapse_description
 string app_name
 string appbar_scrolling_view_behavior
 string bottom_sheet_behavior
+string cancel
+string cancel_waiting_high_five
+string cancel_waiting_hug
 string character_counter_content_description
 string character_counter_pattern
 string common_google_play_services_enable_button
@@ -1571,6 +1585,7 @@ string hug_list
 string hug_match_table
 string matched_hug_finder
 string mtrl_chip_close_icon_content_description
+string ok
 string password_toggle_content_description
 string path_password_eye
 string path_password_eye_mask_strike_through
@@ -1584,6 +1599,7 @@ string retrieve_coordinates
 string search_menu_title
 string status_bar_notification_info_overflow
 string update_coordinates
+string update_hug_coordinates
 style AlertDialog_AppCompat
 style AlertDialog_AppCompat_Light
 style Animation_AppCompat_Dialog

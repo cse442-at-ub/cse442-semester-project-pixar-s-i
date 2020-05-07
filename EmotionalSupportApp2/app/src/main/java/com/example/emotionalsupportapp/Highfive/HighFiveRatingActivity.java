@@ -33,6 +33,7 @@ public class HighFiveRatingActivity extends AppCompatActivity {
     private String userID;
     private String userName;
     private String volunteerID;
+    private String voluneerName;
     private Button submitButton;
     private String rating;
     private RatingBar ratingBar;
@@ -50,9 +51,11 @@ public class HighFiveRatingActivity extends AppCompatActivity {
             userID = b.getString("EXTRA_USER_ID");
             volunteerID = b.getString("EXTRA_VOLUNTEER_ID");
             userName= b.getString("EXTRA_USER_NAME");
+            volunteerName = b.getString("EXTRA_VOLUNTEER_NAME");
+
         }
 
-            textView.setText("How was your High Five with your volunteer?");
+            textView.setText("How was your High Five with " +volunteerName+ ".");
 
 
     }
