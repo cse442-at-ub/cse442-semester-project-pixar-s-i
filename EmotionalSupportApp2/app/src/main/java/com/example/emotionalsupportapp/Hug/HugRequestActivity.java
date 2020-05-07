@@ -191,6 +191,8 @@ public class HugRequestActivity extends FragmentActivity implements OnMapReadyCa
                 if(!userFound){
                     matchedUser();
                 }else{
+                    getUserName(volunteerID);
+
                     updateDistance();
                 }
 
@@ -466,6 +468,9 @@ public class HugRequestActivity extends FragmentActivity implements OnMapReadyCa
 
     }
     private void userIsClose(){
+        if(volunteerName == null){
+            return;
+        }
         final Intent ratings = new Intent(this, HugRatingActivity.class);
         stopLocationUpdates();
         AlertDialog.Builder finisher = new AlertDialog.Builder(this);
@@ -615,6 +620,7 @@ public class HugRequestActivity extends FragmentActivity implements OnMapReadyCa
     private void getUserName(final String volunteerID){
         final ProgressDialog progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Loading...");
+        progressDialog.setCancelable(false);
         progressDialog.show();
         String phpfile = "getUserData.php";
         StringBuilder fullURL = new StringBuilder();

@@ -301,6 +301,7 @@ public class HighFiveRequestActivity extends FragmentActivity implements OnMapRe
                     matchedUser();
                     //
                 }else{
+                    getUserName(volunteerID);
                     updateDistance();
                 }
 
@@ -349,11 +350,15 @@ public class HighFiveRequestActivity extends FragmentActivity implements OnMapRe
     }
 
     private void userIsClose(){
+        if(volunteerName == null){
+            return;
+        }
+        getUserName(volunteerID);
         final Intent ratings = new Intent(this,HighFiveRatingActivity.class);
         stopLocationUpdates();
         AlertDialog.Builder finisher = new AlertDialog.Builder(this);
-        finisher.setTitle(username + " is here");
-        finisher.setMessage(username + " is near by, commence high five ");
+        finisher.setTitle(volunteerName + " is here");
+        finisher.setMessage(volunteerName + " is near by, commence high five ");
         finisher.setCancelable(false);
         finisher.setPositiveButton("Rate", new DialogInterface.OnClickListener() {
             @Override
@@ -652,6 +657,7 @@ public class HighFiveRequestActivity extends FragmentActivity implements OnMapRe
     private void getUserName(final String volunteerID){
         final ProgressDialog progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Loading...");
+        progressDialog.setCancelable(false);
         progressDialog.show();
         String phpfile = "getUserData.php";
         StringBuilder fullURL = new StringBuilder();
