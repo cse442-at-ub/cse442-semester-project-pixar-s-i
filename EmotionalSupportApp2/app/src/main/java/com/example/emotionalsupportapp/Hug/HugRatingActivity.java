@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RatingBar;
+import android.widget.TextView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -30,6 +31,9 @@ public class HugRatingActivity extends AppCompatActivity {
     private RatingBar ratingBar;
     private Button submit;
     private String rating;
+    private  String volunteerName;
+    private String userName;
+    private TextView textView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,11 +41,16 @@ public class HugRatingActivity extends AppCompatActivity {
         setContentView(R.layout.activity_hug_rating);
         ratingBar = (RatingBar) findViewById(R.id.hug_rating_bar);
         submit = (Button) findViewById(R.id.hug_submit_button);
-
         if (getIntent().getExtras() != null) {
             Bundle b = getIntent().getExtras();
             userID = b.getString("EXTRA_USER_ID");
             volunteerID = b.getString("EXTRA_VOLUNTEER_ID");
+            userName= b.getString("EXTRA_USER_NAME");
+            volunteerName = b.getString("EXTRA_VOLUNTEER_NAME");
+            textView = (TextView) findViewById(R.id.textView7);
+
+            textView.setText("How was your High Five with " +volunteerName+ ".");
+
         }else{
             Intent login = new Intent(this, LoginActivity.class);
             startActivity(login);

@@ -483,6 +483,7 @@ public class HugRequestActivity extends FragmentActivity implements OnMapReadyCa
                 ratings.putExtra("EXTRA_USER_ID",userID);
                 ratings.putExtra("EXTRA_VOLUNTEER_ID",volunteerID);
                 ratings.putExtra("EXTRA_USER_NAME", username);
+                ratings.putExtra("EXTRA_VOLUNTEER_NAME",volunteerName);
                 removeMatched(userID);
                 startActivity(ratings);
             }
