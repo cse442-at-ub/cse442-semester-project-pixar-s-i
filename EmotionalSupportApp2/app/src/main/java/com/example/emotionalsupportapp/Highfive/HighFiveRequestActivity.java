@@ -98,6 +98,7 @@ public class HighFiveRequestActivity extends FragmentActivity implements OnMapRe
     private CancelHighFiveDialog dialog;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -340,7 +341,7 @@ public class HighFiveRequestActivity extends FragmentActivity implements OnMapRe
             }
             LatLng origin = new LatLng(lastLocation.getLatitude(),lastLocation.getLongitude());
             LatLng destination = new LatLng(dest.getLatitude(),dest.getLongitude());
-
+            mMap.clear();
             mMap.addMarker(currentUserLocationMarker);
             mMap.addMarker(volunteerLocationMarker);
 

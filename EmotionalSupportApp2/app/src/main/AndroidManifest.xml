@@ -20,6 +20,7 @@
             android:required="false" />
         <activity android:name=".MainActivity" />
 
+        <activity android:name=".Member.Profile.ComplaintsActivity"/>
         <activity android:name=".Member.Profile.ChangeImage" />
         <activity android:name=".Member.Profile.profilePage" />
         <activity android:name=".Member.Registration.SignUpActivity" />
@@ -42,7 +43,6 @@
         <activity android:name=".Connect.AcceptActivity"/>
 
         <activity android:name=".Settings.HistoryActivity" />
-        <activity android:name=".Settings.NotificationsActivity" />
         <activity android:name=".Settings.SettingsActivity" />
 
         <activity android:name=".Talk.TalkNotificationsActivity" />
