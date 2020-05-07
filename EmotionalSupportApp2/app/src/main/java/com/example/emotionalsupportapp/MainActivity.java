@@ -55,6 +55,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        hasUnseenMessages = findViewById(R.id.has_unseen_messages);
+
         sp = this.getSharedPreferences("Login",MODE_PRIVATE);
         if (sp.getBoolean("Login",false)) {
             userID = sp.getString("userID","");
@@ -78,6 +80,8 @@ public class MainActivity extends AppCompatActivity {
 
         final ProgressDialog progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Loading...");
+        progressDialog.setCancelable(false);
+
         progressDialog.show();
         StringBuffer fullURL = new StringBuffer();
         fullURL.append(getString(R.string.database_url));
@@ -119,7 +123,6 @@ public class MainActivity extends AppCompatActivity {
         userID = getIntent().getExtras().getString("EXTRA_USER_ID");
 
         createNotificationChannel();
-        hasUnseenMessages = findViewById(R.id.has_unseen_messages);
         checkUnseenMessage(hasUnseenMessages);
     }
 
