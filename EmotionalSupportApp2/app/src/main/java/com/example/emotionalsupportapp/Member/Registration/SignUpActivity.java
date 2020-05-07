@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Switch;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -21,10 +22,17 @@ import com.example.emotionalsupportapp.R;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.security.SecureRandom;
+import java.security.spec.KeySpec;
+
+import javax.crypto.SecretKeyFactory;
+import javax.crypto.spec.PBEKeySpec;
+
 public class SignUpActivity extends AppCompatActivity {
 
     EditText emailText, passwordText, passwordConText, fNameText, lNameText;
     Button nowCreated;
+    Switch genderSwitch, choiceSwitch;
     String result;
     RequestQueue requestQueue;
     String signUpURL = "https://www-student.cse.buffalo.edu/CSE442-542/2020-spring/cse-442e/signup.php";
@@ -42,33 +50,55 @@ public class SignUpActivity extends AppCompatActivity {
         lNameText = (EditText) findViewById(R.id.lNameText);
         result = "";
 
+        genderSwitch = findViewById(R.id.genderSwitch);
+        choiceSwitch = findViewById(R.id.ChoiceSwitch);
+
         requestQueue = Volley.newRequestQueue(getApplicationContext());
 
         nowCreated = (Button) findViewById(R.id.signInButton);
         nowCreated.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openMainer();
+                try {
+                    openMainer();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         });
-
     }
+
+    public static String hashSimple(String password, byte[] salt) throws Exception{
+        KeySpec spec = new PBEKeySpec(password.toCharArray(), salt, 65536, 128);
+        SecretKeyFactory f = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
+        byte[] hash = f.generateSecret(spec).getEncoded();
+        return String.valueOf(hash);
+    }
+
 
     public void displayToast(String message){
         Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
     }
 
 
-    public void openMainer(){
+    public void openMainer() throws Exception {
         final Intent intent = new Intent(this, LoginActivity.class);
-        String signUpSendURL = signUpURL + "?eMail=" + emailText.getText().toString() + "&FirstName=" +
-                fNameText.getText().toString() + "&LastName=" + lNameText.getText().toString() +
-                "&password=" + passwordText.getText().toString();
+
 
         String pass1 = passwordText.getText().toString();
         String pass2 = passwordConText.getText().toString();
 
         if(pass1.equals(pass2)){
+
+            SecureRandom random = new SecureRandom();
+            byte[] saltie = new byte[16];
+            random.nextBytes(saltie);
+
+            String hashPass = hashSimple(pass1, saltie);
+
+            String signUpSendURL = signUpURL + "?eMail=" + emailText.getText().toString() + "&FirstName=" +
+                    fNameText.getText().toString() + "&LastName=" + lNameText.getText().toString() +
+                    "&password=" + hashPass + "&male_female=" + genderSwitch.isChecked() + "&sameSex=" + choiceSwitch.isChecked();
 
             JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,
                     signUpSendURL, new Response.Listener<JSONObject>() {
