@@ -7,11 +7,14 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -44,6 +47,8 @@ public class UsersFragment extends Fragment implements FriendDialog.FriendDialog
     private Button addFriend;
     private Button deleteFriend;
 
+    private EditText search_users;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -57,6 +62,24 @@ public class UsersFragment extends Fragment implements FriendDialog.FriendDialog
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         initializeSql();
+
+        search_users = view.findViewById(R.id.search_users);
+        search_users.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                searchUsers(s.toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
 
         addFriend = view.findViewById(R.id.add_friend);
         addFriend.setOnClickListener(new View.OnClickListener() {
@@ -91,7 +114,8 @@ public class UsersFragment extends Fragment implements FriendDialog.FriendDialog
                         String userName = jsonobject.getString("userName");
                         String friendId = jsonobject.getString("friendId");
                         String friendName = jsonobject.getString("friendName");
-                        friends.add(new Friend(userId, userName, friendId, friendName));
+
+                        friends.add(new Friend(userId, userName, friendId, friendName, ""));
                     }
                     userAdapter = new UserAdapter(friends, getContext());
                     recyclerView.setAdapter(userAdapter);
@@ -106,6 +130,22 @@ public class UsersFragment extends Fragment implements FriendDialog.FriendDialog
             }
         });
         reqQueue.add(jsonObjectRequest);
+    }
+
+    private void searchUsers(String s){
+        if (!s.equals("")){
+            ArrayList<Friend> temp = new ArrayList<>();
+            for(Friend friend: friends){
+                if (friend.getFriendName().equals(s)){
+                    temp.add(friend);
+                    userAdapter = new UserAdapter(temp, getContext());
+                    recyclerView.setAdapter(userAdapter);
+                }
+            }
+        }else {
+            userAdapter = new UserAdapter(friends, getContext());
+            recyclerView.setAdapter(userAdapter);
+        }
     }
 
 
@@ -263,5 +303,13 @@ public class UsersFragment extends Fragment implements FriendDialog.FriendDialog
             }
         });
         reqQueue.add(jsonObjectRequest);
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser) {
+            getFragmentManager().beginTransaction().detach(this).attach(this).commit();
+        }
     }
 }

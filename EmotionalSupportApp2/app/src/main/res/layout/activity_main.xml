@@ -76,18 +76,37 @@
 
             android:text="Talk" />
 
-        <Button
-            android:id="@+id/connectBtn"
-            style="?android:attr/borderlessButtonStyle"
 
-
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="0.5"
-            android:background="#80A1C1"
-            android:onClick="goToConnectPage"
+            android:layout_height="120dp"
+            >
 
-            android:text="Connect" />
+            <Button
+                android:id="@+id/connectBtn"
+                style="?android:attr/borderlessButtonStyle"
+
+
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#80A1C1"
+                android:onClick="goToConnectPage"
+
+                android:text="Connect" />
+
+            <TextView
+                android:id="@+id/has_unseen_messages"
+                android:layout_width="30dp"
+                android:layout_height="40dp"
+                android:text="!"
+                android:textSize="30dp"
+                android:layout_alignParentRight="true"
+                android:textColor="#FF0000" />
+
+
+        </RelativeLayout>
+
+
 
     </LinearLayout>
 

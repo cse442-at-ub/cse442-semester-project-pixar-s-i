@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationManager;
@@ -14,22 +15,20 @@ import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
-import androidx.core.app.NotificationManagerCompat;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.*;
 import com.example.emotionalsupportapp.MainActivity;
+import com.example.emotionalsupportapp.Member.Registration.LoginActivity;
 import com.example.emotionalsupportapp.R;
 import com.example.emotionalsupportapp.Service.RequestsListAdapter;
 import com.example.emotionalsupportapp.Member.Profile.User;
@@ -38,11 +37,7 @@ import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.iid.FirebaseInstanceId;
-import com.google.firebase.iid.InstanceIdResult;
 import com.google.firebase.messaging.FirebaseMessaging;
 
 import org.json.JSONArray;
@@ -57,22 +52,20 @@ import java.util.Map;
 public class HighFiveActivity extends AppCompatActivity {
 
     private static final int REQUEST_CODE = 101;
-    private NotificationManagerCompat notificationManager;
-    private FusedLocationProviderClient locationProviderClient;
-    private String FCM_TOKEN;
-    private JSONArray users;
+
     private RecyclerView mList;
     private LinearLayoutManager linearLayoutManager;
     private DividerItemDecoration dividerItemDecoration;
     private List<User> userList;
     private RecyclerView.Adapter adapter;
-
+    private SharedPreferences sp;
     // Location Information
     private FusedLocationProviderClient fusedLocationProviderClient;
     private Location lastLocation;
     LocationRequest locationRequest;
     LocationCallback locationCallBack;
     private String userID;
+    private String username;
     Intent highFiveSearch;
 
     @Override
@@ -80,18 +73,29 @@ public class HighFiveActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_high_five);
 
-        locationProviderClient = LocationServices.getFusedLocationProviderClient(this);
-        notificationManager = NotificationManagerCompat.from(this);
         highFiveSearch = new Intent(this, HighFiveRequestActivity.class);
-        highFiveSearch.putExtra("userFound",false);
-        userID = getIntent().getExtras().getString("EXTRA_USER_ID");
-        Log.e("UserID",userID);
+        sp = getSharedPreferences("Login",MODE_PRIVATE);
+        if(sp.getBoolean("Login",false)){
+            userID = sp.getString("userID","");
+            username = sp.getString("username","");
+            Log.e("UserID Main",userID);
+        }
+       else if (getIntent().getExtras() != null) {
+            Bundle b = getIntent().getExtras();
+            userID = b.getString("EXTRA_USER_ID");
+            username = b.getString("EXTRA_USERNAME");
+        }else{
+            Intent login = new Intent(this, LoginActivity.class);
+            startActivity(login);
+        }
         highFiveSearch.putExtra("EXTRA_USER_ID",userID);
+        highFiveSearch.putExtra("EXTRA_USERNAME",username);
 
         mList = findViewById(R.id.high_five_request_list);
         userList = new ArrayList<>();
-        adapter = new RequestsListAdapter(getApplicationContext(), userList);
 
+        //Set Up for List of users
+        adapter = new RequestsListAdapter(getApplicationContext(), userList);
         linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         dividerItemDecoration = new DividerItemDecoration(mList.getContext(), linearLayoutManager.getOrientation());
@@ -104,8 +108,8 @@ public class HighFiveActivity extends AppCompatActivity {
 
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
         locationRequest = new LocationRequest();
-        locationRequest.setInterval(10000);
-        locationRequest.setFastestInterval(10000);
+        locationRequest.setInterval(1000);
+        locationRequest.setFastestInterval(100);
         locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
         locationCallBack = new LocationCallback(){
             @Override
@@ -114,10 +118,8 @@ public class HighFiveActivity extends AppCompatActivity {
                     return;
                 }
                 else{
-                    for(Location location: locationResult.getLocations()){
-                        Log.e("Location Data",location.toString());
-                        super.onLocationResult(locationResult);
-                    }
+                    lastLocation = locationResult.getLastLocation();
+                    sendLocation(lastLocation);
                 }
             }
         };
@@ -133,12 +135,14 @@ public class HighFiveActivity extends AppCompatActivity {
         super.onStart();
     }
 
-    private void stopLocationUpdates(){
-        fusedLocationProviderClient.removeLocationUpdates(locationCallBack);
+    @Override
+    public void onBackPressed() {
+        returnToMain();
     }
 
-    public void returnToMain(View view) {
+    public void returnToMain() {
         Intent returnToMainIntent = new Intent(this, MainActivity.class);
+        returnToMainIntent.putExtra("EXTRA_USER_ID",userID);
         startActivity(returnToMainIntent);
 
     }
@@ -172,22 +176,27 @@ public class HighFiveActivity extends AppCompatActivity {
                     .setNegativeButton("Cancel", null)
                     .show();
         } else {
-            if(!sendActiveUserPush()){
-                return;
+            if(sendActiveUserPush()){
+                sendFCMPush();
+                stopLocationUpdates();
+                startActivity(highFiveSearch);
             }
-            sendFCMPush();
-            stopLocationUpdates();
-            startActivity(highFiveSearch);
         }
 
     }
 
+
+    private void stopLocationUpdates(){
+        fusedLocationProviderClient.removeLocationUpdates(locationCallBack);
+    }
+
+    //Get a location update
     private void startLocationUpdates() {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_CODE);
 
         }
-        fusedLocationProviderClient.requestLocationUpdates(locationRequest, locationCallBack, Looper.getMainLooper());
+        fusedLocationProviderClient.requestLocationUpdates(locationRequest, locationCallBack, Looper.myLooper());
     }
 
     //Make a query to the database with the userid, latitude, and longitude
@@ -203,30 +212,7 @@ public class HighFiveActivity extends AppCompatActivity {
                     public void onSuccess(Location location) {
 
                         if (location != null) {
-                            lastLocation = location;
-                            Log.e("Location",lastLocation.toString());
-
-                            FirebaseInstanceId.getInstance().getInstanceId()
-                                    .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
-                                        @Override
-                                        public void onComplete(@NonNull Task<InstanceIdResult> task) {
-                                            if (!task.isSuccessful()) {
-                                                Log.w("Task", "getInstanceId failed", task.getException());
-                                                return;
-                                            }
-
-                                            // Get new Instance ID token
-                                            FCM_TOKEN = task.getResult().getToken();
-                                            String phpfile = "writeCoord.php";
-                                            HashMap<String,String> query = new HashMap<>();
-                                            query.put("userID",userID);
-                                            query.put("xCord",String.valueOf(lastLocation.getLatitude()));
-                                            query.put("yCord",String.valueOf(lastLocation.getLongitude()));
-                                            Log.e("Query",query.toString());
-                                            sendRequestToSever(phpfile,query);
-
-                                        }
-                                    });
+                            sendLocation(location);
                         }else{
                             startLocationUpdates();
                         }
@@ -237,9 +223,24 @@ public class HighFiveActivity extends AppCompatActivity {
 
     }
 
+    // Creates a query with the location information for this user and calls Send request to the server
+    private void sendLocation(Location location){
+        lastLocation = location;
+        Log.e("Location",lastLocation.toString());
+        String phpfile = "writeCoord.php";
+        HashMap<String,String> query = new HashMap<>();
+        query.put("userID",userID);
+        query.put("xCord",String.valueOf(lastLocation.getLatitude()));
+        query.put("yCord",String.valueOf(lastLocation.getLongitude()));
+        Log.e("Query",query.toString());
+        sendRequestToSever(phpfile,query);
+    }
+
+    //Sends a notification request to the firebase messaging service specific to people subscribed to the high five topic
     private void sendFCMPush() {
         FirebaseMessaging.getInstance().subscribeToTopic("High_Five");
-        String msg = "User Request High Five";
+
+        String msg = username + " requested a High Five";
         String title = "High Five Request";
         String token = "/topics/High_Five";
         JSONObject obj = null;
@@ -260,7 +261,7 @@ public class HighFiveActivity extends AppCompatActivity {
             dataobjData = new JSONObject();
             dataobjData.put("text", msg);
             dataobjData.put("title", title);
-
+            dataobjData.put("userID",userID);
             obj.put("to", token);
 
             obj.put("notification", objData);
@@ -284,7 +285,7 @@ public class HighFiveActivity extends AppCompatActivity {
                     }
                 }) {
             @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
+            public Map<String, String> getHeaders() {
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("Authorization", "key=" + getString(R.string.firebase_server_key));
                 params.put("Content-Type", "application/json");
@@ -296,6 +297,7 @@ public class HighFiveActivity extends AppCompatActivity {
 
     }
 
+    //Get the list of people who request high fives from the database
     public void getRequestsData(String phpfile,String query){
         final ProgressDialog progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Loading...");
@@ -309,12 +311,16 @@ public class HighFiveActivity extends AppCompatActivity {
             @Override
             public void onResponse(JSONArray response) {
                 try{
+                    Log.e("Users List",response + "");
+
                     for(int i = 0; i < response.length();i++){
                         JSONObject jsonObject = response.getJSONObject(i);
                         String username = jsonObject.getString("userID");
                         String lat = jsonObject.getString("xCord");
                         String lon = jsonObject.getString("yCord");
-                        User user = new User(username,lat,lon,"Will","Phil");
+                        String first_name = jsonObject.getString("FirstName");
+                        String last_name = jsonObject.getString("LastName");
+                        User user = new User(username,lat,lon,first_name,last_name);
                         userList.add(user);
                     }
                 }catch(JSONException e){
@@ -337,6 +343,7 @@ public class HighFiveActivity extends AppCompatActivity {
     }
 
 
+    //Sends a Post request to the server using the specific query and phpfile
     public void sendRequestToSever(String phpfile, final HashMap<String,String> query){
         StringBuilder fullURL = new StringBuilder();
         fullURL.append(getString(R.string.database_url));
@@ -346,7 +353,6 @@ public class HighFiveActivity extends AppCompatActivity {
         StringRequest jsonArrayRequest = new StringRequest(Request.Method.POST, fullURL.toString(), new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-            //    Log.e("Response",response + " ");
 
             }
         }, new Response.ErrorListener() {
@@ -358,14 +364,13 @@ public class HighFiveActivity extends AppCompatActivity {
         }){
 
             @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
+            protected Map<String, String> getParams() {
 
                 return query;
             }
         };
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(jsonArrayRequest);
-
     }
 
 }

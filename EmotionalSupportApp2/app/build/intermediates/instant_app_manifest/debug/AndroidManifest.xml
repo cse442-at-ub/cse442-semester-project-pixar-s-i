@@ -10,8 +10,9 @@
         android:targetSdkVersion="28" />
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
-
     <!-- Include required permissions for Google Maps API to run. -->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
@@ -37,48 +38,61 @@
             android:name="org.apache.http.legacy"
             android:required="false" />
 
-        <activity android:name="com.example.emotionalsupportapp.MessageActivity" />
-        <activity android:name="com.example.emotionalsupportapp.ConnectNotificationsActivity" />
-        <activity android:name="com.example.emotionalsupportapp.TalkNotificationsActivity" />
-        <activity android:name="com.example.emotionalsupportapp.MotivationNotificationsActivity" />
-        <activity android:name="com.example.emotionalsupportapp.HugNotificationsActivity" />
-        <activity android:name="com.example.emotionalsupportapp.HighFiveNotificationsActivity" />
-        <activity android:name="com.example.emotionalsupportapp.SignUpPictureActivity" />
-
-        <activity android:name="com.example.emotionalsupportapp.HugRequestActivity" />
-        <activity android:name="com.example.emotionalsupportapp.ChangeImage" />
-        <activity android:name="com.example.emotionalsupportapp.HistoryActivity" />
-        <activity android:name="com.example.emotionalsupportapp.HighFiveRequestActivity" />
-        <activity android:name="com.example.emotionalsupportapp.HugActivity" />
-        <activity android:name="com.example.emotionalsupportapp.HighFiveActivity" />
-        <activity android:name="com.example.emotionalsupportapp.profilePage" />
-        <activity android:name="com.example.emotionalsupportapp.SignUpActivity" />
         <activity android:name="com.example.emotionalsupportapp.MainActivity" />
-        <activity android:name="com.example.emotionalsupportapp.ConnectActivity" />
-        <activity android:name="com.example.emotionalsupportapp.TalkActivity" >
-            <intent-filter>
-                <action android:name="android.intent.action.PHONE_STATE" />
-            </intent-filter>
-        </activity>
-        <activity android:name="com.example.emotionalsupportapp.MotivationActivity" />
-        <activity android:name="com.example.emotionalsupportapp.NotificationsActivity" />
-        <activity android:name="com.example.emotionalsupportapp.SettingsActivity" />
-        <activity android:name="com.example.emotionalsupportapp.SignUpPictureActivity" />
-        <activity android:name="com.example.emotionalsupportapp.VolunteerAndLocationInfoActivity" />
-        <activity android:name="com.example.emotionalsupportapp.MissedMeetUpActivity" />
-        <activity android:name="com.example.emotionalsupportapp.LoginActivity" >
+        <activity android:name="com.example.emotionalsupportapp.Member.Profile.ChangeImage" />
+        <activity android:name="com.example.emotionalsupportapp.Member.Profile.profilePage" />
+        <activity android:name="com.example.emotionalsupportapp.Member.Registration.SignUpActivity" />
+        <activity android:name="com.example.emotionalsupportapp.Member.Registration.SignUpPictureActivity" />
+        <activity android:name="com.example.emotionalsupportapp.Member.Registration.LoginActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name="com.example.emotionalsupportapp.Motivation.MotivationActivity" />
+        <activity android:name="com.example.emotionalsupportapp.Motivation.SearchActivity" />
+        <activity android:name="com.example.emotionalsupportapp.Motivation.MotivationNotificationsActivity" />
+        <activity android:name="com.example.emotionalsupportapp.Connect.MessageActivity" />
+        <activity android:name="com.example.emotionalsupportapp.Connect.ConnectNotificationsActivity" />
+        <activity android:name="com.example.emotionalsupportapp.Connect.ConnectActivity" />
+        <activity android:name="com.example.emotionalsupportapp.Connect.AcceptActivity" />
+        <activity android:name="com.example.emotionalsupportapp.Settings.HistoryActivity" />
+        <activity android:name="com.example.emotionalsupportapp.Settings.NotificationsActivity" />
+        <activity android:name="com.example.emotionalsupportapp.Settings.SettingsActivity" />
+        <activity android:name="com.example.emotionalsupportapp.Talk.TalkNotificationsActivity" />
+        <activity android:name="com.example.emotionalsupportapp.Talk.TalkActivity" >
+            <intent-filter>
+                <action android:name="android.intent.action.PHONE_STATE" />
+            </intent-filter>
+        </activity>
+        <activity android:name="com.example.emotionalsupportapp.Highfive.HighFiveActivity" />
+        <activity android:name="com.example.emotionalsupportapp.Highfive.HighFiveRequestActivity" />
+        <activity android:name="com.example.emotionalsupportapp.Highfive.HighFiveRatingActivity" />
+        <activity android:name="com.example.emotionalsupportapp.Hug.HugActivity" />
+        <activity android:name="com.example.emotionalsupportapp.Hug.HugRequestActivity" />
+        <activity android:name="com.example.emotionalsupportapp.Hug.HugRatingActivity" />
 
-        <service android:name="com.example.emotionalsupportapp.LocationService" />
+        <service android:name="com.example.emotionalsupportapp.Service.MyFirebaseMessagingService" >
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyBaUPPSTrK4s6N7vgZ9tpGS3uzdfgjDviE" />
+            android:value="@string/google_maps_key" />
+        <!-- Set custom default icon. This is used when no icon is set for incoming notification messages. -->
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@drawable/ic_notifications_24" />
+        <!--
+             Set color used with incoming notification messages. This is used when no color is set for the incoming
+             notification message.
+        -->
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_color"
+            android:resource="@color/colorAccent" />
         <!--
              FirebaseMessagingService performs security checks at runtime,
              no need for explicit permissions despite exported="true"

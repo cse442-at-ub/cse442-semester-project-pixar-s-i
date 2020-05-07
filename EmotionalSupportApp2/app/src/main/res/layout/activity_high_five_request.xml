@@ -10,9 +10,46 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/map"
+        android:id="@+id/map_high_five"
         tools:context=".MapsActivity"
-        android:name="com.google.android.gms.maps.SupportMapFragment" />
+        android:name="com.google.android.gms.maps.SupportMapFragment">
+
+    <Button
+        android:id="@+id/cancel_high_five_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal|bottom"
+        android:text="Cancel Request"
+        android:padding="10dp"
+        android:layout_marginTop="20dp"
+        android:paddingRight="10dp"/>
+
+
+        <ImageView
+            android:id="@+id/volunteer_info_button"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="40dp"
+            android:layout_gravity="start|top"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_info"
+            android:onClick="displayVolunteerinfo"/>
+
+        <TextView
+            android:id="@+id/volunteer_info_text"
+            android:gravity="center_vertical"
+            android:background="@drawable/volunteer_info_boarder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:layout_marginLeft="65dp"
+            android:layout_alignBottom="@id/volunteer_info_button"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            />
+
+</fragment>
 
 
 </RelativeLayout>

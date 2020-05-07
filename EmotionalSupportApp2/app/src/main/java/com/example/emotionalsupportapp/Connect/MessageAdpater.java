@@ -45,6 +45,11 @@ public class MessageAdpater extends RecyclerView.Adapter<MessageAdpater.ViewHold
     public void onBindViewHolder(@NonNull MessageAdpater.ViewHolder holder, int position) {
         Chat chat = chats.get(position);
         holder.show_message.setText(chat.getMessage());
+        if(chat.getSenderId().equals(userId)){
+            if (chat.getHasSeen().equals("0")) {
+                holder.has_seen.setText("unseen");
+            }
+        }
     }
 
     @Override
@@ -54,11 +59,13 @@ public class MessageAdpater extends RecyclerView.Adapter<MessageAdpater.ViewHold
 
     public class ViewHolder extends RecyclerView.ViewHolder{
         TextView show_message;
+        TextView has_seen;
 
         ViewHolder(View itemView){
             super(itemView);
 
             show_message = itemView.findViewById(R.id.show_message);
+            has_seen = itemView.findViewById(R.id.has_seen);
         }
     }
 
