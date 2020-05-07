@@ -22,4 +22,10 @@
         android:textSize="18sp"
         android:padding="8dp"/>
 
+
+    <TextView
+        android:id="@+id/has_seen"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content" />
+
 </RelativeLayout>

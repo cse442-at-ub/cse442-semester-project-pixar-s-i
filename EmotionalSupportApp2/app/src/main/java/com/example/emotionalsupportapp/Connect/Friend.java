@@ -8,12 +8,14 @@ public class Friend implements Parcelable {
     private String userName;
     private String friendId;
     private String friendName;
+    private String lastMessage;
 
-    public Friend(String userId, String userName, String friendId, String friendName)  {
+    public Friend(String userId, String userName, String friendId, String friendName, String lastMessage)  {
         this.userId = userId;
         this.userName = userName;
         this.friendId = friendId;
         this.friendName = friendName;
+        this.lastMessage = lastMessage;
     }
 
     public String getUserId() {
@@ -32,13 +34,22 @@ public class Friend implements Parcelable {
         return friendName;
     }
 
+    public String getLastMessage() {
+        return lastMessage;
+    }
+
+    public void setLastMessage(String lastMessage) {
+        this.lastMessage = lastMessage;
+    }
+
     public Friend(Parcel in){
-        String[] data = new String[4];
+        String[] data = new String[5];
         in.readStringArray(data);
         this.userId = data[0];
         this.userName = data[1];
         this.friendId = data[2];
         this.friendName = data[3];
+        this.lastMessage = data[4];
     }
 
 
@@ -49,7 +60,7 @@ public class Friend implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeStringArray(new String[] {this.userId, this.userName, this.friendId, this.friendName});
+        dest.writeStringArray(new String[] {this.userId, this.userName, this.friendId, this.friendName, this.lastMessage});
     }
 
     public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
