@@ -20,11 +20,6 @@ public class SettingsActivity extends AppCompatActivity {
         idNum = getIntent().getStringExtra("EXTRA_USER_ID");
     }
 
-    public void goToNotifications(View view) {
-        Intent intent = new Intent(this, NotificationsActivity.class);
-        intent.putExtra("EXTRA_USER_ID", idNum);
-        startActivity(intent);
-    }
 
     public void goToHistory(View view) {
         Intent intent = new Intent(this, HistoryActivity.class);
