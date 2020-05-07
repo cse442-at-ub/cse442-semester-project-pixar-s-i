@@ -76,13 +76,13 @@ public class ChatsFragment extends Fragment {
                                 continue;
                             }
                             hasChatted.add(receiverId);
-                            friends.add(new Friend(senderId, senderName, receiverId, receiverName));
+                            friends.add(new Friend(senderId, senderName, receiverId, receiverName, "Test"));
                         }else if (userID.equals(receiverId)){
                             if (hasChatted.contains(senderId)){
                                 continue;
                             }
                             hasChatted.add(senderId);
-                            friends.add(new Friend(receiverId, receiverName, senderId, senderName));
+                            friends.add(new Friend(receiverId, receiverName, senderId, senderName, "Test"));
                         }
                     }
                     userAdapter = new UserAdapter(friends, getContext());

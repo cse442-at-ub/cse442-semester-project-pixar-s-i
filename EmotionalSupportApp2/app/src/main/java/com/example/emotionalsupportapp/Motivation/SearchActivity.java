@@ -4,8 +4,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -45,6 +49,7 @@ public class SearchActivity extends AppCompatActivity {
     }
 
     private void getTopFiveVolunteers() {
+        topFiveVolunteers.clear();
         String phpURLBase = "https://www-student.cse.buffalo.edu/CSE442-542/2020-spring/cse-442e/getAllRatings.php";
         RequestQueue reqQueue;
         reqQueue = Volley.newRequestQueue(getApplicationContext());
@@ -66,6 +71,12 @@ public class SearchActivity extends AppCompatActivity {
                     topFiveVolunteers.add(new Volunteer(userId, userName, volunteerId,volunteerName,overallRating));
                 }
                 Collections.sort(topFiveVolunteers);
+                for (Volunteer volunteer: topFiveVolunteers){
+                    if (volunteer.getUserName().equals(userName)){
+                        topFiveVolunteers.remove(volunteer);
+                        break;
+                    }
+                }
                 topFiveVolunteerAdapter = new TopFiveVolunteerAdapter(new ArrayList<>(topFiveVolunteers.subList(0, Math.min(topFiveVolunteers.size(), 5))), SearchActivity.this);
                 recyclerView.setAdapter(topFiveVolunteerAdapter);
             } catch (JSONException e) {
@@ -81,5 +92,9 @@ public class SearchActivity extends AppCompatActivity {
         reqQueue.add(jsonObjectRequest);
     }
 
+    public void refreshVolunteers(View view) {
+        getTopFiveVolunteers();
+        Log.d("TEST", "11111111111111111111");
+    }
 
 }

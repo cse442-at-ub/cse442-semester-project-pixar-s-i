@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationManager;
@@ -21,13 +22,13 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.*;
 import com.example.emotionalsupportapp.MainActivity;
+import com.example.emotionalsupportapp.Member.Registration.LoginActivity;
 import com.example.emotionalsupportapp.R;
 import com.example.emotionalsupportapp.Service.RequestsListAdapter;
 import com.example.emotionalsupportapp.Member.Profile.User;
@@ -57,13 +58,14 @@ public class HighFiveActivity extends AppCompatActivity {
     private DividerItemDecoration dividerItemDecoration;
     private List<User> userList;
     private RecyclerView.Adapter adapter;
-
+    private SharedPreferences sp;
     // Location Information
     private FusedLocationProviderClient fusedLocationProviderClient;
     private Location lastLocation;
     LocationRequest locationRequest;
     LocationCallback locationCallBack;
     private String userID;
+    private String username;
     Intent highFiveSearch;
 
     @Override
@@ -72,10 +74,22 @@ public class HighFiveActivity extends AppCompatActivity {
         setContentView(R.layout.activity_high_five);
 
         highFiveSearch = new Intent(this, HighFiveRequestActivity.class);
-        highFiveSearch.putExtra("userFound",false);
-        userID = getIntent().getExtras().getString("EXTRA_USER_ID");
-        Log.d("UserID",userID);
+        sp = getSharedPreferences("Login",MODE_PRIVATE);
+        if(sp.getBoolean("Login",false)){
+            userID = sp.getString("userID","");
+            username = sp.getString("username","");
+            Log.e("UserID Main",userID);
+        }
+       else if (getIntent().getExtras() != null) {
+            Bundle b = getIntent().getExtras();
+            userID = b.getString("EXTRA_USER_ID");
+            username = b.getString("EXTRA_USERNAME");
+        }else{
+            Intent login = new Intent(this, LoginActivity.class);
+            startActivity(login);
+        }
         highFiveSearch.putExtra("EXTRA_USER_ID",userID);
+        highFiveSearch.putExtra("EXTRA_USERNAME",username);
 
         mList = findViewById(R.id.high_five_request_list);
         userList = new ArrayList<>();
@@ -121,9 +135,14 @@ public class HighFiveActivity extends AppCompatActivity {
         super.onStart();
     }
 
+    @Override
+    public void onBackPressed() {
+        returnToMain();
+    }
 
-    public void returnToMain(View view) {
+    public void returnToMain() {
         Intent returnToMainIntent = new Intent(this, MainActivity.class);
+        returnToMainIntent.putExtra("EXTRA_USER_ID",userID);
         startActivity(returnToMainIntent);
 
     }
@@ -220,7 +239,8 @@ public class HighFiveActivity extends AppCompatActivity {
     //Sends a notification request to the firebase messaging service specific to people subscribed to the high five topic
     private void sendFCMPush() {
         FirebaseMessaging.getInstance().subscribeToTopic("High_Five");
-        String msg = "User Request High Five";
+
+        String msg = username + " requested a High Five";
         String title = "High Five Request";
         String token = "/topics/High_Five";
         JSONObject obj = null;
@@ -241,7 +261,7 @@ public class HighFiveActivity extends AppCompatActivity {
             dataobjData = new JSONObject();
             dataobjData.put("text", msg);
             dataobjData.put("title", title);
-
+            dataobjData.put("userID",userID);
             obj.put("to", token);
 
             obj.put("notification", objData);
@@ -265,7 +285,7 @@ public class HighFiveActivity extends AppCompatActivity {
                     }
                 }) {
             @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
+            public Map<String, String> getHeaders() {
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("Authorization", "key=" + getString(R.string.firebase_server_key));
                 params.put("Content-Type", "application/json");
@@ -344,14 +364,13 @@ public class HighFiveActivity extends AppCompatActivity {
         }){
 
             @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
+            protected Map<String, String> getParams() {
 
                 return query;
             }
         };
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(jsonArrayRequest);
-
     }
 
 }

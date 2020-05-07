@@ -2,6 +2,7 @@ package com.example.emotionalsupportapp.Member.Profile;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.drawable.Icon;
 import android.os.Build;
 import android.os.Bundle;
@@ -58,12 +59,7 @@ public class profilePage extends Activity {
 
         phpURLHighFive = "https://www-student.cse.buffalo.edu/CSE442-542/2020-spring/cse-442e/getHighFiveRatingProfile.php/?id=" + idNum;
         phpURLBase = "https://www-student.cse.buffalo.edu/CSE442-542/2020-spring/cse-442e/getInfoProfile.php/?id=" + idNum+ "&meetingType=0";
-        phpURLMotivation = "https://www-student.cse.buffalo.edu/CSE442-542/2020-spring/cse-442e/getMotivationRatingProfile.php/?id=" + idNum + "&meetingType=2";
-        //idNum = Integer.getInteger(sessionId);
-
-        //phpURLBase = "https://www-student.cse.buffalo.edu/CSE442-542/2020-spring/cse-442e/getInfoProfile.php/?id=" + idNum;
-        //phpURLHighFive = "https://www-student.cse.buffalo.edu/CSE442-542/2020-spring/cse-442e/getHighFiveRatingProfile.php/?id=" + idNum + "&meetingType=0";
-        //phpURLMotivation = "https://www-student.cse.buffalo.edu/CSE442-542/2020-spring/cse-442e/getHighFiveRatingProfile.php/?id=" + idNum + "&meetingType=2";
+        phpURLMotivation = "https://www-student.cse.buffalo.edu/CSE442-542/2020-spring/cse-442e/getHighFiveRatingProfile.php/?id=" + idNum + "&meetingType=2";
 
         changeImage = (Button) findViewById(R.id.changeImage);
         changeImage.setOnClickListener(new View.OnClickListener() {
@@ -89,6 +85,10 @@ public class profilePage extends Activity {
         LogoutBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view){
+                SharedPreferences sp = getSharedPreferences("Login",MODE_PRIVATE);
+                SharedPreferences.Editor ed = sp.edit();
+                ed.putBoolean("Login",false);
+                ed.commit();
                 Intent intent = new Intent(profilePage.this, LoginActivity.class);
                 startActivity(intent);
             }
